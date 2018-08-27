@@ -1,0 +1,153 @@
+---
+title: R bootcamp in Beg-Meil
+subtitle: Basic optimization with R
+author: State of the R
+institute: "https://github.com/finistR2018"
+date: "Beg-Meil, August 2018"
+csl: "../../resources/apa-no-doi-no-issue.csl"
+output:
+  beamer_presentation:
+    slide_level: 2
+    highlight: tango
+    includes: 
+      in_header: ../../resources/common_preamble.tex
+      before_body: ../../resources/common_startup.tex
+bibliography: ../../resources/bibliography.bib
+fontsize: 10pt
+nocite: |
+  @convexOptim
+params: 
+  setup_path : "../../resources/"
+---
+
+```{r setup, include = FALSE, cache = FALSE}
+source(paste0(params$setup_path, "knitr_setup.R"))
+```
+
+
+## References
+
+### See Chapter 9 in Convex Optimization [@convexOptim], [http://:web.stanford.edu/~boyd/cvxbook/](http://web.stanford.edu/~boyd/cvxbook/)
+
+![](../../resources/common_figs/cover_convexOptim){width="50px"}\
+
+
+### Online courses
+
+All slides stolen (extracted/re-arranged) from \alert{Lieve Vandenberghe}:
+
+  - Convex Optimization: [http://www.seas.ucla.edu/~vandenbe/ee236b/ee236b.html](http://www.seas.ucla.edu/~vandenbe/ee236b/ee236b.html)
+  - Optimization Methods for Large-Scale Systems [http://www.seas.ucla.edu/~vandenbe/ee236c/ee236c.html](http://www.seas.ucla.edu/~vandenbe/ee236c/ee236c.html)
+
+
+# Minimization Problem
+
+## 
+
+\includepdf[pages=1]{unconstrained_setup.pdf}
+
+## 
+
+\includepdf[pages=1]{descent_principle.pdf}
+
+## 
+
+\includepdf[pages=2]{descent_principle.pdf}
+
+# Gradient methods
+
+## 
+
+\includepdf[pages=1]{gradient_method.pdf}
+
+## 
+
+\includepdf[pages=2]{gradient_method.pdf}
+
+## 
+
+\includepdf[pages=3]{gradient_method.pdf}
+
+
+# Newton methods
+
+## 
+
+\includepdf[pages=1]{newton_method.pdf}
+
+## 
+
+\includepdf[pages=2]{newton_method.pdf}
+
+## 
+
+\includepdf[pages=3]{newton_method.pdf}
+
+## 
+
+\includepdf[pages=5]{newton_method.pdf}
+
+# Quasi-Newton methods
+
+## 
+
+\includepdf[pages=1]{newton_quasi.pdf}
+
+## 
+
+\includepdf[pages=2]{newton_quasi.pdf}
+
+## 
+
+\includepdf[pages=3]{newton_quasi.pdf}
+
+## 
+
+\includepdf[pages=9]{newton_quasi.pdf}
+
+# Use `stats::optim`
+
+## `optim` usage
+
+### Definition
+
+```{r optim_syntax, eval = FALSE}
+optim(par, fn, gr = NULL, ...,
+      method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN",
+                 "Brent"),
+      lower = -Inf, upper = Inf,
+      control = list(), hessian = FALSE)
+```
+
+## Example: Multivariate Gaussian loglikelihood
+
+### Minimize the negative MVN loglikelihood
+
+Let $\bX$ be a $n\times p$ data matrix ($n$ observations, $p$ variables), $\bS$ the mepirical covariance matrix, $\bX_i \sim \clN (\bzr, \bSigma)$, then maximizing the likelihood w.r.t. $\bSigma$ is equivalent to minimize 
+\[
+  \ln | \bSigma | + \textrm{trace}(\bS \bSigma^{-1})
+\]
+
+with gradient function (differentiating w.r.t. $\bSigma^{-1}$)
+\[
+  - \bSigma^{-1} | + \bS 
+\]
+
+and Hessian $p^2 \times p^2$ matrix
+\[
+  \bSigma^{-1} \otimes \bSigma^{-1}
+\]
+
+## Example: Multivariate Gaussian loglikelihood
+
+```{r optim}
+fr <- function() {}
+```
+
+# Use external library via `nloptr`
+
+# Use external library by embedding C++ code by yourself
+
+
+## References
+

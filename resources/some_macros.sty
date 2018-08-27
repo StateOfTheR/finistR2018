@@ -1,0 +1,216 @@
+% NOTATIONS MATHEMATIQUES
+\newcommand{\Rset}{\mathbb{R}}
+\newcommand{\Rbb}{\mathbb{R}}
+\newcommand{\Nset}{\mathbb{N}}
+\newcommand{\ud}{\mathrm{d}}
+\newcommand{\var}{\mathbb{V}}
+\newcommand{\cov}{\mathrm{cov}}
+\newcommand{\cor}{\mathrm{cor}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Beta}{B}
+\newcommand{\Nbb}{\mathbb{N}}
+
+\newcommand{\projorth}[2]{\text{proj}^{\bot}_{#2}(#1)}
+\newcommand{\proj}[2]{\text{proj}_{#2}(#1)}
+\newcommand{\argmax}{\mathop{\mathrm{arg\ max}}}
+\newcommand{\argmin}{\mathop{\mathrm{arg\ min}}}
+\newcommand{\minimize}{\mathop{\mathrm{minimize}}}
+\newcommand{\maximize}{\mathop{\mathrm{maximize}}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+% definitions related to groups
+\newcommand{\norm}[2][]{\left|\left|#2\right|\right|_{#1}}
+\newcommand{\group}[1][k]{{\mathcal G}_{#1}}
+\newcommand{\positive}{{\mathcal P}}
+\newcommand{\negative}{{\mathcal N}}
+\newcommand{\zero}{{\mathcal Z}}
+%\renewcommand{\active}[1][k]{{\mathcal A}_{#1}}
+\newcommand{\1}{\mathbf{1}}
+
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\trace}[1]{\mathrm{trace}{\left(#1\right)}}
+\newcommand{\vect}{\mathrm{vec}}
+\newcommand{\sign}{\mathrm{sign}}
+\newcommand{\err}{\mathrm{err}}
+\newcommand{\weights}{\mathbf{w}}
+\newcommand{\supp}{\mathcal{A}}
+\newcommand{\prob}{\mathbb{P}}
+\renewcommand{\P}{\mathbb{P}}
+
+%definitions related to convergences
+\newcommand{\inprob}{\overset{P}{\longrightarrow}}
+\newcommand{\inlaw}{\overset{D}{\longrightarrow}}
+
+\newcommand{\C}{\texttt}
+\newcommand{\R}{\C{R}}
+\newcommand{\easy}{\mbox{\large\fontencoding{U}\fontfamily{wasy}\selectfont\char44}}
+\newcommand{\medium}{\mbox{\large\fontencoding{U}\fontfamily{wasy}\selectfont\char47}}
+\newcommand{\hard}{\raisebox{2pt}{\footnotesize\fontencoding{U}\fontfamily{futs}\selectfont\char77}}
+
+\newcommand{\Easy}{\mbox{\Huge\fontencoding{U}\fontfamily{wasy}\selectfont\char44}}
+\newcommand{\Medium}{\mbox{\Huge\fontencoding{U}\fontfamily{wasy}\selectfont\char47}}
+\newcommand{\Hard}{\raisebox{3pt}{\huge\fontencoding{U}\fontfamily{futs}\selectfont\char77}}
+
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\green}[1]{\textcolor{green!50!black}{#1}}
+
+\newcommand\indep{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+%-------------------------------------------------------------------------%
+% Definitions
+%-------------------------------------------------------------------------%
+\def\Argmin{\mathop{\mbox{\rm argmin}}}
+\def\Argmax{\mathop{\mbox{\rm argmax}}}
+
+\newcommand{\hatbeta}{\hat{\beta}}
+\newcommand{\hatbbeta}{\,\hat{\!\bbeta}}
+\newcommand{\hatbetalasso}{\,\hat{\!\beta}^{\mathrm{lasso}}}
+\newcommand{\hatbetacoop}{\,\hat{\!\beta}^{\mathrm{coop}}}
+\newcommand{\hatbetagroup}{\,\hat{\!\beta}^{\mathrm{group}}}
+\newcommand{\hatbetaspgroup}{\,\hat{\!\beta}^{\mathrm{spgroup}}}
+\newcommand{\hatbetaridge}{\,\hat{\!\beta}^{\mathrm{ridge}}}
+\newcommand{\hatbetaols}{\,\hat{\!\beta}^{\mathrm{ols}}}
+\newcommand{\hatbbetacoop}{\,\hat{\!\bbeta}^{\mathrm{coop}}}
+\newcommand{\hatbbetagroup}{\,\hat{\!\bbeta}^{\mathrm{group}}}
+\newcommand{\hatbbetaridge}{\,\hat{\!\bbeta}^{\mathrm{ridge}}}
+\newcommand{\hatbbetalasso}{\,\hat{\!\bbeta}^{\mathrm{lasso}}}
+\newcommand{\hatbbetaols}{\,\hat{\!\bbeta}^{\mathrm{ols}}}
+\newcommand{\hatbbetamv}{\,\hat{\!\bbeta}^{\mathrm{mv}}}
+\newcommand{\tildebbeta}{\,\tilde{\!\bbeta}}
+\newcommand{\bbetaridge}{\bbeta^{\mathrm{ridge}}}
+\newcommand{\bbetacoop}{\bbeta^{\mathrm{coop}}}
+\newcommand{\bbetagroup}{\bbeta^{\mathrm{group}}}
+\newcommand{\bbetaols}{\bbeta^{\mathrm{ols}}}
+
+\newcommand{\hattheta}{\hat{\theta}}
+\newcommand{\hatbtheta}{\,\hat{\!\btheta}}
+\newcommand{\hatthetalasso}{\,\hat{\!\theta}^{\mathrm{lasso}}}
+\newcommand{\hatthetacoop}{\,\hat{\!\theta}^{\mathrm{coop}}}
+\newcommand{\hatthetagroup}{\,\hat{\!\theta}^{\mathrm{group}}}
+\newcommand{\hatthetaspgroup}{\,\hat{\!\theta}^{\mathrm{spgroup}}}
+\newcommand{\hatthetaridge}{\,\hat{\!\theta}^{\mathrm{ridge}}}
+\newcommand{\hatthetaols}{\,\hat{\!\theta}^{\mathrm{ols}}}
+\newcommand{\hatbthetacoop}{\,\hat{\!\btheta}^{\mathrm{coop}}}
+\newcommand{\hatbthetagroup}{\,\hat{\!\btheta}^{\mathrm{group}}}
+\newcommand{\hatbthetaridge}{\,\hat{\!\btheta}^{\mathrm{ridge}}}
+\newcommand{\hatbthetalasso}{\,\hat{\!\btheta}^{\mathrm{lasso}}}
+\newcommand{\hatbthetaols}{\,\hat{\!\btheta}^{\mathrm{ols}}}
+\newcommand{\hatbthetamv}{\,\hat{\!\btheta}^{\mathrm{mv}}}
+\newcommand{\tildebtheta}{\,\tilde{\!\btheta}}
+\newcommand{\bthetaridge}{\btheta^{\mathrm{ridge}}}
+\newcommand{\bthetacoop}{\btheta^{\mathrm{coop}}}
+\newcommand{\bthetagroup}{\btheta^{\mathrm{group}}}
+\newcommand{\bthetaols}{\btheta^{\mathrm{ols}}}
+
+\newcommand{\bTheta}{\boldsymbol\Theta}
+
+\newcommand{\transpose}[1]{\matr{#1}^\trans}
+\newcommand{\crossprod}[2]{\transpose{#1} \matr{#2}}
+\newcommand{\tcrossprod}[2]{\matr{#1} \transpose{#2}}
+
+\newcommand{\bbeta}{\boldsymbol\beta}
+\newcommand{\bPsi}{\boldsymbol\Psi}
+\newcommand{\ba}{\mathbf{a}}
+\newcommand{\bb}{\mathbf{b}}
+
+\newcommand{\bmu}{\boldsymbol{\mu}}
+\newcommand{\bSigma}{\boldsymbol{\Sigma}}
+\newcommand{\bOmega}{\boldsymbol{\Omega}}
+\newcommand{\bsigma}{\boldsymbol{\sigma}}
+\newcommand{\bomega}{\boldsymbol{\omega}}
+
+\newcommand{\tP}{\tilde{p}}
+\newcommand{\diag}{\text{diag}}
+
+\newcommand{\I}{\mathbf{1}}
+\newcommand{\clG}{\mathcal{G}}
+\newcommand{\clV}{\mathcal{V}}
+\newcommand{\clE}{\mathcal{E}}
+\newcommand{\clJ}{\mathcal{J}}
+\newcommand{\clN}{\mathcal{N}}
+\newcommand{\clP}{\mathcal{P}}
+\newcommand{\clA}{\mathcal{A}}
+\newcommand{\clD}{\mathcal{D}}
+\newcommand{\clH}{\mathcal{H}}
+\newcommand{\clO}{\mathcal{O}}
+\newcommand{\clS}{\mathcal{S}}
+\newcommand{\bW}{\mathbf{W}}
+\newcommand{\bM}{\mathbf{M}}
+\newcommand{\bR}{\mathbf{R}}
+\newcommand{\bm}{\mathbf{m}}
+\newcommand{\bs}{\mathbf{s}}
+\newcommand{\bS}{\mathbf{S}}
+\newcommand{\bO}{\mathbf{O}}
+\newcommand{\bA}{\mathbf{A}}
+\newcommand{\bE}{\mathbf{E}}
+\newcommand{\bI}{\mathbf{I}}
+\newcommand{\bP}{\mathbf{P}}
+\newcommand{\bL}{\mathbf{L}}
+\newcommand{\be}{\mathbf{e}}
+\newcommand{\bg}{\mathbf{g}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bu}{\mathbf{u}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bY}{\mathbf{Y}}
+\newcommand{\bz}{\mathbf{z}}
+\newcommand{\bX}{\mathbf{X}}
+\newcommand{\bzr}{\mathbf{0}}
+\newcommand{\bH}{\mathbf{H}}
+\newcommand{\bC}{\mathbf{C}}
+\newcommand{\bB}{\mathbf{B}}
+\newcommand{\bT}{\mathbf{T}}
+\newcommand{\bV}{\mathbf{V}}
+\newcommand{\bD}{\mathbf{D}}
+\newcommand{\bU}{\mathbf{U}}
+\newcommand{\bZ}{\mathbf{Z}}
+\newcommand{\balpha}{\boldsymbol\alpha}
+\newcommand{\bkappa}{\boldsymbol\kappa}
+\newcommand{\bvarphi}{\boldsymbol\varphi}
+\newcommand{\btheta}{\boldsymbol\theta}
+\newcommand{\bgamma}{{\boldsymbol\gamma}}
+\newcommand{\bepsilon}{\boldsymbol\epsilon}
+\newcommand{\bvarepsilon}{\boldsymbol\varepsilon}
+\newcommand{\blambda}{\boldsymbol\lambda}
+\newcommand{\rsa}{\emphase{\mathversion{bold}{$\rightsquigarrow$}~}}
+
+
+\newcommand\xylabellarge[4]{% #1 Image, #2=XText, #3=YText,, #4=Title,
+  \setlength{\unitlength}{0.9\textwidth}%
+  \begin{picture}(1,0.6)%
+    \put(0.025,0.025){\includegraphics[width=0.95\unitlength]{#1}}
+    \put(0.525,0){\makebox[0cm]{\small#2}}
+    \put(0,0.3){\rotatebox{90.0}{\makebox[0cm]{\small#3}}}
+    \put(0.525,0.6){\makebox[0cm]{#4}}
+  \end{picture}%
+}
+
+\newcommand\xylabelsquare[4]{% #1 Image, #2=XText, #3=YText,, #4=Title,
+  \setlength{\unitlength}{0.5\linewidth}%
+  \begin{picture}(1,1)%
+    \put(0.05,0.05){\includegraphics[width=\unitlength]{#1}}
+    \put(0.575,-0.025){\makebox[0cm]{\small#2}}
+    \put(-0.05,0.575){\rotatebox{90.0}{\makebox[0cm]{\small#3}}}
+    \put(0.575,1.075){\makebox[0cm]{#4}}
+  \end{picture}%
+}
+
+\newcommand\xylabel[3]{% #1 Image, #2=XText, #3=YText,
+  \setlength{\unitlength}{0.18\textwidth}
+  \begin{picture}(1,1)
+    \put(0,0){\includegraphics[type=pdf,ext=.pdf,read=.pdf,width=0.18\textwidth]{#1}}
+    \put(0.85,0.325){\small#2}
+    \put(0.275,0.875){\small#3}
+  \end{picture}
+}
+
+\newcommand\xyzlabel[4]{% #1 Image, #2=XText, #3=YText,, #3=ZText,
+  \setlength{\unitlength}{0.18\textwidth}
+  \begin{picture}(1,1)
+    \put(0,0){\includegraphics[type=pdf,ext=.pdf,read=.pdf,width=0.18\textwidth]{#1}}
+    \put(0.85,0.25){\small#2}
+    \put(0.25,0.1){\small#3}
+    \put(0.325,0.85){\small#4}
+  \end{picture}
+}
+
