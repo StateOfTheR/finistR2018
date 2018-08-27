@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyr)
 library(dplyr)
 library(tibble)
-main_dir <- '/home/metienne/Dropbox/FinistR2018'
+main_dir <- ''
 ```
 
 
