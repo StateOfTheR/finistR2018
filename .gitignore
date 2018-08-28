@@ -35,3 +35,12 @@ vignettes/*.pdf
 # Shiny token, see https://shiny.rstudio.com/articles/shinyapps.html
 rsconnect/
 pnavaro/.ipynb_checkpoints/Makefile-checkpoint.ipynb
+.Rproj.user
+pnavaro/Makefile.slides.html
+pnavaro/.ipynb_checkpoints/JuliaCallOptim-checkpoint.ipynb
+pnavaro/.ipynb_checkpoints/JuliaOptim-checkpoint.ipynb
+pnavaro/.ipynb_checkpoints/XRJulia-checkpoint.ipynb
+julia/.ipynb_checkpoints/JuliaCallOptim-checkpoint.ipynb
+julia/.ipynb_checkpoints/JuliaOptim-checkpoint.ipynb
+julia/.ipynb_checkpoints/Makefile-checkpoint.ipynb
+julia/.ipynb_checkpoints/XRJulia-checkpoint.ipynb
