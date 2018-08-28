@@ -105,6 +105,42 @@ All slides stolen (extracted/re-arranged) from \alert{Lieve Vandenberghe}:
 
 \includepdf[pages=9]{newton_quasi.pdf}
 
+# An example
+
+## Rosenbrock Banana function
+
+\[
+  f(x) = 100( x_2 - x_2^2) + (1-x_1)^2
+\]
+
+\[
+\nabla f (x) = \begin{pmatrix}
+-400 x_1 (x_2 - x_1^2) - 2 (1-x_1) \\
+200 (x_2 - x_1^2)
+  \end{pmatrix}
+\]
+
+![rosenbrock function](Rosenbrock_function.png){width="200px"}\
+
+
+## Rosenbrock Banana function in R
+
+### objective
+```{r objective rosenbrock}
+objective <- function(x) {
+  return( 100 * (x[2] - x[1] * x[1])^2 + (1 - x[1])^2 )
+}
+
+```
+
+### gradient
+
+```{r, gradient}
+gradient <- function(x) {
+  return( c( -400 * x[1] * (x[2] - x[1] * x[1]) - 2 * (1 - x[1]), 200 * (x[2] - x[1] * x[1]) ) )
+}
+```
+
 # Use `stats::optim`
 
 ## `optim` usage
@@ -119,35 +155,53 @@ optim(par, fn, gr = NULL, ...,
       control = list(), hessian = FALSE)
 ```
 
-## Example: Multivariate Gaussian loglikelihood
+  - Nelder-Mead: approximation of the gradient
+  - BFGS: quasi-Newton
+  - CG: conjuguate gradient
+  - L-BFGS-B: BFGS with limited memory, box constrained
+  - SANN: simulated annealing
 
-### Minimize the negative MVN loglikelihood
+## Call to optim - BFGS
 
-Let $\bX$ be a $n\times p$ data matrix ($n$ observations, $p$ variables), $\bS$ the mepirical covariance matrix, $\bX_i \sim \clN (\bzr, \bSigma)$, then maximizing the likelihood w.r.t. $\bSigma$ is equivalent to minimize 
-\[
-  \ln | \bSigma | + \textrm{trace}(\bS \bSigma^{-1})
-\]
-
-with gradient function (differentiating w.r.t. $\bSigma^{-1}$)
-\[
-  - \bSigma^{-1} | + \bS 
-\]
-
-and Hessian $p^2 \times p^2$ matrix
-\[
-  \bSigma^{-1} \otimes \bSigma^{-1}
-\]
-
-## Example: Multivariate Gaussian loglikelihood
-
-```{r optim}
-fr <- function() {}
+```{r optim rosenbrock bfgs}
+x0 <- c(-1.2, 1)
+res_bfgs <- optim(x0, objective, gradient, method = "BFGS", control= list(trace = 2))
 ```
+
+## Call to optim - CG
+
+```{r optim rosenbrock cg}
+x0 <- c(-1.2, 1)
+res_cg <- optim(x0, objective, gradient, method = "CG", control= list(trace = 2))
+```
+
 
 # Use external library via `nloptr`
 
+## `nloptr` usage
+
+### Definition
+
+```{r nloptr_syntax, eval = FALSE}
+nloptr(x0, eval_f, eval_grad_f, ..., opts = list())
+```
+
+  - Many gradient free methods
+  - Most existing gradient-based methods
+  - global optimizer
+
+## Call to `nloptr` - BFGS
+
+```{r nloptr rosenbrock}
+library(nloptr)
+opts <- list("algorithm"="NLOPT_LD_LBFGS", "xtol_rel"=1.0e-8)
+res <- nloptr(x0=x0, eval_f=objective, eval_grad_f=gradient, opts=opts)
+print(res)
+```
+
 # Use external library by embedding C++ code by yourself
 
+See [https://github.com/jchiquet/optimLibR](https://github.com/jchiquet/optimLibR)
 
 ## References
 
