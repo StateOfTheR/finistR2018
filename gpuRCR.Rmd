@@ -1,0 +1,188 @@
+---
+title: "Utiliser le GPU avec R"
+author: "Avner, Félix, Marie, Vincent"
+date: "August 28, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Liste des packages
+Une liste des packages est disponible sur (https://www.r-pkg.org/ctv/HighPerformanceComputing)
+
+On ne s'intéresse pas à :
+
+- OpenCL  (plumaintenu depuis 2012)
+- permGPU (plus maintenu depuis 3 ans)
+- BDgraph et  ssgraph (trop spécifique bayésien)
+- cudaBayesreg package by da Silva, implements the rhierLinearModel from the 
+- bayesm package (trop spécifique fMRI voxels)
+
+On veut explorer 
+
+- tfestimators (https://cran.r-project.org/web/packages/tfestimators/index.html)
+- gpuR (https://cran.r-project.org/web/packages/gpuR/index.html) ou plus rÃ©cent sur github (https://github.com/cdeterman/gpuR)
+- rgpu (https://cran.r-project.org/web/packages/gpuR/index.html)
+- gcbd (https://cran.r-project.org/web/packages/gcbd/index.html)
+- RCUDA (https://github.com/yuanli22/RCUDA)
+
+
+Limites potentielles : il faut une carte graphique !
+Cuda a été développé pour Nvidia, et OpenCL est compatible avec AMD et toutes les cartes graphiques. 
+
+La plupart des packages dépendent de CUDA et sont donc réserver aux utilisateurs équipés d'une carte nvidia.
+
+Sous Linux pour connaître sa carte graphique sous ubuntu 
+
+```{r, eval=FALSE}
+sudo lshw -C display
+```
+
+Sous Windows, clic droit sur le drapeau Windows, exécuter et
+```{r, eval=FALSE}
+dxdiag
+```
+
+
+Dans ce cas, on est condamé  à utiliser `gpur` car pas de carte nvidia (qui a le gros avantage de fonctionner avec beaucoup de cartes).
+
+#GPU : Graphics Processing Unit
+
+Là où un processeur peut avoir 2 à 36 cours, un GPU typique aura 100 à 1000 cours. Le GPU Tesla P100 a 3584 cours
+
+Pour les situations où le même calcul est effectué sur plusieurs parties d'un ensemble de données, le parallélisme massif d'un GPU peut être utile.
+
+Rien ne vient gratuitement : on perd de la mémoire et il y a un coût pour le transfert des données du système vers le GPU (et probablement de retour). Donc toutes les situations ne sont pas appropriées pour le calcul sur GPU. Un GPU haut de gamme a 16 à 32 Go de mémoire sur la carte, ce qui peut vite limiter l'utilité des GPU dans certaines situations (le dell  XPS13 de base a 128Mo).
+
+## gpuR, 
+
+Il faut installer openCL sous Ubuntu avec les commandes. On peut suivre la page 
+(https://doc.ubuntu-fr.org/opencl).
+
+Il faut aussi installer ViennaCL
+
+```{r, eval=FALSE}
+sudo apt update
+sudo apt-get install opencl-headers
+sudo apt-get install libviennacl-dev
+sudo apt-get install beignet beignet-dev
+
+```
+
+Une vignette très utile et très bien faite (https://cran.r-project.org/web/packages/gpuR/vignettes/gpuR.pdf)
+
+
+Sous Windows un `install.packages()` classique fonctionne très bien.
+
+#Fonctionnement
+Voyons l'exemple ci-dessous sur des multiplications matriciels
+
+```{r }
+library(gpuR)
+ORDER = 1024
+
+A = matrix(rnorm(ORDER^2), nrow=ORDER)
+B = matrix(rnorm(ORDER^2), nrow=ORDER)
+gpuA = gpuMatrix(A, type="double") #float possible
+gpuB = gpuMatrix(B, type="double")
+vclA = vclMatrix(A)
+vclB = vclMatrix(B)
+
+
+system.time(A %*% B)
+system.time(gpuA %*% gpuB)
+system.time(vclA %*% vclB)
+
+```
+
+La librairie gpuR utilise les classes S4 (même si on ne va pas utiliser cette fonctionnalité ici). L'objet gpuMatrix pointe sur une matrice dans la RAM qui est ensuite calculée par le GPU lorsqu'elle est appelée par une fonction. Cela évite que R recopie l'objet a chaque appel. Ceci peut se voir par exemple :
+
+```{r }
+library(pryr)
+
+x = matrix(rnorm(16), 4)
+y = x
+ 
+address(x)
+address(y)
+
+y[1,1] = 0
+address(x)
+address(y)
+
+x = gpuMatrix(rnorm(16), 4, 4)
+y = x
+ 
+x@address
+y@address
+
+y[1,1] = 0
+x@address
+y@address
+
+```
+
+Chaque nouvelle variable affectée à cet objet ne copiera que le pointeur, rendant ainsi le programme plus efficace en termes de mémoire. Toutefois, la classe gpuMatrix nécessite toujours d'allouer de la mémoire GPU et de copier les données sur l'appareil pour chaque appel de fonction. Les fonctions les plus couramment utilisées sont présentes et en particulier les fonctions` % *%, +, -, *, /, crossprod, tcrossprod et trig`. Un utilisateur R peut créer ces objets et tirer parti des ressources GPU sans avoir besoin de connaître un tas de fonctions qui pourraient casser les algorithmes existants. Ceci signifie aussi que le gain est plus faible pour des fonctions plus évoluées
+
+Pour les classes gpuMatix et gpuVector, il existe une classe vclMatrix et vclVector close qui pointe vers les objets qui persistent dans la RAM du processeur graphique. De cette manière, l'utilisateur décide explicitement du moment où les données doivent être déplacées dans la RAM. En évitant les transferts de données inutiles les performances peuvent être considérablement améliorées. L'autre intérêt de vclMatrix est la scalabilité : On peut regarder ce qui se passe en doublant la taille de la matrice.
+
+```{r }
+ORDER =2048
+
+A = matrix(rnorm(ORDER^2), nrow=ORDER)
+B = matrix(rnorm(ORDER^2), nrow=ORDER)
+gpuA = gpuMatrix(A, type="double")
+gpuB = gpuMatrix(B, type="double")
+vclA = vclMatrix(A)
+vclB = vclMatrix(B)
+
+
+system.time(A %*% B)
+system.time(gpuA %*% gpuB)
+system.time(vclA %*% vclB)
+
+```
+
+Petit détail : pour traduire unne gpuMatrix ou un vclMatrix en matrice classque il suffit de rajouter les crochets
+
+```{r }
+class(gpuA)
+class(gpuA[])
+class(vclA)
+class(vclA[])
+
+```
+##Quelques limites
+
+Si l'on sort des fonctions adaptés pour `gpuR` le gain tombe immédiatement. 
+
+```{r }
+ORDER =1024
+
+A = matrix(rnorm(ORDER^2), nrow=ORDER)
+gpuA = gpuMatrix(A, type="double")
+vclA = vclMatrix(A)
+
+system.time(solve(A))
+system.time(solve(gpuA))
+system.time(solve(vclA))
+
+
+
+system.time(svd(A))
+system.time(svd(gpuA))
+system.time(svd(vclA))
+```
+
+Ensuite la taille des objets est limitée par la taille de la RAM GPU (la fonction `gc()` permet de voir la taille des objets dans le garbage collector de R)
+# Comment choisir sa carte graphique
+
+Des configurations luxueuses peuvent avoir plusieurs cartes et il est donc utile de pouvoir chosir. 
+
+- `listContexts()` donne la liste des cartes
+- `currentContext()` donne la carte utilisée
+- `setContext(id=2)` spécifie la carte à utiliser
+
+Enfin `gpuInfo()` donne les infos sur la carte graphique (et en particulier le nombre de coeur).
