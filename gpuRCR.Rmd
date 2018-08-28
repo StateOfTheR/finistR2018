@@ -186,3 +186,25 @@ Des configurations luxueuses peuvent avoir plusieurs cartes et il est donc utile
 - `setContext(id=2)` spécifie la carte à utiliser
 
 Enfin `gpuInfo()` donne les infos sur la carte graphique (et en particulier le nombre de coeur).
+
+## RCUDA
+CUDA est le framework développé par NVIDIA pour pour gérer ses GPU
+
+RCUDA est l'interface R et est uniquement développé pour LINUX
+
+Sous Windows, l'enfer commence : il faut écrire le code CUDA ; l'exporter en dll et charger le dll sous R
+
+Le code CUDA nécessite de définr le code executé par chaque thread dans chaque bloc. Puis de gérr l'allocation mémoire dans chaque bloc et dans chaque thread. 
+
+Deux ressources importantes :
+
+-(https://devblogs.nvidia.com/accelerate-r-applications-cuda/)
+-(http://www.ademiller.com/blogs/tech/2010/10/visual-studio-2010-adding-intellisense-support-for-cuda-c/)
+
+Le premier document précise comment insérer CUDA (et en particulier sous Windows)
+
+Le deuxième document permet de mettre à jour `Intellisense` pour prendre en compte les mots-clés CUDA
+
+Il faut aussi comprendre le GPU, et le code CUDA. Une bonne référence est 
+
+Kirk, D. B., and  Wen-Mei, W. H. (2016). Programming massively parallel processors: a hands-on approach. Morgan kaufmann.
