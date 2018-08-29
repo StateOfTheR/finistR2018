@@ -1,1 +1,3 @@
 libarmadillo-dev
+libnlopt-dev
+vim

@@ -3,3 +3,4 @@ dependencies:
   - numpy
   - tensorflow
   - scikit-learn
+  - r
