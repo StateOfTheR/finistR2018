@@ -12056,6 +12056,43 @@ python myfile.py</code></pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="R">R<a class="anchor-link" href="#R">&#182;</a></h1><p>Binder supports using R + RStudio, with libraries pinned to a specific
+snapshot on <a href="https://mran.microsoft.com/documents/rro/reproducibility">MRAN</a>.</p>
+<p>You need to have a <code>runtime.txt</code> file that is formatted like:</p>
+
+<pre><code>r-&lt;YYYY&gt;-&lt;MM&gt;-&lt;DD&gt;</code></pre>
+<p>where YYYY-MM-DD is a snapshot at MRAN that will be used for installing
+libraries.</p>
+<p>You can also have an <code>install.R</code> file that will be executed during build,
+and can be used to install libraries.</p>
+<p>Both <a href="https://www.rstudio.com/">RStudio</a> and <a href="https://irkernel.github.io/">IRKernel</a>
+are installed by default, so you can use either the Jupyter notebook interface or
+the RStudio interface.</p>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Example">Example<a class="anchor-link" href="#Example">&#182;</a></h1><p>Links below show an example of a Shiny app.</p>
+<ul>
+<li><p>Jupyter+R: <a href="http://beta.mybinder.org/v2/gh/binder-examples/r/master?filepath=index.ipynb"><img src="http://mybinder.org/badge.svg" alt="Binder"></a></p>
+</li>
+<li><p>RStudio: <a href="http://beta.mybinder.org/v2/gh/binder-examples/r/master?urlpath=rstudio"><img src="http://mybinder.org/badge.svg" alt="Binder"></a></p>
+</li>
+<li><p>RShiny: <a href="http://beta.mybinder.org/v2/gh/binder-examples/r/master?urlpath=shiny/bus-dashboard/"><img src="http://mybinder.org/badge.svg" alt="Binder"></a></p>
+</li>
+</ul>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Want-to-setup-your-own-copy-of-mybinder.org?">Want to setup your own copy of mybinder.org?<a class="anchor-link" href="#Want-to-setup-your-own-copy-of-mybinder.org?">&#182;</a></h2><p>Then look at BinderHub and the "<a href="https://zero-to-jupyterhub.readthedocs.io/en/latest/index.html">Zero to BinderHub</a>" guide</p>
 
 </div>
