@@ -1,0 +1,6 @@
+dependencies:
+  - matplotlib
+  - numpy
+  - tensorflow
+  - scikit-learn
+  - r
