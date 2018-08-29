@@ -34,4 +34,6 @@ vignettes/*.pdf
 
 # Shiny token, see https://shiny.rstudio.com/articles/shinyapps.html
 rsconnect/
-atelier2/TensorFlow/.ipynb_checkpoints/Untitled-checkpoint.ipynb
+
+# Ignore jupyter notebook checkpoints anywhere
+.ipynb_checkpoints
