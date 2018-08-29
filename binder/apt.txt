@@ -1,3 +1,4 @@
 libarmadillo-dev
 libnlopt-dev
+openssl-dev
 vim
