@@ -1,0 +1,69 @@
+---
+title: "Répartition des premiers chiffres pour une croissance exponentielle"
+author: "Antoine Bichat"
+date: "27/08/2018"
+output: 
+  html_document:
+   number_sections: false
+   highlight: tango
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(rvest)
+theme_set(theme_bw())
+```
+
+```{r}
+df <- 
+  "https://fr.wikipedia.org/wiki/Liste_des_pays_par_population" %>% 
+  read_html() %>% 
+  html_node('table') %>% 
+  html_table() %>% 
+  as_tibble()
+df
+```
+
+```{r}
+pop <- pull(df, `Population[Note 2]`)
+head(pop)
+premier_chiffre <- str_sub(pop, 1, 1)
+head(premier_chiffre)
+```
+
+```{r}
+qplot(premier_chiffre) + geom_bar(fill = "grey50", color = "black")
+```
+
+```{r}
+frequences <- 
+  tibble(premier_chiffre) %>% 
+  group_by(premier_chiffre) %>% 
+  summarise(eff_obs = n()) %>% 
+  mutate(freq_obs = eff_obs/sum(eff_obs)) %>% 
+  mutate(freq_unif = 1/9,
+         freq_benford = c(0.301,	0.176,	0.125,	0.097, 0.079,	0.067, 0.058,	0.051, 0.046))
+frequences
+```
+```{r}
+frequences %>% 
+  select(premier_chiffre, freq_obs, freq_unif, freq_benford) %>% 
+  gather(-premier_chiffre, key = type, value = freq) %>% 
+  mutate(type = factor(type, 
+                       levels = c("freq_obs", "freq_benford", "freq_unif"),
+                       labels = c("Observé", "Benford", "Uniforme"))) %>% 
+  print() %>% 
+  ggplot() +
+  aes(x = premier_chiffre, y = freq, fill = type) +
+  geom_col(position = "dodge", color = "black") +
+  labs(x = "Premier chiffre", y = "Fréquence", 
+       fill = "Type", title = "Barplot des différences fréquences")
+```
+
+
+
+
