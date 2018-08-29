@@ -1,0 +1,123 @@
+---
+title: "Personalisation de Rmarkdown"
+subtitle: "R Bootcamp, Beg Meil"
+author: "Marie, Avner, Éric, Julien"
+date: "August 29, 2018"
+output: 
+  html_document:
+    number_sections: yes
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Base de fonctionnement de Rmarkdown
+
+## Résumé de la chaîne de traitement
+
+![Process de création d'un document](schema_rmd.png)
+
+## Les acteurs 
+
+  1. Chaîne de traitement
+    - package/fonction *rmarkdown*: gestion de l'ensemble de la chaîne de traitement (Rstudio -> document final)
+    - package *knitr*: interprétation du code utilisateur (R/Python/Julia) et conversion en sortie intégrable au document
+    - logiciel *Pandoc*: convertisseur de markdown (faiblement structuré)  en langage balisé (fortement structuré)
+  
+  2. Interpréteur de langage balisé
+    - navigateur web (*HTML*)
+    - commande `(pdf)latex` + lecteur  (*PDF*)
+    - Word/libreoffice (*docx*)
+
+## Langages
+
+  - Metadata (YAML): paramétrisation de la chaîne de traitement
+  - Langage pour code utilisateur (R, Python, Julia, bash...)
+  - Langage de balisage (Rmarkdown, markdown, HTML, $\LaTeX2e$, XML)
+
+## Organisation d'un document structuré par balises
+
+   - Un préambule
+      - _preamble_ (précède `\begin{document}`) dans $\LaTeX$
+      - une _en-tête_ en `HTML` (`<header> ... <\header>`)
+   -  document principal
+      - `\begin{document} ... \end{document}`  en $\LaTeX$
+      - `<body> ... </body>` en `HTML` 
+
+## Fichiers
+
+  1. entrée
+    - .Rmd (YAML+R+markdown)
+  2. fichier intermédiare
+    - .md (markdown), figures
+  3. configuration
+    - .sty, .css
+  4. sortie
+    - .tex/.PDF, .html, .docx
+  
+# Fonctionnement du préambule `Rmd`
+
+L'idée est de transformer le Rmd en md et qu'il soit interprété par pandoc. Les options vont donc devoir être passéees à knitr et à Pandoc. On a donc un préambule pour cela. Néanmoins on voit à ce moment de l'histoire que les options vont être traitées différemment selon les étapes. Il faut donc récupérer les options sous une forme structurée et non plus balisée. C'est le but de *yaml* qui est un parseur. Ceci explique aussi pourquoi l'indentation et la présentation sont importantes. Les éléments parsés vont être transmis aux interpréteurs.
+
+On peut distinguer les options globales des options qui sont spécifiques d'un format.
+
+## Options globales
+
+Elles sont communes à tout type de sortie
+
+```{yaml}
+---
+title: titre du document
+subtitle: "sous titre"
+author: auteur du document
+date: "`r Sys.Date()`"
+---   
+``` 
+
+## Options spécifiques
+
+On peut distinguer pour HTML ou \LaTeX les fichiers de définition inclus (css ou .sty) ou ou l'utilisation de certaines commandes (on donne une valeur à une variable).
+
+### Exemple pour html_document()
+
+```{yaml}
+---
+title: titre du document
+author: auteur du document
+output: 
+  html_document:
+    number_sections: yes
+    toc: true
+    mathjax: "http://example.com/MathJax.js"
+    css: monstyle.css
+---   
+```
+
+### Exemple pour pdf_document()
+
+```{yaml}
+---
+title: titre du document
+author: auteur du document
+output: 
+  pdf_document:
+    number_sections: yes
+    toc: true
+    include:
+      in_header: preamble.sty
+---   
+```
+
+## Example avancé pour la sortie `beamer_presentation`
+
+[https://github.com/jchiquet/CourseAdvancedR](https://github.com/jchiquet/CourseAdvancedR)
+
+# Créer son propre template `Rmd`
+
+Si la customisation du document est importante il devient vite illisible de les inclure en paramètres dans le préambule et il faut mieux créer son propre template. Ceci revient à créer une libraire R un peu spéciale et l'inclure.
+
+Un exemple simple est le template d'un journal. Il faut donc installer la librairie fourni par le package et créer un fichier Rmarkdown à partir d'un template.
+
+La dernière étape consiste donc à créer sa propre librairie.
