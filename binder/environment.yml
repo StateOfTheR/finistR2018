@@ -4,3 +4,5 @@ dependencies:
   - tensorflow
   - scikit-learn
   - r
+  - r-tidyverse
+  - r-irkernel
