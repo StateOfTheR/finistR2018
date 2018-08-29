@@ -126,6 +126,8 @@ Si la customisation du document est importante il devient vite illisible de les 
 
 Un exemple simple est le template d'un journal. Il faut créer package  qui s'organisera comme dans la figure suivante :
 
+![arborescence](TreePackageRmarkdown.png)
+
 ![arborescence type](arborescence_pkg_template.png)
 
 ### Définition d'un processiong de sortie en HTML
