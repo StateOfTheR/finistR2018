@@ -1,2 +1,5 @@
 install.packages("nlopt")
 install.packages("tidyverse")
+install.packages('devtools')
+devtools::install_github('IRkernel/IRkernel')
+IRkernel::installspec() 
