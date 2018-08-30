@@ -1,0 +1,281 @@
+---
+title: "Introduction à Rcpp Modules"
+subtitle: "BootCamp BegMeil"
+author: "Mathieu Carmassi & Timothée Tabouy"
+date: "30 août 2018"
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+    highlights: tango
+---
+
+# Introduction
+
+R n'est pas un language Orienté Objet (OO). Cependant, lors de la création de packages ou lorsque l'on a besoin de structurer une partie de son code, on peut avoir recours à l'utilisation de la programmation OO (POO). Plusieurs packages ont été développés dans ce sens comme le package R6 ou les packages S3, S4. La structure OO permet de disposer d'une structure unifiée qui génère des objets de même formes selon des méthodes définis.
+
+Les parties de code qui sont chronophages peuvent être optimisées en les codant en C++. En effet, R est un langage interprété ce qui peut alourdir le temps de calcul de certaines boucles FOR qui ne peuvent pas être parallelisées. Le recours au langage C++ dans R peut être une sollution. Le codage des fonctions chronophages peut donc se faire en C++ et l'importation se fait par le biais du package Rcpp.
+
+# Rcpp dans R
+## Importation de fonctions C++ dans R
+
+L'importation et l'utilisation de fonctions codées en C++ dans R se fait de manière assez intuitive. En effet, grace au package Rcpp, il suffit de créer un fichier .cpp au même endroit que le fichier R et la fonction sourceCpp (équivalente à la fonction source de R) permet de charger les fonctions exportables de C++.
+
+```{r, eval=FALSE}
+library(Rcpp)
+sourceCpp("file.cpp")
+```
+
+Le fichier file.cpp contient donc du C++ tel que:
+
+```{Rcpp, eval=FALSE}
+#include "RcppArmadillo.h"
+using namespace arma;  // Evite d'écrire arma::fonctionArmadillo
+// [[Rcpp::depends(RcppArmadillo)]]
+
+// [[Rcpp::export]] // Importe la fonction qui suit dans l'environnement global de R
+mat addition(int a, mat M) {
+  return a + M;
+}
+```
+
+Plus de détails sont disponible sur le repos GitHub [https://github.com/mathieucarmassi/RcppStateOfTheR.git](https://github.com/mathieucarmassi/RcppStateOfTheR.git).
+
+## Un package avec Rcpp
+### Création d'un package comprenant du C++
+
+Lorsqu'un package est créé normalement (voir [https://stateofther.github.io/finistR2017/packages.html](https://stateofther.github.io/finistR2017/packages.html) pour plus de détails), une fonction du package devtools permet de générer les dossiers et les modifications nécessaires à l'incorporation du C++ dans le package. 
+
+```{r, eval=FALSE}
+devtools::use_rcpp()
+```
+
+Les modifications opérées sont:
+
+- la création d'un dossier src/ dans lequel seront stoqués les fichiers C++,
+- l'ajout de Rcpp dans Linking To et Imports du fichier DESCRIPTION,
+- l'introduction dans le .gitignore des extensions pour ne pas suivre les fichiers inutiles (dans le cas d'une utilisation de Git),
+- l'ajout dans la documentation du package faite avec le package Roxygen:
+
+```{r, eval=FALSE}
+#' @useDynLib your-package-name
+#' @importFrom Rcpp sourceCpp
+NULL
+```
+
+Ces prédentes lignes de code sont ajoutées dans l'entête de la documentation du package your-package-name.R. Cette documentation génère les fichiers Markdown nécessaires pour la documentation générale du package qui se situent dans le dossier man/.
+
+### Les fichiers Makevars et Makevars.win
+Les deux fichiers Makevars et Makevars.win sont un sujet à part entière. De la documentation complémentaire de ces deux fichiers sont disponibles sur [http://kbroman.org/minimal_make/](http://kbroman.org/minimal_make/). Par défaut R génère la fonction makefile automatiquement. Pour vérifier les compatibilités avec les autres systêmes d'exploitation, il peut être intéressant de créer ces fichiers Makevars et Makevars.win (Makevars.win étant pour Windows) pour contrôler les variables définisant entre autre les compilateurs ou les chemins des libraries à utiliser.
+
+Un exemple de contenu pour les fichier Makevars et Makevars.win:
+```{r, eval=FALSE}
+CC=ccache clang -Qunused-arguments
+CXX=ccache clang++ -Qunused-arguments
+CCACHE_CPP2=yes
+
+PKG_CXXFLAGS = $(SHLIB_OPENMP_CXXFLAGS)
+PKG_LIBS = $(SHLIB_OPENMP_CFLAGS) $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
+```
+
+
+Si ces fichiers ne sont pas présents dans le dossier src/, il peut être nécessaire de les ajouter pour pouvoir compiler du code C++ comme des fonctions de base de la librairie Armadillo.
+
+
+### À vérifier
+
+- La présence du dossier src/ avec / ou pas les Makevars et Makevars.win à l'intérieur.
+- Dans le fichier DESCRIPTION les champs Linking To et Imports.
+- ```#' @useDynLib your-package-name``` et ```#' @importFrom Rcpp sourceCpp``` dans la documentation Roxygen du package.
+
+Les fonctions C++ permettent d'améliorer des parties de code. Le code R appelle les fonctions C++ en tant que tel dans la structure du package qui peut être en OO. Cependant, R n'étant pas un langage OO, il peut être intéressant d'utiliser une structure de classe en C++ et l'importer en R. Il s'agit alors de créer une surcouche en R sur la structure OO de C++. Il n'y a cependant pas d'incompatibilité à réaliser la surcouche R en OO (en classe R6 par exemple).
+
+
+# Rcpp Modules
+
+Rcpp Modules est une partie du package Rcpp développée pour inclure les classes C++ en R. Une documentation utile faite par les auteurs est diponible à l'adresse suivante [https://cran.r-project.org/web/packages/Rcpp/vignettes/Rcpp-modules.pdf](https://cran.r-project.org/web/packages/Rcpp/vignettes/Rcpp-modules.pdf) ou sur le blog  [http://jamescurran.co.nz/2017/01/eg-html/](http://jamescurran.co.nz/2017/01/eg-html/).
+
+ Cela consiste à coder les classes directement en C++ dans un fichier C++ et à les importer pour les utiliser dans R.
+ 
+ 
+## Rcpp Modules dans un fichier
+
+Si l'on est pas en train d'écrire un package et que l'on veut exploiter la structure OO du C++, il est possible d'importer (depuis un fichier .R) la structure OO d'un autre fichier C++.
+
+Par exemple, on souhaite créer un fichier test.R qui réalise un regression linéaire avec un bruit Gaussien à partir d'une matrice X et d'un vecteur Y. Ce fichier doit utiliser une classe C++ contenue dans un fichier .cpp qui réalise l'estimation. L'écriture de la classe en C++ se réalise en deux temps. Le premier est le codage brut de la classe en C++ selon les normes. La seconde est une partie de RCPP_MODULE qui fait le lien entre les différents éléments de la classe C++ avec R.
+
+```{Rcpp, eval=FALSE}
+#include <iostream>
+#include <RcppArmadillo.h>
+// [[Rcpp::depends(Matrix,RcppArmadillo)]]
+using namespace Rcpp;
+using namespace arma;
+using namespace std;
+
+class GaussModLin{
+public:
+  vec beta;
+  mat X;
+  vec Y;
+  double sigma2;
+
+  GaussModLin(mat X_, vec Y_):
+    X(X_) , Y(Y_) {}
+
+  List estim(){
+    beta = inv(X.t()*X)*X.t()*Y;
+    sigma2 = sum(square(Y - X * beta))/(X.n_rows - X.n_cols);
+    return(List::create(Named("beta")=beta, Named("sigma2")=sigma2));
+  }
+};
+
+
+// Expose the classes
+RCPP_MODULE(MyModule) {
+  using namespace Rcpp;
+
+  class_<GaussModLin>("GaussModLin")
+    .constructor<mat,vec>("constructor") // This exposes the default constructor
+    .method("estim", &GaussModLin::estim) // This exposes the estim method
+    .field("X", &GaussModLin::X)
+  ;
+
+}
+
+```
+
+L'entête du précédent chunck est similaire à celui d'une fonction C++ qui serait utilisée en tant que tel. La création de la classe GaussModLin est classique avec la définition de 4 champs publics (beta, X, Y et simga2), d'un constructeur GaussModLin qui attribue des valeurs de X et de Y au champs correspondants et une méthode estim() qui réalise l'estimation en renvoyant une liste contenant les valeurs de beta et sigma2.
+
+La deuxième partie concerne la liaison entre R et C++. Par le biais de RCPP_MODULE(NomModule) on définit un objet RCPP_MODULE qui permet d'associer les champs, constructeurs, et méthodes définis en C++ à R. Ainsi, dans l'exemple précédent, on définit la classe GaussModLin que l'on exporte avec la commande ```class_<GaussModLin>("GaussModLin")```. Suivi de cette commande se trouve les fonctions qui exporte éléments de la classe en R:
+
+- ```.constructor<mat,vec>("constructor")``` exporte la fonction contructeur qui prend en entrée une matrice et un vecteur,
+- ```.method("estim", &GaussModLin::estim)``` exporte la fonction méthode estim de la classe GaussModLin qui ne prend pas d'arguments en entrée,
+- ```.field("X", &GaussModLin::X)``` exporte le champ X.
+
+D'autre commandes sont disponibles comme:
+
+- ```.constructor_default("constructor_default")``` qui offre la possibilité d'ajouter un constructeur par défaut,
+- ```.field_readonly("field_readonly")``` permet d'exporter le champ sans la possibilité de modification.
+
+Le fichier test.R qui pourra exploiter cette classe C++ sera construit de la manière suivante:
+
+```{R, eval=FALSE}
+library(Rcpp)
+sourceCpp(test.cpp)
+
+data <- c(1,1,5,0,1,1,1,1,1)
+X <- matrix(data, nr=3,nc=3)
+Y <- rep(3,3)
+
+t <- new(GaussModLin,X,Y)
+t$estim()
+```
+
+Ce fichier R doit "sourcer" le fichier C++ contenant la classe puis avec la fonction new(), du package Rcpp, et permet d'instancier un objet d'une classe donnée. On peut remarquer que si le constructeur contient des arguments en entrée il est possible de les insérer directement dans la fonction new(). La variable t contient alors la classe définie dans le fichier test.cpp. Ainsi en lançant la commande t$estim() on excécute la méthode associée à la classe GaussModLin définie. Dans le RCPP_MODULE précédent on a laissé la possibilité de modifier le champ X. Il est alors possible de donner:
+
+```{r, eval=FALSE}
+t$X <- 2*X
+t$estim()
+```
+
+Ce chunck permet de modifier l'objet X dans la classe contenue dans t et de relancer l'estimation. Le contrôle de l'apparition des champs dans R se fait par RCPP_MODULE et l'intérêt de déclarer les variables en public ou en privée semble limitée. En effet il est tout à fait possible de définir un champ public sans pour autant y avoir accès dans R (si celui-ci n'est pas définit dans RCPP_MODULE). Cela constraste avec la POO faite en R avec les packages R6 ou S4. Celà étant pour la reproductibilité du programme C++, il est important de respecter les définitions publiques et privées.
+
+## Rcpp Modules dans un package
+
+Si on souhaite introduire des classes C++ dans un package R, plusieurs ajouts sont à réaliser:
+
+- la ligne ```//' @export GaussModLin``` doit précéder la définition de la classe, ce qui permet d'exporter la classe GaussModLin avec le package Roxygen,
+- dans le fichier DESCRIPTION, il faut ajouter un champ ```RcppModules: MyModule``` pour indiquer au package d'utiliser le RCPP_MODULE appelé MyModule,
+- ajouter dans le fichier de surcouche R la ligne ```loadModule("MyModule", TRUE)``` qui permet de charger le module en R.
+
+
+Le fichier R:
+```{R, eval=FALSE}
+loadModule("MyModule", TRUE)
+
+#' function that calls the class of Rcpp
+#'
+#' @export
+exportRcppClass <- function(class)
+{
+  res = new(class)
+  return(res)
+}
+```
+
+Le fichier Rcpp:
+```{Rcpp, eval=FALSE}
+#include <iostream>
+#include <RcppArmadillo.h>
+// [[Rcpp::depends(Matrix,RcppArmadillo)]]
+using namespace Rcpp;
+using namespace arma;
+using namespace std;
+
+
+//' @export GaussModLin
+class GaussModLin{
+public:
+  vec beta;
+  mat X;
+  vec Y;
+  double sigma2;
+
+  GaussModLin(mat X_, vec Y_):
+    X(X_) , Y(Y_) {}
+
+  List estim(){
+    beta = inv(X.t()*X)*X.t()*Y;
+    sigma2 = sum(square(Y - X * beta))/(X.n_rows - X.n_cols);
+    return(List::create(Named("beta")=beta, Named("sigma2")=sigma2));
+  }
+};
+
+
+// Expose the classes
+RCPP_MODULE(MyModule) {
+  using namespace Rcpp;
+
+  class_<GaussModLin>("GaussModLin")
+    .constructor<mat,vec>("constructor") // This exposes the default constructor
+    .method("estim", &GaussModLin::estim) // This exposes the estim method
+    .field("X", &GaussModLin::X)
+  ;
+
+}
+```
+
+
+Le fichier DESCRIPTION:
+```{R, eval=FALSE}
+Package: myPackage
+Type: Package
+Title: A Minimum Example of an Rcpp Module
+Version: 0.1.0
+Author: Tim & Mathieu
+Maintainer: Tim & Mathieu <TimMat@stateofther.fr>
+Description: This package provides a minimal example for using an Rcpp pacakge.
+License: GPL (>=2)
+Encoding: UTF-8
+LazyData: true
+Depends:
+    Rcpp (>= 0.12.8)
+Imports:
+    Rcpp (>= 0.12.8)
+LinkingTo:
+    Rcpp,
+    RcppArmadillo,
+    Matrix
+RcppModules: MyModule
+RoxygenNote: 6.1.0
+
+```
+
+Les fichiers Rcpp exports et NAMESPACE sont automatiquement générés et gérés par la commande ```devtools::document()``` si les entêtes Roxygen ont bien été renseignés.
+
+
+# Conclusion
+
+Écrire la structure OO en C++ présente un avantage de reproductibilité surtout lorsque l'on veut exporter le code dans un autre langage que R. La surcouche R peut aussi être une surcouche OO qui comprend les méthodes print et plot qui permettent de créer des fonction print et plot directement utilisables sur les objets générés. Ce document n'a pas traité les problèmes d'héritages en classe C++ ni l'utilisation de plusieurs fichiers C++ avec plusieurs RCPP_METHOD mais fait partie des perspectives.
+
+
