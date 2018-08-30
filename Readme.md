@@ -12,8 +12,7 @@ Participants
 -   2ème rang: Marie-Pierre Étienne (IRMAR/ Agrocampus Ouest), Antoine Bichat (UMR Maiage - INRA), Julien Chiquet (UMR MIA Paris - INRA), Sophie Donnet (UMR MIA Paris - INRA),
 -   3ème rang: Bewentaoré S. (UMR MIA Paris), Pierre Gloaguen (UMR MIA Paris - Agroparistech), Avner Bar-Hen (CNAM), Saint-Clair Chabert-Liddell (UMR MIA Paris), Vincent Runge (UMR LaMME - Université Paris Saclay), Jean-Baptiste Lecomte (UMR ESE - Agrocampus Ouest), Gabriel Lang (UMR MIA Paris - Agroparistech), Raphaëlle Momal (UMR MIA Paris), Pierre Navaro (IRMAR - Université de Rennes), Éric Parent (UMR MIA Paris - Agroparistech)
 
-![people\_finister18](pictures/finister18_2.jpg)
-
+<!-- ![people_finister18](pictures/finister18_2.jpg) -->
 Programme
 ---------
 
