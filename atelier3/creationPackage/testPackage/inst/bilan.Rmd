@@ -1,0 +1,12 @@
+---
+title: "Package propre et fiable"
+author: "Marie, Pierre"
+date: "29 août 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = NA)
+```
+
+# Premier lien avec TRAVIS
