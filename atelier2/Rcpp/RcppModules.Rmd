@@ -65,10 +65,12 @@ NULL
 
 Ces prédentes lignes de code sont ajoutées dans l'entête de la documentation du package your-package-name.R. Cette documentation génère les fichiers Markdown nécessaires pour la documentation générale du package qui se situent dans le dossier man/.
 
-### Les fichiers Makevars et Makevars.win
-Les deux fichiers Makevars et Makevars.win sont un sujet à part entière. De la documentation complémentaire de ces deux fichiers sont disponibles sur [http://kbroman.org/minimal_make/](http://kbroman.org/minimal_make/). Par défaut R génère la fonction makefile automatiquement. Pour vérifier les compatibilités avec les autres systêmes d'exploitation, il peut être intéressant de créer ces fichiers Makevars et Makevars.win (Makevars.win étant pour Windows) pour contrôler les variables définisant entre autre les compilateurs ou les chemins des libraries à utiliser.
+### Les fichiers `Makevars` et `Makevars.win`
+Les deux fichiers `Makevars` et `Makevars.win` sont un sujet à part entière. De la documentation complémentaire de ces deux fichiers est disponible sur [http://kbroman.org/minimal_make/](http://kbroman.org/minimal_make/). 
 
-Un exemple de contenu pour les fichier Makevars et Makevars.win:
+Par défaut R génère la fonction makefile automatiquement. Pour vérifier les compatibilités avec les autres systèmes d'exploitation, il peut être intéressant de créer ces fichiers `Makevars` et `Makevars.win` (`Makevars.win` étant pour Windows) pour contrôler les variables définissant, entre autres, les compilateurs ou les chemins des librairies à utiliser.
+
+Un exemple de contenu pour les fichiers `Makevars` et `Makevars.win`:
 ```{r, eval=FALSE}
 CC=ccache clang -Qunused-arguments
 CXX=ccache clang++ -Qunused-arguments
@@ -84,7 +86,7 @@ Si ces fichiers ne sont pas présents dans le dossier src/, il peut être néces
 
 ### À vérifier
 
-- La présence du dossier src/ avec / ou pas les Makevars et Makevars.win à l'intérieur.
+- La présence du dossier `src/` avec / ou pas les Makevars et Makevars.win à l'intérieur.
 - Dans le fichier DESCRIPTION les champs Linking To et Imports.
 - ```#' @useDynLib your-package-name``` et ```#' @importFrom Rcpp sourceCpp``` dans la documentation Roxygen du package.
 
@@ -102,7 +104,10 @@ Rcpp Modules est une partie du package Rcpp développée pour inclure les classe
 
 Si l'on est pas en train d'écrire un package et que l'on veut exploiter la structure OO du C++, il est possible d'importer (depuis un fichier .R) la structure OO d'un autre fichier C++.
 
-Par exemple, on souhaite créer un fichier test.R qui réalise un regression linéaire avec un bruit Gaussien à partir d'une matrice X et d'un vecteur Y. Ce fichier doit utiliser une classe C++ contenue dans un fichier .cpp qui réalise l'estimation. L'écriture de la classe en C++ se réalise en deux temps. Le premier est le codage brut de la classe en C++ selon les normes. La seconde est une partie de RCPP_MODULE qui fait le lien entre les différents éléments de la classe C++ avec R.
+Par exemple, on souhaite créer un fichier test.R qui réalise un regression linéaire avec un bruit Gaussien à partir d'une matrice X et d'un vecteur Y. Ce fichier doit utiliser une classe C++ contenue dans un fichier .cpp qui réalise l'estimation. 
+
+L'écriture de la classe en C++ se réalise en deux temps. Le premier est le codage brut de la classe en C++ selon les normes. 
+La seconde est une partie de RCPP_MODULE qui fait le lien entre les différents éléments de la classe C++ avec R.
 
 ```{Rcpp, eval=FALSE}
 #include <iostream>
@@ -129,7 +134,6 @@ public:
   }
 };
 
-
 // Expose the classes
 RCPP_MODULE(MyModule) {
   using namespace Rcpp;
@@ -144,9 +148,10 @@ RCPP_MODULE(MyModule) {
 
 ```
 
-L'entête du précédent chunck est similaire à celui d'une fonction C++ qui serait utilisée en tant que tel. La création de la classe GaussModLin est classique avec la définition de 4 champs publics (beta, X, Y et simga2), d'un constructeur GaussModLin qui attribue des valeurs de X et de Y au champs correspondants et une méthode estim() qui réalise l'estimation en renvoyant une liste contenant les valeurs de beta et sigma2.
+L'entête du précédent chunk est similaire à celui d'une fonction C++ qui serait utilisée en tant que tel. 
+La création de la classe `GaussModLin` est classique avec la définition de 4 champs publics (`beta`, `X`, `Y` et `sigma2`), d'un constructeur `GaussModLin` qui attribue des valeurs de `X` et de `Y` au champs correspondants et une méthode `estim()` qui réalise l'estimation en renvoyant une liste contenant les valeurs de `beta` et `sigma2`.
 
-La deuxième partie concerne la liaison entre R et C++. Par le biais de RCPP_MODULE(NomModule) on définit un objet RCPP_MODULE qui permet d'associer les champs, constructeurs, et méthodes définis en C++ à R. Ainsi, dans l'exemple précédent, on définit la classe GaussModLin que l'on exporte avec la commande ```class_<GaussModLin>("GaussModLin")```. Suivi de cette commande se trouve les fonctions qui exporte éléments de la classe en R:
+La deuxième partie concerne la liaison entre R et C++. Par le biais de `RCPP_MODULE(NomModule)` on définit un objet RCPP_MODULE qui permet d'associer les champs, constructeurs, et méthodes définis en C++ à R. Ainsi, dans l'exemple précédent, on définit la classe GaussModLin que l'on exporte avec la commande ```class_<GaussModLin>("GaussModLin")```. Suivi de cette commande se trouve les fonctions qui exporte éléments de la classe en R:
 
 - ```.constructor<mat,vec>("constructor")``` exporte la fonction contructeur qui prend en entrée une matrice et un vecteur,
 - ```.method("estim", &GaussModLin::estim)``` exporte la fonction méthode estim de la classe GaussModLin qui ne prend pas d'arguments en entrée,
@@ -171,14 +176,14 @@ t <- new(GaussModLin,X,Y)
 t$estim()
 ```
 
-Ce fichier R doit "sourcer" le fichier C++ contenant la classe puis avec la fonction new(), du package Rcpp, et permet d'instancier un objet d'une classe donnée. On peut remarquer que si le constructeur contient des arguments en entrée il est possible de les insérer directement dans la fonction new(). La variable t contient alors la classe définie dans le fichier test.cpp. Ainsi en lançant la commande t$estim() on excécute la méthode associée à la classe GaussModLin définie. Dans le RCPP_MODULE précédent on a laissé la possibilité de modifier le champ X. Il est alors possible de donner:
+Ce fichier R doit "sourcer" le fichier C++ contenant la classe puis avec la fonction `new()`, du package Rcpp, et permet d'instancier un objet d'une classe donnée. On peut remarquer que si le constructeur contient des arguments en entrée il est possible de les insérer directement dans la fonction `new()`. La variable t contient alors la classe définie dans le fichier test.cpp. Ainsi en lançant la commande t$estim() on excécute la méthode associée à la classe GaussModLin définie. Dans le RCPP_MODULE précédent on a laissé la possibilité de modifier le champ X. Il est alors possible de donner:
 
 ```{r, eval=FALSE}
 t$X <- 2*X
 t$estim()
 ```
 
-Ce chunck permet de modifier l'objet X dans la classe contenue dans t et de relancer l'estimation. Le contrôle de l'apparition des champs dans R se fait par RCPP_MODULE et l'intérêt de déclarer les variables en public ou en privée semble limitée. En effet il est tout à fait possible de définir un champ public sans pour autant y avoir accès dans R (si celui-ci n'est pas définit dans RCPP_MODULE). Cela constraste avec la POO faite en R avec les packages R6 ou S4. Celà étant pour la reproductibilité du programme C++, il est important de respecter les définitions publiques et privées.
+Ce chunk permet de modifier l'objet X dans la classe contenue dans t et de relancer l'estimation. Le contrôle de l'apparition des champs dans R se fait par RCPP_MODULE et l'intérêt de déclarer les variables en public ou en privée semble limitée. En effet il est tout à fait possible de définir un champ public sans pour autant y avoir accès dans R (si celui-ci n'est pas définit dans RCPP_MODULE). Cela constraste avec la POO faite en R avec les packages R6 ou S4. Celà étant pour la reproductibilité du programme C++, il est important de respecter les définitions publiques et privées.
 
 ## Rcpp Modules dans un package
 
