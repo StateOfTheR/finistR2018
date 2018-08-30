@@ -1,43 +1,70 @@
 ---
-title: "Gaussian State Space model with greta"
+title: "greta"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+# What is greta
+greta relies on TensorFlow and use efficient inference algorithms like Hamiltonian Monte Carlo. The main objective of greta is to provide a MCMC software like BUGS, JAGS or Stan. We can found on greta's [website](https://greta-dev.github.io/greta/index.html) the follwing definition:
 
-## Gaussian State Space model
+- *simple : greta models are written right in R, so there’s no need to learn another language like BUGS or Stan*
+- *scalable : greta uses Google TensorFlow so it’s fast even on massive datasets, and runs on CPU clusters and GPUs*
+- *extensible : it’s easy to write your own R functions, modules, and even packages using greta*
 
-$$X_{t} = \rho_x X_{t-1} + \epsilon_x \quad \text{with} \quad \epsilon_x \sim Normal(0, \sigma_x) $$
+The main advantage of greta is it builds statistical models interactively in R, and then sample from them by MCMC. There is no need to create a model object like in JAGS, Stan or nimble. However, greta creates specific objects (i.e. greta arrays) which are used to build the model and define the data to be used in the inference. greta is still is in its early developpement (version 0.2.3 on CRAN) and at this time their is a lack of documentation (especially compared with with Stan, JAGS or nimble).
 
-$$Y_{t} = \rho_y X_{t} + \epsilon_y \quad \text{with} \quad \epsilon_y \sim Normal(0, \sigma_y) $$
+## instalation
+greta use TensorFlow and it needs to be installed before installing greta. 
 
-
-```{r packages, echo = FALSE, cache = FALSE, message = FALSE}
-library(greta)
-library(MASS)
-library (bayesplot)
+```{r installation_TS, eval=FALSE, echo = TRUE, cache = FALSE, message = FALSE}
+install.packages('tensorflow')
+install_tensorflow()
 ```
 
-## greta definition from greta's website
-simple : greta models are written right in R, so there’s no need to learn another language like BUGS or Stan
+greta also use the DiagrammeR R package for plotting Directed Acyclic Graph of greta models.
 
-scalable : greta uses Google TensorFlow so it’s fast even on massive datasets, and runs on CPU clusters and GPUs
+```{r installation_greta, echo = TRUE, cache = FALSE, message = FALSE}
+# install.packages('greta')
+# install.packages('DiagrammeR')
+```
 
-extensible : it’s easy to write your own R functions, modules, and even packages using greta
+## How it works
+On greta's website a getting started [page](https://greta-dev.github.io/greta/get_started.html) as well as [examples](https://greta-dev.github.io/greta/example_models.html) are availables. In the following section, we use greta with a simple dynamic model, for which there is no example on greta's website.
 
-## Data simulation
-```{r simulation}
+# Gaussian State Space model with greta
+The latent process $X$ is assumed to be an independent random walk, which is a cumulative sum of a sequence of independent process errors $\epsilon_x$. 
+
+$$X_{t} = \rho_x X_{t-1} + \epsilon_x \quad \text{with} \quad \epsilon_x \sim Normal(0, \sigma_x) $$
+The observation process $Y$ is defined as:
+$$Y_{t} = \rho_y X_{t} + \epsilon_y \quad \text{with} \quad \epsilon_y \sim Normal(0, \sigma_y) $$
+
+## greta in practice
+### packages loading
+```{r packages_greta, cache = FALSE, message = FALSE}
+library('greta')
+library('MASS')
+library('tidyverse')
+library('DiagrammeR')
+```
+
+### Data simulation
+```{r simulation_greta}
 set.seed(123)
 
-## Données
-N = 20; x_true = y = rep(NA,N);
+N <- 20 # number of time step
+x_true <- rep(NA, N) # latent process
+y <- rep(NA, N) # observations
 
-sd_x_true = sd_y_true = 1
-mean_x_init_true = 0
-r_x_true = .85; r_y_true = 1
+# parameters
+sd_x_true <- 1
+sd_y_true <- 1
+mean_x_init_true <- 0
+r_x_true <- 0.85
+r_y_true <- 1
 
+### Process and data generation
 x_true[1] <- rnorm(1, mean_x_init_true, sd_x_true)
 
 y[1] <- rnorm(1, r_y_true*x_true[1], sd_y_true)
@@ -48,23 +75,24 @@ for (t in 2:N){
 }
 ```
 
-## greta data and priors
+### greta data and priors
 
 
 ```{r greta1}
-
 # greta's data 
 obs <- as_data(y)
 
-# variables and priors
-sd_y <- sd_y_true
-r_y <- gamma(1, 1)
+# priors
+r_y <- gamma(1, 1) # gamma prior set to r_y
+sd_x <- inverse_gamma(1, 1) # inv-gamma prior set to sd_x
 
-sd_x <- inverse_gamma(1, 1)
-r_x <- r_x_true
+# fixed parameters
+sd_y <- sd_y_true # parameter fixed to the true value
+r_x <- r_x_true # parameter fixed to the true value
 
-innovations <- normal(0, sd_x, dim = N)
-print(innovations)
+# creation of an empty greta array
+epsilon_x <- normal(0, sd_x, dim = N)
+print(epsilon_x)
 ```
 
 ```{r greta1b}
@@ -72,37 +100,41 @@ print(innovations)
 # greta's data 
 obs <- as_data(y)
 
-# variables and priors
-sd_y <- sd_y_true
-r_y <- gamma(1, 1)
+# priors
+r_y <- gamma(1, 1) # gamma prior set to r_y
+sd_x <- inverse_gamma(1, 1) # inv-gamma prior set to sd_x
 
-sd_x <- inverse_gamma(1, 1)
-r_x <- r_x_true
+# fixed parameters
+sd_y <- sd_y_true # parameter fixed to the true value
+r_x <- r_x_true # parameter fixed to the true value
 
-innovations <- normal(0, sd_x, dim = N)
+# creation of an empty greta array for the epsilon
+epsilon_x <- normal(0, sd_x, dim = N)
 
-latentState <- greta_array(data = 0, dim = c(N, 1))
+# creation of an empty greta array for the X
+X <- greta_array(data = 0, dim = c(N, 1))
+# definition of the latent process interpreted by greta
 for(t in 1:N){
-  latentState[t, 1] <- sum(r_x^((t - 1) - (0:(t-1))) * innovations[1:t, 1])
+  X[t, 1] <- sum(r_x^((t - 1) - (0:(t-1))) * epsilon_x[1:t, 1])
 }
 ```
 
-## greta model definition
+### greta model definition
 ```{r greta2}
-distribution(obs) <- normal(latentState * r_y, rep(sd_y, N), dim = N)
-model_greta <- model(latentState, r_y, sd_x, precision = 'double')
+# definition of the distribution of the observation
+distribution(obs) <- normal(X * r_y, rep(sd_y, N), dim = N)
+# greta's model building
+model_greta <- model(X, r_y, sd_x, precision = 'double')
 ```
-
-
-## greta model DAG
+In this case study, greta faces numerical instability. The option *precision = 'double* of the model greta function redefines the model to have double precision and increase numerical stability, though this will slow down sampling. Once, the greta's model is built, greta in combination with the DiagrammeR package can generate a DAG representing the greta's model
 ```{r greta3, eval = FALSE}
 plot(model_greta)
 ```
 ![DAG generated by greta](DAG.png)
 
 
-## greta model DAG
-```{r greta4a, echo = FALSE, eval = TRUE, include = FALSE}
+## greta model inference
+```{r greta4, echo = FALSE, eval = TRUE, include = FALSE}
 if(file.exists('greta_draws.RData')){
 } else {
   draws <- mcmc(model_greta, n_samples = 1000)
@@ -110,25 +142,25 @@ if(file.exists('greta_draws.RData')){
 }
 ```
 
-```{r greta4, echo = TRUE, eval = FALSE}
-draws <- mcmc(model_greta, n_samples = 1000)
+```{r greta4b, echo = TRUE, eval = FALSE}
+# run sampler for 1000 iterations
+draws <- greta::mcmc(model_greta, n_samples = 1000)
 ```
 
-## greta model DAG
-```{r greta6, echo = TRUE, include = FALSE, eval = TRUE}
+## greta model results
+```{r greta5, echo = TRUE, include = FALSE, eval = TRUE}
 load('greta_draws.RData')
 ```
 
-
-```{r greta7}
-mcmc_trace(draws)
-# mcmc_intervals(draws)
+Results of draws are retruned as an mcmc.list object and can be summarized with:
+```{r greta6}
+# print summary of mcmc.list
+summary(draws)
 ```
 
 
-```{r greta7b, eval = TRUE, message = FALSE}
-library(tidyverse)
-nlignes <- nrow(draws[[1]])
+```{r greta7, eval = TRUE, message = FALSE}
+### extract data from mcmc.list object to tibble for easy plotting with ggplot2
 bounds <- as_tibble(t(apply(draws[[1]][, -c(21, 22)],2,function(x) quantile(x,c(0.025,0.5,0.975)))))
 bounds$param <- 1:N
 colnames(bounds)[1:3] <- c("min","med","max")
@@ -143,18 +175,18 @@ data <- left_join(ggdraws,bounds,by="param")
 data <- left_join(data,true,by="param")
 data <- left_join(data,obs,by="param")
 
-
-ggplot(data,aes(param,value))+
-  geom_point(size=0.2)+
-  geom_ribbon(aes(ymin=min,ymax=max),fill="gold",alpha=0.2)+
-  geom_line(aes(param,X,colour="col1"),size=1)+
-  geom_line(aes(param,Y,colour="col2"),size=0.6, linetype="dashed")+
-  geom_line(aes(param,med,colour="col3"),size=1.1)+
+### 
+ggplot(data, aes(param, value)) +
+  geom_point(size = 0.2) +
+  geom_ribbon(aes(ymin = min, ymax = max), fill = "gold", alpha = 0.2) +
+  geom_line(aes(param, X, colour = "col1"), size = 1) +
+  geom_line(aes(param, Y, colour = "col2"), size = 0.6, linetype = "dashed") +
+  geom_line(aes(param, med, colour= "col3"), size = 1.1) +
   scale_colour_manual(name = "",
-                      values = c(col1 = "blue",col2 = "black",col3 = "violetred3"),
-                      labels = c("True","Observed","Median estimate"))+
-  labs (x="Time",y="Simulated values")+
-  theme_bw()
+                      values = c(col1 = "blue", col2 = "black", col3 = "violetred3"),
+                      labels = c("True", "Observed", "Median estimate")) +
+  labs (x = "Time", y = "Simulated values") +
+  theme_bw() + ggtitle("Simulated data and their posterior distributions (black points).", subtitle = 'Yellow shade represents the CI at 95%')
 ```
 
 
@@ -165,6 +197,10 @@ ggplot(data,aes(param,value))+
 ![](postRY.png)
 
 ![](effectiveSize.png)
+
+## Conclusion
+greta allows to perform inference with Hamiltonian Monte Carlo algorithm like Stan or nimble. Currently, the only implemented MCMC procedure in greta is static Hamiltonian Monte Carlo. In regards of our case study, greta give similar results than JAGS and nimble. However, its early version and the small amount of documentation do not allow (yet) the implementation of complex model. greta seems promising and its development is interesting to follow for users of MCMC software.
+
 
 ## Reference 
 [https://greta-dev.github.io/greta/index.html](https://greta-dev.github.io/greta/index.html)
