@@ -1,0 +1,42 @@
+---
+title: "Ateliers Finist'R 2018"
+output: github_document
+always_allow_html: yes
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(magrittr)
+library(dplyr)
+```
+
+L'atelier Finist'R 2018 -- ou _bootcamp R_ s'est tenu à Beg Meil du 27 au 31 août 2018. sont
+
+## Participants
+
+![people_finister18](pictures/finisteR18_1.jpg)
+
+  - 1er rang: Marie Perrot (UMR MIA Paris), Timothée Tabouy (UMR MIA Paris), Félix Cheysson (UMR MIA Paris), Mathieu Carmassi (UMR MIA Paris - EDF)
+  - 2ème rang: Marie-Pierre Étienne (IRMAR/ Agrocampus Ouest), Antoine Bichat (UMR Maiage - INRA), Julien Chiquet (UMR MIA Paris - INRA), Sophie Donnet (UMR MIA Paris - INRA), 
+  - 3ème rang: Bewentaoré S.  (UMR MIA Paris), Pierre Gloaguen (UMR MIA Paris - Agroparistech), Avner Bar-Hen (CNAM), Saint-Clair Chabert-Liddell (UMR MIA Paris), Vincent Runge (UMR LaMME - Université  Paris Saclay), Jean-Baptiste Lecomte (UMR ESE - Agrocampus Ouest), Gabriel Lang (UMR MIA Paris - Agroparistech),  Raphaëlle Momal (UMR MIA Paris), Pierre Navaro (IRMAR - Université de Rennes), Éric Parent (UMR MIA Paris - Agroparistech)
+
+<!-- ![people_finister18](pictures/finister18_2.jpg) -->
+
+## Programme
+
+### Atelier 1: scrapping
+
+### Atelier 2: interfaces, calcul
+
+### Atelier 3: bonnes pratiques de programmation
+
+### Atelier 4: bases de données, SIG
+
+
+```{r programme, echo = FALSE}
+programme <- readODS::read.ods(file = 'Programme.ods')[[1]] %>% 
+  rename(Horaire = A, Lundi = B, Mardi = C, Mercredi = D, Jeudi = E, Vendredi = F) %>% 
+  filter(!(Horaire == ''))
+knitr::kable(programme)
+```
+

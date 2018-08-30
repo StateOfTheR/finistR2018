@@ -1,0 +1,164 @@
+---
+title: "Web scraping"
+subtitle: "Occurrences Google"
+author: "Vincent Runge"
+date: "27 août 2018"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Web scraping : obtenir le nombre d'occurrence sur Google
+
+Notre objectif est de construire une fonction qui retourne le nombre d'occurences d'une requête "exacte" sur Google. Cela revient à rechercher le nombre d'occurrences sur google en ajoutant des guillemets autour de l'expression recherchée. 
+Le but est de vérifier la pertinence de notre anglais par exemple. 
+
+
+```{r}
+library(rvest)
+library(stringr)
+```
+
+## Construction de l'url 
+
+Choix d'une recherche google
+
+```{r}
+expr <- "responsible for"
+```
+
+
+Rajout des guillemets et du signe + entre les mots de notre requête
+
+
+```{r}
+ words <- as.vector(strsplit(expr, " "))
+  request <- NULL
+  if(length(words[[1]]) > 1)
+  {
+    #build the request by adding + and "
+    for(i in 1:(length(words[[1]]) - 1))
+    {request <- paste(request, paste(words[[1]][i], '+', sep=""), sep="")}
+  }
+request <- paste(request, words[[1]][length(words[[1]])], sep="")
+request
+```
+
+
+Construction de l'url
+
+```{r}
+webpage <- "http://www.google.com"
+mypage <- paste(webpage, paste('%22', paste(request,'%22', sep = ""), sep = ""), sep="/search?q=")
+mypage
+```
+
+
+
+## rvest functions
+
+Extraction  structurée par read_htlm
+
+```{r}
+mydata <- read_html(mypage)
+```
+
+Lecture du noeud asssocié à l'identifiant (id) resultStats dans le htlm et obtention du texte associé par htlm_text
+
+```{r}
+res <- html_node(mydata, "#resultStats") %>% html_text
+res
+class(res)
+```
+
+Noter que 'clic droit -> examiner l'élément' permet d'obtenir les informations sur les identifiants ou la classe associé à l'élément d'intérêt.
+
+
+## bidouillage final
+
+Avec la fonction du package stringr nommé str_extract_all, on obtient une liste contenant un vecteur de string contenant les nombres inclus dans la variable 'res'.
+
+Avec paste et as.numeric, on achève le boulot. 
+
+```{r}
+as.numeric(paste(str_extract_all(res,"\\(?[0-9,.]+\\)?")[[1]], collapse = ''))
+```
+
+# La fonction nbGoogleResults 
+
+```{r}
+
+nbGoogleResults <- function(expr)
+{
+  words <- as.vector(strsplit(expr, " "))
+  request <- NULL
+  if(length(words[[1]])>1)
+  {
+    #build the request by adding + and "
+    for(i in 1:(length(words[[1]])-1))
+    {request <- paste(request,paste(words[[1]][i],'+',sep=""),sep="")}
+  }
+  request <- paste(request,words[[1]][length(words[[1]])],sep="")
+  
+  webpage <- "http://www.google.com"
+  mypage <- paste(webpage, paste('%22', paste(request,'%22', sep = ""), sep = ""), sep="/search?q=")
+  
+  mydata <- read_html(mypage)
+  res <- html_node(mydata, "#resultStats") %>% html_text
+  
+  return(as.numeric(paste(str_extract_all(res,"\\(?[0-9,.]+\\)?")[[1]], collapse = '')))
+}
+```
+
+Tests 
+
+```{r}
+nbGoogleResults("responsible")
+nbGoogleResults("responsible of")
+nbGoogleResults("responsible with")
+nbGoogleResults("responsible for")
+```
+
+  
+
+
+  
+# La bonne préposition ?
+
+```{r}
+prep <- c("on", "in", "at", "of", "for", "from", "to", "into", "by", "across", "around", "near", "with", "about", "along")
+```
+
+ 
+ 
+Mon choix
+ 
+```{r}
+word <- "responsible"
+```
+
+
+```{r}
+n <- length(prep)
+res <- NULL
+for (i in 1:n)
+{
+  print(i)
+  res <- c(res, nbGoogleResults(paste(word, prep[i])))
+}
+res
+prep[which.max(res)]
+```
+
+
+
+  
+  
+  
+  
+

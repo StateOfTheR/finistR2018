@@ -39,3 +39,5 @@ rsconnect/
 
 # Ignore jupyter notebook checkpoints anywhere
 .ipynb_checkpoints
+
+Readme_files/
