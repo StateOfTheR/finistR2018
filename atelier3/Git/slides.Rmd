@@ -11,6 +11,12 @@
 - The service have the right to delete information from free and inactive accounts.
 - Users are not allowed to perform encryption.
 
+# Dropbox shares your data
+
+<a href="https://twitter.com/kopfnuss/status/1020575998205710336">
+<img src="images/tweet_dropbox.png" width=600>
+</a>
+
 # New products based on a git server for collaborating writing.
 
 - ShareLaTeX (https://fr.sharelatex.com)
