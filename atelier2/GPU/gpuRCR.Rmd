@@ -1,6 +1,6 @@
 ---
 title: "Utiliser le GPU avec R"
-author: "Avner, Félix, Marie, Vincent"
+author: "Avner, FÃ©lix, Marie, Vincent"
 date: "August 28, 2018"
 output: html_document
 ---
@@ -12,49 +12,49 @@ knitr::opts_chunk$set(echo = TRUE)
 # Liste des packages
 Une liste des packages est disponible sur (https://www.r-pkg.org/ctv/HighPerformanceComputing)
 
-On ne s'intéresse pas à :
+On ne s'intÃ©resse pas Ã  :
 
 - OpenCL  (plumaintenu depuis 2012)
 - permGPU (plus maintenu depuis 3 ans)
-- BDgraph et  ssgraph (trop spécifique bayésien)
+- BDgraph et  ssgraph (trop spÃ©cifique bayÃ©sien)
 - cudaBayesreg package by da Silva, implements the rhierLinearModel from the 
-- bayesm package (trop spécifique fMRI voxels)
+- bayesm package (trop spÃ©cifique fMRI voxels)
 
 On veut explorer 
 
 - tfestimators (https://cran.r-project.org/web/packages/tfestimators/index.html)
-- gpuR (https://cran.r-project.org/web/packages/gpuR/index.html) ou plus rÃ©cent sur github (https://github.com/cdeterman/gpuR)
+- gpuR (https://cran.r-project.org/web/packages/gpuR/index.html) ou plus rÃƒÂ©cent sur github (https://github.com/cdeterman/gpuR)
 - rgpu (https://cran.r-project.org/web/packages/gpuR/index.html)
 - gcbd (https://cran.r-project.org/web/packages/gcbd/index.html)
 - RCUDA (https://github.com/yuanli22/RCUDA)
 
 
 Limites potentielles : il faut une carte graphique !
-Cuda a été développé pour Nvidia, et OpenCL est compatible avec AMD et toutes les cartes graphiques. 
+Cuda a Ã©tÃ© dÃ©veloppÃ© pour Nvidia, et OpenCL est compatible avec AMD et toutes les cartes graphiques. 
 
-La plupart des packages dépendent de CUDA et sont donc réserver aux utilisateurs équipés d'une carte nvidia.
+La plupart des packages dÃ©pendent de CUDA et sont donc rÃ©server aux utilisateurs Ã©quipÃ©s d'une carte nvidia.
 
-Sous Linux pour connaître sa carte graphique sous ubuntu 
+Sous Linux pour connaÃ®tre sa carte graphique sous ubuntu 
 
 ```{r, eval=FALSE}
 sudo lshw -C display
 ```
 
-Sous Windows, clic droit sur le drapeau Windows, exécuter et
+Sous Windows, clic droit sur le drapeau Windows, exÃ©cuter et
 ```{r, eval=FALSE}
 dxdiag
 ```
 
 
-Dans ce cas, on est condamé  à utiliser `gpur` car pas de carte nvidia (qui a le gros avantage de fonctionner avec beaucoup de cartes).
+Dans ce cas, on est condamÃ©  Ã  utiliser `gpur` car pas de carte nvidia (qui a le gros avantage de fonctionner avec beaucoup de cartes).
 
 #GPU : Graphics Processing Unit
 
-Là où un processeur peut avoir 2 à 36 cours, un GPU typique aura 100 à 1000 cours. Le GPU Tesla P100 a 3584 cours
+LÃ  oÃ¹ un processeur peut avoir 2 Ã  36 cours, un GPU typique aura 100 Ã  1000 cours. Le GPU Tesla P100 a 3584 cours
 
-Pour les situations où le même calcul est effectué sur plusieurs parties d'un ensemble de données, le parallélisme massif d'un GPU peut être utile.
+Pour les situations oÃ¹ le mÃªme calcul est effectuÃ© sur plusieurs parties d'un ensemble de donnÃ©es, le parallÃ©lisme massif d'un GPU peut Ãªtre utile.
 
-Rien ne vient gratuitement : on perd de la mémoire et il y a un coût pour le transfert des données du système vers le GPU (et probablement de retour). Donc toutes les situations ne sont pas appropriées pour le calcul sur GPU. Un GPU haut de gamme a 16 à 32 Go de mémoire sur la carte, ce qui peut vite limiter l'utilité des GPU dans certaines situations (le dell  XPS13 de base a 128Mo).
+Rien ne vient gratuitement : on perd de la mÃ©moire et il y a un coÃ»t pour le transfert des donnÃ©es du systÃ¨me vers le GPU (et probablement de retour). Donc toutes les situations ne sont pas appropriÃ©es pour le calcul sur GPU. Un GPU haut de gamme a 16 Ã  32 Go de mÃ©moire sur la carte, ce qui peut vite limiter l'utilitÃ© des GPU dans certaines situations (le dell  XPS13 de base a 128Mo).
 
 ## gpuR, 
 
@@ -71,10 +71,10 @@ sudo apt-get install beignet beignet-dev
 
 ```
 
-Une vignette très utile et très bien faite (https://cran.r-project.org/web/packages/gpuR/vignettes/gpuR.pdf)
+Une vignette trÃ¨s utile et trÃ¨s bien faite (https://cran.r-project.org/web/packages/gpuR/vignettes/gpuR.pdf)
 
 
-Sous Windows un `install.packages()` classique fonctionne très bien.
+Sous Windows un `install.packages()` classique fonctionne trÃ¨s bien.
 
 #Fonctionnement
 Voyons l'exemple ci-dessous sur des multiplications matriciels
@@ -97,7 +97,7 @@ system.time(vclA %*% vclB)
 
 ```
 
-La librairie gpuR utilise les classes S4 (même si on ne va pas utiliser cette fonctionnalité ici). L'objet gpuMatrix pointe sur une matrice dans la RAM qui est ensuite calculée par le GPU lorsqu'elle est appelée par une fonction. Cela évite que R recopie l'objet a chaque appel. Ceci peut se voir par exemple :
+La librairie gpuR utilise les classes S4 (mÃªme si on ne va pas utiliser cette fonctionnalitÃ© ici). L'objet gpuMatrix pointe sur une matrice dans la RAM qui est ensuite calculÃ©e par le GPU lorsqu'elle est appelÃ©e par une fonction. Cela Ã©vite que R recopie l'objet a chaque appel. Ceci peut se voir par exemple :
 
 ```{r }
 library(pryr)
@@ -124,9 +124,9 @@ y@address
 
 ```
 
-Chaque nouvelle variable affectée à cet objet ne copiera que le pointeur, rendant ainsi le programme plus efficace en termes de mémoire. Toutefois, la classe gpuMatrix nécessite toujours d'allouer de la mémoire GPU et de copier les données sur l'appareil pour chaque appel de fonction. Les fonctions les plus couramment utilisées sont présentes et en particulier les fonctions` % *%, +, -, *, /, crossprod, tcrossprod et trig`. Un utilisateur R peut créer ces objets et tirer parti des ressources GPU sans avoir besoin de connaître un tas de fonctions qui pourraient casser les algorithmes existants. Ceci signifie aussi que le gain est plus faible pour des fonctions plus évoluées
+Chaque nouvelle variable affectÃ©e Ã  cet objet ne copiera que le pointeur, rendant ainsi le programme plus efficace en termes de mÃ©moire. Toutefois, la classe gpuMatrix nÃ©cessite toujours d'allouer de la mÃ©moire GPU et de copier les donnÃ©es sur l'appareil pour chaque appel de fonction. Les fonctions les plus couramment utilisÃ©es sont prÃ©sentes et en particulier les fonctions` % *%, +, -, *, /, crossprod, tcrossprod et trig`. Un utilisateur R peut crÃ©er ces objets et tirer parti des ressources GPU sans avoir besoin de connaÃ®tre un tas de fonctions qui pourraient casser les algorithmes existants. Ceci signifie aussi que le gain est plus faible pour des fonctions plus Ã©voluÃ©es
 
-Pour les classes gpuMatix et gpuVector, il existe une classe vclMatrix et vclVector close qui pointe vers les objets qui persistent dans la RAM du processeur graphique. De cette manière, l'utilisateur décide explicitement du moment où les données doivent être déplacées dans la RAM. En évitant les transferts de données inutiles les performances peuvent être considérablement améliorées. L'autre intérêt de vclMatrix est la scalabilité : On peut regarder ce qui se passe en doublant la taille de la matrice.
+Pour les classes gpuMatix et gpuVector, il existe une classe vclMatrix et vclVector close qui pointe vers les objets qui persistent dans la RAM du processeur graphique. De cette maniÃ¨re, l'utilisateur dÃ©cide explicitement du moment oÃ¹ les donnÃ©es doivent Ãªtre dÃ©placÃ©es dans la RAM. En Ã©vitant les transferts de donnÃ©es inutiles les performances peuvent Ãªtre considÃ©rablement amÃ©liorÃ©es. L'autre intÃ©rÃªt de vclMatrix est la scalabilitÃ© : On peut regarder ce qui se passe en doublant la taille de la matrice.
 
 ```{r }
 ORDER =2048
@@ -145,7 +145,7 @@ system.time(vclA %*% vclB)
 
 ```
 
-Petit détail : pour traduire unne gpuMatrix ou un vclMatrix en matrice classque il suffit de rajouter les crochets
+Petit dÃ©tail : pour traduire unne gpuMatrix ou un vclMatrix en matrice classque il suffit de rajouter les crochets
 
 ```{r }
 class(gpuA)
@@ -156,7 +156,7 @@ class(vclA[])
 ```
 ##Quelques limites
 
-Si l'on sort des fonctions adaptés pour `gpuR` le gain tombe immédiatement. 
+Si l'on sort des fonctions adaptÃ©s pour `gpuR` le gain tombe immÃ©diatement. 
 
 ```{r }
 ORDER =1024
@@ -176,35 +176,35 @@ system.time(svd(gpuA))
 system.time(svd(vclA))
 ```
 
-Ensuite la taille des objets est limitée par la taille de la RAM GPU (la fonction `gc()` permet de voir la taille des objets dans le garbage collector de R)
+Ensuite la taille des objets est limitÃ©e par la taille de la RAM GPU (la fonction `gc()` permet de voir la taille des objets dans le garbage collector de R)
 # Comment choisir sa carte graphique
 
 Des configurations luxueuses peuvent avoir plusieurs cartes et il est donc utile de pouvoir chosir. 
 
 - `listContexts()` donne la liste des cartes
-- `currentContext()` donne la carte utilisée
-- `setContext(id=2)` spécifie la carte à utiliser
+- `currentContext()` donne la carte utilisÃ©e
+- `setContext(id=2)` spÃ©cifie la carte Ã  utiliser
 
 Enfin `gpuInfo()` donne les infos sur la carte graphique (et en particulier le nombre de coeur).
 
 ## RCUDA
-CUDA est le framework développé par NVIDIA pour pour gérer ses GPU
+CUDA est le framework dÃ©veloppÃ© par NVIDIA pour pour gÃ©rer ses GPU
 
-RCUDA est l'interface R et est uniquement développé pour LINUX
+RCUDA est l'interface R et est uniquement dÃ©veloppÃ© pour LINUX
 
-Sous Windows, l'enfer commence : il faut écrire le code CUDA ; l'exporter en dll et charger le dll sous R
+Sous Windows, l'enfer commence : il faut Ã©crire le code CUDA ; l'exporter en dll et charger le dll sous R
 
-Le code CUDA nécessite de définr le code executé par chaque thread dans chaque bloc. Puis de gérr l'allocation mémoire dans chaque bloc et dans chaque thread. 
+Le code CUDA nÃ©cessite de dÃ©finr le code executÃ© par chaque thread dans chaque bloc. Puis de gÃ©rr l'allocation mÃ©moire dans chaque bloc et dans chaque thread. 
 
 Deux ressources importantes :
 
 -(https://devblogs.nvidia.com/accelerate-r-applications-cuda/)
 -(http://www.ademiller.com/blogs/tech/2010/10/visual-studio-2010-adding-intellisense-support-for-cuda-c/)
 
-Le premier document précise comment insérer CUDA (et en particulier sous Windows)
+Le premier document prÃ©cise comment insÃ©rer CUDA (et en particulier sous Windows)
 
-Le deuxième document permet de mettre à jour `Intellisense` pour prendre en compte les mots-clés CUDA
+Le deuxiÃ¨me document permet de mettre Ã  jour `Intellisense` pour prendre en compte les mots-clÃ©s CUDA
 
-Il faut aussi comprendre le GPU, et le code CUDA. Une bonne référence est 
+Il faut aussi comprendre le GPU, et le code CUDA. Une bonne rÃ©fÃ©rence est 
 
 Kirk, D. B., and  Wen-Mei, W. H. (2016). Programming massively parallel processors: a hands-on approach. Morgan kaufmann.
