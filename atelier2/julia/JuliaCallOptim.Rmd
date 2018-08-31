@@ -1,0 +1,29 @@
+```{r}
+install.packages("JuliaCall")
+```
+
+```{r}
+library("JuliaCall")
+```
+
+```{r}
+julia_setup()
+```
+
+```{r}
+julia_library("Optim")
+julia_library("LineSearches")
+```
+
+[JuliaCall in R Markdown](https://rpubs.com/Consistency/310507)
+
+```{r}
+julia_command("rosenbrock(x) =  (1.0 - x[1])^2 + 100.0 * (x[2] - x[1]^2)^2")
+```
+
+```{r}
+julia_eval("optimize(rosenbrock, zeros(2), BFGS())")
+```
+
+```{r}
+```

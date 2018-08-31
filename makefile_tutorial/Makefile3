@@ -1,0 +1,23 @@
+
+default: exe_armadillo
+
+CXX                 := c++
+ARMADILLO_INCDIR    = /opt/local/include
+ARMADILLO_LIBDIR    = /opt/local/lib
+ARMADILLO_INC_FLAGS = -I${ARMADILLO_INCDIR}
+ARMADILLO_LIB_FLAGS = -L${ARMADILLO_LIBDIR} -larmadillo
+
+CXXFLAGS += ${ARMADILLO_INC_FLAGS}
+LDFLAGS  += ${ARMADILLO_LIB_FLAGS}
+
+SRCS = $(wildcard *.cpp)  # List all cpp files
+OBJS = $(SRCS:.cpp=.o)    # List all matching object files
+    
+.cpp.o: # $< the source file .cpp $@ the target .o
+	$(CXX) $(CXXFLAGS) -c $< -o $@   
+    
+exe_armadillo: $(OBJS)
+	${CXX} -o $@ $^ $(CXXFLAGS) ${LDFLAGS}
+    
+clean:
+	rm *.txt *.o exe_armadillo

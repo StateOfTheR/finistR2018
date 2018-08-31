@@ -1,0 +1,17 @@
+
+default: exe_armadillo # default target
+
+CXX                := c++   # := means "change CXX only if it is undefined"
+ARMADILLO_INCDIR   = /opt/local/include
+ARMADILLO_LIBDIR   = /opt/local/lib
+ARMADILLO_INC_FLAGS = -I${ARMADILLO_INCDIR}
+ARMADILLO_LIB_FLAGS = -L${ARMADILLO_LIBDIR} -larmadillo
+
+obj_armadillo.o: obj_armadillo.cpp
+	${CXX} -c -o $@ $^ ${ARMADILLO_INC_FLAGS} # $@ : target $^: dependencies
+    
+exe_armadillo: main.cpp obj_armadillo.o
+	${CXX} -o $@ $^ ${ARMADILLO_LIB_FLAGS}
+    
+clean:
+	rm *.txt *.o exe_armadillo
