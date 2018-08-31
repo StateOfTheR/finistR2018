@@ -35,7 +35,7 @@ vignettes/*.pdf
 # Shiny token, see https://shiny.rstudio.com/articles/shinyapps.html
 rsconnect/
 .Rproj.user
-.DS_Store
+/.DS_Store/
 
 # Ignore jupyter notebook checkpoints anywhere
 .ipynb_checkpoints
@@ -45,3 +45,6 @@ Readme_files/
 ## ignorer les fichiers gnérés du site web
 atelier*/
 finistr2018_website/_site
+
+finistR2018.Rproj
+

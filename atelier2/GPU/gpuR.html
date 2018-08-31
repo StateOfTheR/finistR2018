@@ -196,26 +196,26 @@ library(gpuR)</code></pre>
 y = x
  
 address(x)</code></pre>
-<pre><code>## [1] &quot;0xe01cf58&quot;</code></pre>
+<pre><code>## [1] &quot;0xdffbb88&quot;</code></pre>
 <pre class="r"><code>address(y)</code></pre>
-<pre><code>## [1] &quot;0xe01cf58&quot;</code></pre>
+<pre><code>## [1] &quot;0xdffbb88&quot;</code></pre>
 <pre class="r"><code>y[1,1] = 0
 address(x)</code></pre>
-<pre><code>## [1] &quot;0xe01cf58&quot;</code></pre>
+<pre><code>## [1] &quot;0xdffbb88&quot;</code></pre>
 <pre class="r"><code>address(y)</code></pre>
-<pre><code>## [1] &quot;0xf30e728&quot;</code></pre>
+<pre><code>## [1] &quot;0xeef6670&quot;</code></pre>
 <pre class="r"><code>x = gpuMatrix(rnorm(16), 4, 4)
 y = x
  
 x@address</code></pre>
-<pre><code>## &lt;pointer: 0x0000000009799dc0&gt;</code></pre>
+<pre><code>## &lt;pointer: 0x00000000099fe030&gt;</code></pre>
 <pre class="r"><code>y@address</code></pre>
-<pre><code>## &lt;pointer: 0x0000000009799dc0&gt;</code></pre>
+<pre><code>## &lt;pointer: 0x00000000099fe030&gt;</code></pre>
 <pre class="r"><code>y[1,1] = 0
 x@address</code></pre>
-<pre><code>## &lt;pointer: 0x0000000009799dc0&gt;</code></pre>
+<pre><code>## &lt;pointer: 0x00000000099fe030&gt;</code></pre>
 <pre class="r"><code>y@address</code></pre>
-<pre><code>## &lt;pointer: 0x0000000009799dc0&gt;</code></pre>
+<pre><code>## &lt;pointer: 0x00000000099fe030&gt;</code></pre>
 <p>Chaque nouvelle variable affectée à cet objet ne copiera que le pointeur, rendant ainsi le programme plus efficace en termes de mémoire. Toutefois, la classe gpuMatrix nécessite toujours d’allouer de la mémoire GPU et de copier les données sur l’appareil pour chaque appel de fonction. Les fonctions les plus couramment utilisées sont présentes et en particulier les fonctions<code>%*%, %o%, +, -, *, /, crossprod, tcrossprod</code>. Un utilisateur R peut créer ces objets et tirer parti des ressources GPU sans avoir besoin de connaître un tas de fonctions qui pourraient casser les algorithmes existants. Ceci signifie aussi que le gain est plus faible pour des fonctions plus évoluées</p>
 <p>Pour les classes gpuMatix et gpuVector, il existe une classe vclMatrix et vclVector close qui pointe vers les objets qui persistent dans la RAM du processeur graphique. De cette manière, l’utilisateur décide explicitement du moment où les données doivent être déplacées dans la RAM. En évitant les transferts de données inutiles les performances peuvent être considérablement améliorées. L’autre intérêt de vclMatrix est la scalabilité :</p>
 <p>Voyons l’exemple ci-dessous sur des multiplications matriciels</p>
@@ -231,13 +231,13 @@ vclB = vclMatrix(B)
 
 system.time(A %*% B)</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.65    0.00    0.64</code></pre>
+##    0.66    0.00    0.65</code></pre>
 <pre class="r"><code>system.time(gpuA %*% gpuB)</code></pre>
 <pre><code>##    user  system elapsed 
-##    2.14    0.14    2.30</code></pre>
+##    1.94    0.12    2.08</code></pre>
 <pre class="r"><code>system.time(vclA %*% vclB)</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.00    0.02    0.02</code></pre>
+##    0.01    0.00    0.02</code></pre>
 <p>On peut regarder ce qui se passe en doublant la taille de la matrice.</p>
 <pre class="r"><code>ORDER =2048
 
@@ -251,10 +251,10 @@ vclB = vclMatrix(B)
 
 system.time(A %*% B)</code></pre>
 <pre><code>##    user  system elapsed 
-##    4.64    0.00    4.67</code></pre>
+##    5.26    0.00    5.55</code></pre>
 <pre class="r"><code>system.time(gpuA %*% gpuB)</code></pre>
 <pre><code>##    user  system elapsed 
-##    1.91    0.10    2.00</code></pre>
+##    1.89    0.09    2.05</code></pre>
 <pre class="r"><code>system.time(vclA %*% vclB)</code></pre>
 <pre><code>##    user  system elapsed 
 ##    0.02    0.02    0.03</code></pre>
@@ -282,22 +282,22 @@ vclA = vclMatrix(A)
 
 system.time(solve(A))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.86    0.00    0.86</code></pre>
+##    1.04    0.00    1.05</code></pre>
 <pre class="r"><code>system.time(solve(gpuA))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.66    0.06    0.70</code></pre>
+##    0.59    0.11    0.70</code></pre>
 <pre class="r"><code>system.time(solve(vclA))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.48    0.09    0.56</code></pre>
+##    0.50    0.08    0.56</code></pre>
 <pre class="r"><code>system.time(svd(A))</code></pre>
 <pre><code>##    user  system elapsed 
-##    3.54    0.02    3.60</code></pre>
+##    3.39    0.00    3.50</code></pre>
 <pre class="r"><code>system.time(svd(gpuA))</code></pre>
 <pre><code>##    user  system elapsed 
-##    4.89    0.19    5.14</code></pre>
+##    5.44    0.12    5.90</code></pre>
 <pre class="r"><code>system.time(svd(vclA))</code></pre>
 <pre><code>##    user  system elapsed 
-##    4.33    0.21    4.66</code></pre>
+##    4.11    0.13    4.46</code></pre>
 <p>Ensuite la taille des objets est limitée par la taille de la RAM GPU (la fonction <code>gc()</code> permet de voir la taille des objets dans le garbage collector de R)</p>
 </div>
 </div>

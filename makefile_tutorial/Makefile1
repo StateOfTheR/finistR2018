@@ -1,0 +1,11 @@
+
+default: exe_armadillo
+
+obj_armadillo.o: obj_armadillo.cpp
+	c++ -o $@ -c $^ -I/opt/local/include 
+    
+exe_armadillo: main.cpp obj_armadillo.o
+	c++ -o $@ $^ -L/opt/local/lib -larmadillo
+    
+clean:
+	rm -f *.txt *.o exe_armadillo
