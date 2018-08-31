@@ -144,15 +144,15 @@ $(document).ready(function () {
 <p>Un langage de marquage comme HTML ou XML peut être schématisé comme une arborescence hiérarchisée. Les différentes composantes de l’arborescence sont appelés <em>noeuds</em>. Il existe différents types de noeuds et dans un document HTML il y a au moins trois types de noeuds : les noeud-élément, les noeud-attribut, et les noeud-texte.</p>
 <p>Prenons un exemple de ligne html</p>
 <pre><code>  &lt;h1 class=&quot;centre&quot;&gt;Bonjour &lt;i&gt;tout le monde&lt;/i&gt;&amp;nbsp;!&lt;/h1&gt;</code></pre>
-<p>L’élément h1 a trois noeuds enfants et un noeud associé : les nouds enfants sont le noeud texte avec le mot « Bonjour » suivi d’un espace, le noeuds élément de l’élément i, enfin le noeud texte constitué de la chaîne de caractères “ !”. L’attribut class dans la balise ouvrante <code>&lt;h1&gt;</code> n’est pas un noeud enfant mais un noeud associé. Le noeud attribut a cependant un noeud enfant : la valeur affectée (centre).</p>
+<p>L’élément h1 a trois noeuds enfants et un noeud associé : les nouds enfants sont le noeud texte avec le mot « Bonjour » suivi d’un espace, le noeuds élément de l’élément i, enfin le noeud texte constitué de la chaîne de caractères <code>&quot;&amp;nbsp;!&quot;</code>. L’attribut class dans la balise ouvrante <code>&lt;h1&gt;</code> n’est pas un noeud enfant mais un noeud associé. Le noeud attribut a cependant un noeud enfant : la valeur affectée (<code>centre</code>).</p>
 <p>De manière graphique on peut représenter une page HTML sous forme d’un arbre</p>
 <p>!(HTMLDOMTree.png)</p>
-<p>Enfin il faut se rappeler que les attributs</p>
+<p><code>&lt;h1&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;p&gt;</code>,<code>&lt;div&gt;</code> ou <code>&lt;span&gt;</code> sont des balises. Notez que pour les attributs</p>
 <ul>
-<li>un id s’applique à un objet unique : il ne peut pas y avoir deux mêmes id dans une page</li>
-<li>une classe peut caractériser plusieurs objets (identiques ou non)</li>
+<li><code>id</code> s’applique à un objet unique : il ne peut pas y avoir deux mêmes id dans une page</li>
+<li><code>class</code> peut caractériser plusieurs objets (identiques ou non)</li>
 </ul>
-<p>Dans une feuille de style CSS, les id seront écrites avec la syntaxe #nom_id et on trouve .nom_de_classe pour les class.</p>
+<p>Si l’attribut place le texte en haut de la page, il ne peut y avoir qu’un paragraphe de ce type dans la page. Si l’attribut met le texte en rouge il peut y avoir plusieurs paragraphes en rouge dans la page. Dans une feuille de style CSS, les id seront écrites avec la syntaxe #nom_id et on trouve .nom_de_classe pour les class.</p>
 </div>
 
 
