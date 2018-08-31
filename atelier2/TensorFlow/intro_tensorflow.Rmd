@@ -1,6 +1,6 @@
 ---
 title: "Introduction à Tensorflow"
-author: "Sophie"
+author: "Sophie, Saint-Clair"
 date: "28 août 2018"
 output: html_document
 ---
@@ -152,6 +152,88 @@ for (step in 1:201) {
 }
 
 ```
+
+
+##Session interactive
+
+Afin de profiter des interfaces interactives comme `Rstudio`avec `tensorflow`, il est possible de lancer une session interactive. Cela permet d'exécuter les opérations sur le graphes ligne par ligne et de ne pas bloquer les noms des variables. On ouvre une session interactive avec `tf$InteractiveSession()`. Pour éviter les conflits inhérents au fait d'avoir plusieurs sessions ouvertes en même temps, il est important de les fermer à chaque fois. 
+
+L'exemple ci-dessous est tiré de <https://tensorflow.rstudio.com/tensorflow/articles/basic_usage.html>.
+
+```{r}
+library(tensorflow)
+
+sess <- tf$InteractiveSession()
+
+x <- tf$Variable(c(1.0, 2.0))
+a <- tf$constant(c(3.0, 3.0))
+
+
+
+# Initialize 'x' using the run() method of its initializer op.
+x$initializer$run()
+
+# Add an op to subtract 'a' from 'x'.  Run it and print the result
+sub <- tf$subtract(x, a)
+print(sub$eval())
+sess$close()
+```
+
+Attention ! Les indices des objets de type "Tensor" dans `tensorflow` sont les même qu'en `Python` (indicé à partir de 0 et non à partir de 1 comme en `R`).
+
+```{r}
+sess <- tf$InteractiveSession()
+x <- tf$Variable(seq(-2.0, 2.0, by = 1))
+x$initializer$run()
+abs_x <- tf$abs(x)
+print(abs_x$eval())
+print(abs_x[[1]]$eval())
+print(abs_x[[0]]$eval())
+```
+
+D'autres objets, se présentent sous la forme d'une liste de Tensor. Les listes sont indicées comme en `R`.
+```{r}
+grad_abs <- tf$gradients(abs(x), x)
+str(grad_abs)
+print(grad_abs[[1]]$eval())
+print(grad_abs[[1]][[2]]$eval())
+sess$close()
+```
+
+## Tensorboard, visualisation interactive de graphe
+
+`tensorboard` <https://tensorflow.rstudio.com/tensorflow/articles/howto_summaries_and_tensorboard.html> est un outil de visualisation permettant d'observer de manière interactive les graphes `tensorflow`. Il est possible de s'en servir pour voir les ètapes de différentiation automatique pour le calcul du gradient d'une fonction. `tensorboard` lit un log crée lors de l'exécution de la session. Il est possible de créer toute sorte de statistiques résumant le graphe afin de les visualiser.
+
+
+### Exemple :  dérivée de la densité d'une loi gaussienne 
+
+La fonction à dériver doit être écrite sous forme de fonction mathématique de base `tensorflow` :
+```{r}
+gaussian <- function(x, mu, sig) {
+  1./(sig * tf$sqrt(2. * pi )) * tf$exp(-.5 * ((x - mu)/sig)**2)
+}
+```
+
+
+Il est important de réinitialiser le graphe `tensorflow`. Celui-ci n'est pas stocké dans les variables d'environnement et vider l'environnement de travail sous `Rstudio` ne réinitialise pas le graph `tensorflow`.
+```{r eval=FALSE}
+tf$reset_default_graph()
+mu  <- tf$constant(0.0, name = "mu")
+sig <- tf$constant(1.0, name = "sigma")
+x   <- tf$placeholder(dtype = tf$float32, shape = c(100L), name = "x")
+dgauss <- tf$gradients(gaussian(x, mu, sig), x)
+
+with(tf$Session() %as% sess, {
+  result <- sess$run(dgauss, feed_dict=dict(x = seq(-2, 2, length.out = 100)))
+  writer <- tf$summary$FileWriter("dgauss_log_summary", sess$graph)
+  print(result)
+})
+
+
+tensorboard(log_dir = "dgauss_log_summary")
+```
+
+![Caption](tensorboard.png)
 
 
 <!-- ### Remarques  -->
