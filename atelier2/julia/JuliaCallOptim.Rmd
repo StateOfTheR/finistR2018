@@ -24,6 +24,3 @@ julia_command("rosenbrock(x) =  (1.0 - x[1])^2 + 100.0 * (x[2] - x[1]^2)^2")
 ```{r}
 julia_eval("optimize(rosenbrock, zeros(2), BFGS())")
 ```
-
-```{r}
-```

@@ -1,38 +1,44 @@
 [**Optim.jl** : Univariate and multivariate optimization in Julia](https://github.com/JuliaNLSolvers/Optim.jl/blob/master/docs/src/user/minimization.md)
 
-```{r}
+```{julia}
+using Pkg
+Pkg.add("Optim")
+Pkg.add("LineSearches")
+```
+
+```{julia}
 using Optim, LineSearches
 ```
 
-```{r}
+```{julia}
 rosenbrock(x) =  (1.0 - x[1])^2 + 100.0 * (x[2] - x[1]^2)^2
 result = optimize(rosenbrock, zeros(2), BFGS())
 ```
 
-```{r}
+```{julia}
  optimize(rosenbrock, zeros(2), BFGS(linesearch = LineSearches.BackTracking()))
 ```
 
-```{r}
+```{julia}
 optimize(rosenbrock, zeros(2), BFGS(linesearch = LineSearches.BackTracking(order = 2)))
 ```
 
 For the Rosenbrock example, the analytical gradient can be shown to be:
 
-```{r}
+```{julia}
 function g!(G, x)
 G[1] = -2.0 * (1.0 - x[1]) - 400.0 * (x[2] - x[1]^2) * x[1]
 G[2] = 200.0 * (x[2] - x[1]^2)
 end
 ```
 
-```{r}
+```{julia}
 optimize(rosenbrock, g!, zeros(2), LBFGS())
 ```
 
 In addition to providing gradients, you can provide a Hessian function h! as well. In our current case this is:
 
-```{r}
+```{julia}
 function h!(H, x)
     H[1, 1] = 2.0 - 400.0 * x[2] + 1200.0 * x[1]^2
     H[1, 2] = -400.0 * x[1]
@@ -41,9 +47,6 @@ function h!(H, x)
 end
 ```
 
-```{r}
+```{julia}
 optimize(rosenbrock, g!, h!, zeros(2))  # newton
-```
-
-```{r}
 ```

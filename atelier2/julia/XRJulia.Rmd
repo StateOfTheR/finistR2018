@@ -10,7 +10,7 @@ install.packages("XRJulia")
 library(XRJulia)
 ```
 
-```{r}
+```{r,eval=FALSE}
 Sys.setenv(JULIA_BIN = "/Applications/JuliaPro-0.6.4.1.app/Contents/Resources/julia/Contents/Resources/julia/bin/julia")
 ```
 
@@ -35,12 +35,10 @@ result <- juliaEval("optimize(rosenbrock, zeros(2), BFGS())")
 ```
 
 ```{r}
-JLreg=juliaGet(result)
+JLres=juliaGet(result)
 ```
 
 ```{r}
-JLreg
+JLres
 ```
 
-```{r}
-```
