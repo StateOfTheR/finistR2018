@@ -6,6 +6,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
 # What is greta
 greta relies on TensorFlow and use efficient inference algorithms like Hamiltonian Monte Carlo. The main objective of greta is to provide a MCMC software like BUGS, JAGS or Stan. We can find on greta's [website](https://greta-dev.github.io/greta/index.html) the following definition:
 
@@ -14,8 +15,14 @@ greta relies on TensorFlow and use efficient inference algorithms like Hamiltoni
 - *extensible : it’s easy to write your own R functions, modules, and even packages using greta*
 
 The main advantage of greta is it builds statistical models interactively in R, and then sample from them by MCMC. There is no need to create a model object like in JAGS, Stan or nimble. However, greta creates specific objects (i.e. greta arrays) which are used to build the model and define the data to be used in the inference. greta is still is in its early development (version 0.2.3 on CRAN) and at this time there is a lack of documentation (especially compared with Stan, JAGS or nimble).
+We chose to test greta on a very easy and standard exemple. We further compare greta performances with other Bayesian inference tools : Jags, Nimble and Stan.
 
-## instalation
+
+## HMC
+For now, greta is only using the Hamiltonian Monte Carlo algorithm, a most remarkable Markov chain Monte Carlo method for Bayesian inference. HMC reduces the correlation between successive sampled states by using properties from Hamiltonian dynamics  [see the nice paper from R.M. Neal on the topic](https://www.cs.toronto.edu/~radford/ftp/ham-mcmc.pdf). It allows larger moves between states at the cost of doubling the dimension of the state space and being able to efficiently compute the gradient of the logposterior density. This causes such an algorithm to converge more quickly to the targeted posterior probability distribution. There is a growing interest to implement HMC algorithms in the many Bayesian toolboxes.
+
+
+## installation
 greta use TensorFlow and it needs to be installed before installing greta. 
 
 ```{r installation_TS, eval=FALSE, echo = TRUE, cache = FALSE, message = FALSE}
@@ -59,7 +66,9 @@ y <- rep(NA, N) # observations
 
 # parameters
 sd_x_true <- 1
+prec_x_init_true <- sd_x_true^(-2)
 sd_y_true <- 1
+prec_y_true <- sd_y_true^(-2)
 mean_x_init_true <- 0
 r_x_true <- 0.85
 r_y_true <- 1
@@ -186,15 +195,16 @@ ggplot(data, aes(param, value)) +
 
 ## Comparison with Jags, Nimble and Stan
 
-### HMC
-Hamiltonian Monte Carlo algorithm is a most remarkable Markov chain Monte Carlo method for Bayesian inference that reduces the correlation between successive sampled states by using properties from Hamiltonian dynamics  [see the nice paper from R.M. Neal on the topic](https://www.cs.toronto.edu/~radford/ftp/ham-mcmc.pdf). It allows larger moves between states at the cost of doubling the dimension of the state space and being able to efficiently compute the gradient of the logposterior density. This causes such an algorithm to converge more quickly to the targeted posterior probability distribution. There is a growing interest to implement HMC algorithms in the many Bayesian toolboxes. In what follows
-we chose to test greta on a very easy and standard exemple. We further compare greta performances with other Bayesian inference tools : Jags, Nimble and Stan.
-
 ### Jags
 
 Written in C++, Jags (Just another Gibbs sampler 
 [Just another Gibbs sampler](https://web.sgh.waw.pl/~atoroj/ekonometria_bayesowska/jags_user_manual.pdf) ) is becomming the common tool for Bayesian newbies. Conversely to WinBUGS/OpenBUGS platform ([BUGS](https://www.mrc-bsu.cam.ac.uk/software/bugs/)) written in Pascal component and quasi-impossible to install on anything but Windows systems, Jags can be launched as a stand-alone routine from R whatever the operating system. It does not rely as greta on the recent Hamiltonian Monte algorithm to visit the space of the model's unknowns ( and subsequently does not call Tensorflow as a quick routine to perform Hamiltonian dynamics). But Jags is known to work quite fast (since it is developped by Martyn Plummer, founding member of the Rcore team) and we'd wished to compare its performance to greta's previous ones on this very simple linear Kalman filter example.  A jag's code treating the simple Kalman model would look like the following lines of code :
-```{r jagsexample}
+```{r jagsexample, message = FALSE}
+burnSize <- 100
+numberIter <- 1000
+thin <- 1
+params <- c('x', 'pres_x', 'r_y')
+
 require(rjags)
 jags.data <- list(y=y,N=N,prec_x_init=prec_x_init_true,prec_y=prec_y_true, 
                  mean_x_init=mean_x_init_true,r_x = r_x_true)
