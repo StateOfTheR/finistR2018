@@ -1,0 +1,119 @@
+---
+title: "Carte des participants"
+author: "Antoine Bichat"
+date: "31/08/2018"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, out.width = "90%", fig.align = "center")
+```
+
+
+<style>
+/* center widgets */
+.html-widget {
+    margin: auto;
+}
+</style>
+
+# Packages
+
+```{r packages, message=FALSE}
+library(tidyverse)
+library(leaflet)
+library(glue)
+```
+
+# Data
+
+```{r data}
+df_participants <-
+  tribble(~Prenom, ~Nom, ~Labo,
+       "Avner", "Bar-Hen", "(CNAM)",
+       "Antoine", "Bichat", "(LaMME - INRA Jouy-en-Josas - Enterome)",
+       "Mathieu", "Carmassi", "(AgroParisTech - EDF Lab Les Renardières)",
+       "Saint-Clair", "Chabert-Liddell", "(AgroParisTech)",
+       "Félix", "Cheysson", "(AgroParisTech - Institut Pasteur)",
+       "Julien", "Chiquet", "(AgroParisTech)",
+       "Sophie", "Donnet", "(AgroParisTech)",
+       "Marie-Pierre", "Étienne", "(IRMAR - Agrocampus Ouest)",
+       "Pierre", "Gloaguen", "(AgroParisTech)",
+       "Gabriel", "Lang", "(AgroParisTech)",
+       "Jean-Baptiste", "Lecomte", "(Agrocampus Ouest)",
+       "Raphaëlle", "Momal", "(AgroParisTech)",
+       "Pierre", "Navaro", "(IRMAR - Université de Rennes)",
+       "Éric", "Parent", "(AgroParisTech)",
+       "Marie", "Perrot", "(AgroParisTech)",
+       "Bewentaoré", "Sawadogo", "(AgroParisTech)",
+       "Timothée", "Tabouy", "(AgroParisTech)",
+       "Vincent", "Runge", "(LaMME)")
+df_participants
+
+df_labos <- 
+  tribble(~Labo, ~Lat, ~Long,
+          "CNAM", 48.866456, 2.355539,
+          "LaMME", 48.625671, 2.439936,
+          "INRA Jouy-en-Josas", 48.766096, 2.182927,
+          "Enterome", 48.851725, 2.376756,
+          "EDF Lab Les Renardières", 48.375008, 2.843243,
+          "Institut Pasteur", 48.840352, 2.311357,
+          "IRMAR", 48.119174, -1.641708,
+          "Agrocampus Ouest", 48.113799, -1.706054,
+          "AgroParisTech", 48.839827, 2.348523,
+          "Université de Rennes", 48.115951, -1.673121) 
+df_labos
+```
+
+# Manipulate data
+
+```{r dplyr, }
+df <-
+  df_participants %>% 
+  mutate(Labo = str_remove_all(Labo, "\\(|\\)"),
+         Labo = str_split(Labo, " - "),
+         Label = paste(Prenom, Nom)) %>% 
+  unnest(Labo) %>% 
+  group_by(Labo) %>% 
+  nest() %>% 
+  mutate(N = map_dbl(data, nrow),
+         Label = map(data, ~ pull(., Label)),
+         Label = map_chr(Label, ~ paste(., collapse = ", ")),
+         Label = glue("<b>{Labo}</b><br>{Label}")) %>% 
+  select(-data) %>% 
+  left_join(df_labos, by = "Labo")
+df
+```
+
+# Maps
+
+```{r map}
+map <- 
+  df %>% 
+  leaflet() %>% 
+  addTiles() %>%
+  addAwesomeMarkers(lng = ~Long, lat = ~Lat, popup = ~Label, label = ~Labo,
+                    icon = awesomeIcons(icon = "ios-people", iconColor = "black", 
+                                        library = "ion", markerColor = "blue")) %>% 
+  addAwesomeMarkers(lng = -3.984898, lat = ~47.860725, 
+                    popup = "<b>Agrocampus Ouest, site de Beg Meil</b><br>Lieu de Finist'R 2018",
+                    label = "Agrocampus Ouest, site de Beg Meil",
+                    icon = awesomeIcons(icon = "ios-analytics", iconColor = "black", 
+                                        library = "ion", markerColor = "red")) %>% 
+  addCircleMarkers(lng = -3.984898, lat = ~47.860725, color = "red") %>% 
+  addCircleMarkers(lng = ~Long, lat = ~Lat, radius = ~ 3*N, color = "blue")
+map 
+```
+<br>
+```{r mapparis}
+map %>% setView(lng = 2.3, lat = 48.7, zoom = 9)
+```
+<br>
+```{r maprennes}
+map %>% setView(lng = -1.68, lat = 48.12, zoom = 13)
+```
+
+
