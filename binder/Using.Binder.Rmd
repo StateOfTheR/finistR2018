@@ -1,0 +1,164 @@
+# Binder 
+
+- This is a free, public demo of BinderHub the software BinderHub.
+- Binder is a service that provides to your code, the hardware, and the software.
+
+# Preparing a repository for Binder
+
+## Supported configuration files list in the order of build priority
+
+- Dockerfile
+- environment.yml  
+- requirements.txt 
+- apt.txt
+- REQUIRE
+- postBuild
+
+## environment.yml
+
+This is a conda environment specification, that lets you install packages with conda (https://conda.io/docs/).
+
+Example Contents
+```yaml
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - matplotlib
+  - pip:
+    - pythran
+```
+
+## requirements.txt
+
+This specifies a list of Python packages that should be installed in a virtualenv (or conda environment).
+
+Example Contents
+
+~~~
+numpy==1.11
+matplotlib==2.1
+scipy
+~~~
+
+## apt.txt
+
+A list of Debian packages that should be installed. The base image used is usually the latest released version of Ubuntu.
+
+Example Contents
+
+~~~
+ffmpeg
+graphviz
+~~~
+
+## REQUIRE
+
+This file is dedicated to Julia language. It install julia 0.6 and packages listed in this file.
+
+Example Contents
+
+~~~
+Optim
+Plots
+~~~
+
+## postBuild
+A script that can contain arbitrary commands to be run after the whole repository has been built. If you want this to be a shell script, make sure the first line is `#!/bin/bash`.
+
+Example Contents
+
+````bash
+wget <url-to-dataset>
+python myfile.py
+```
+
+### Note:
+This file must be executable.
+```
+
+## Launching your Binder
+
+- Go to mybinder.org and insert the URL for your git repository. 
+- Press Launch to automatically create your Binder. 
+- Binder will only build a new one if the git hashes don’t match.
+
+## JupyterLab + Binder
+
+1. Launch a Binder instance
+
+2. Replace tree at the end of your URL with lab.
+```
+https://hub.mybinder.org/user/groupecalcul-canum-2018-la7iw4x1/tree
+```
+
+3. That’s it!
+```
+https://hub.mybinder.org/user/groupecalcul-canum-2018-la7iw4x1/lab
+```
+
+# R 
+
+Binder supports using R + RStudio, with libraries pinned to a specific
+snapshot on [MRAN](https://mran.microsoft.com/documents/rro/reproducibility).
+
+You need to have a `runtime.txt` file that is formatted like:
+
+```
+r-<YYYY>-<MM>-<DD>
+```
+
+where YYYY-MM-DD is a snapshot at MRAN that will be used for installing
+libraries.
+
+You can also have an `install.R` file that will be executed during build,
+and can be used to install libraries.
+
+Both [RStudio](https://www.rstudio.com/) and [IRKernel](https://irkernel.github.io/)
+are installed by default, so you can use either the Jupyter notebook interface or
+the RStudio interface.
+
+# Example
+
+Links below show an example of a Shiny app.
+
+- Jupyter+R: [![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/binder-examples/r/master?filepath=index.ipynb)
+
+- RStudio: [![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/binder-examples/r/master?urlpath=rstudio)
+
+- RShiny: [![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/binder-examples/r/master?urlpath=shiny/bus-dashboard/)
+
+## Want to setup your own copy of mybinder.org? 
+
+Then look at BinderHub and the "[Zero to BinderHub](https://zero-to-jupyterhub.readthedocs.io/en/latest/index.html)" guide 
+
+ ## Remarks
+ 
+ - Everything that happens in a Binder session is destroyed when the user logs off or becomes inactive for more than a few minutes.
+ 
+
+ - Never share sensitive or personal information within a Binder repository.
+ 
+
+ - The maximum number of simultaneous users for a given repo is 100
+ 
+
+ - You are guaranteed to have at least 1G of RAM. There is an upper-limit of 4GB.
+ 
+
+ - Binder automatically shut down user sessions that have more than 10 minutes of inactivity
+ 
+
+ - Binder aims to provide at least 12 hours of session time per user session.
+ 
+
+ - Do not push information from a Binder session onto GitHub.
+ 
+
+ - Configuration files may be placed in the root of your repository or in a **binder/** folder.
+
+## Need some examples or want to start from a working setup? 
+
+A lots of examples that work Python, R, Latex, conda, docker...
+
+http://mybinder.readthedocs.io/en/latest/sample_repos.html
