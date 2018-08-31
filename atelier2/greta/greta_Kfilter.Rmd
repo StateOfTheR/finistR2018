@@ -7,13 +7,13 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 # What is greta
-greta relies on TensorFlow and use efficient inference algorithms like Hamiltonian Monte Carlo. The main objective of greta is to provide a MCMC software like BUGS, JAGS or Stan. We can found on greta's [website](https://greta-dev.github.io/greta/index.html) the follwing definition:
+greta relies on TensorFlow and use efficient inference algorithms like Hamiltonian Monte Carlo. The main objective of greta is to provide a MCMC software like BUGS, JAGS or Stan. We can find on greta's [website](https://greta-dev.github.io/greta/index.html) the following definition:
 
 - *simple : greta models are written right in R, so there’s no need to learn another language like BUGS or Stan*
 - *scalable : greta uses Google TensorFlow so it’s fast even on massive datasets, and runs on CPU clusters and GPUs*
 - *extensible : it’s easy to write your own R functions, modules, and even packages using greta*
 
-The main advantage of greta is it builds statistical models interactively in R, and then sample from them by MCMC. There is no need to create a model object like in JAGS, Stan or nimble. However, greta creates specific objects (i.e. greta arrays) which are used to build the model and define the data to be used in the inference. greta is still is in its early developpement (version 0.2.3 on CRAN) and at this time their is a lack of documentation (especially compared with with Stan, JAGS or nimble).
+The main advantage of greta is it builds statistical models interactively in R, and then sample from them by MCMC. There is no need to create a model object like in JAGS, Stan or nimble. However, greta creates specific objects (i.e. greta arrays) which are used to build the model and define the data to be used in the inference. greta is still is in its early development (version 0.2.3 on CRAN) and at this time there is a lack of documentation (especially compared with Stan, JAGS or nimble).
 
 ## instalation
 greta use TensorFlow and it needs to be installed before installing greta. 
@@ -23,7 +23,7 @@ install.packages('tensorflow')
 install_tensorflow()
 ```
 
-greta also use the DiagrammeR R package for plotting Directed Acyclic Graph of greta models.
+greta also uses the DiagrammeR R package for plotting Directed Acyclic Graph of greta models.
 
 ```{r installation_greta, echo = TRUE, cache = FALSE, message = FALSE}
 # install.packages('greta')
@@ -31,7 +31,7 @@ greta also use the DiagrammeR R package for plotting Directed Acyclic Graph of g
 ```
 
 ## How it works
-On greta's website a getting started [page](https://greta-dev.github.io/greta/get_started.html) as well as [examples](https://greta-dev.github.io/greta/example_models.html) are availables. In the following section, we use greta with a simple dynamic model, for which there is no example on greta's website.
+On greta's website a getting started [page](https://greta-dev.github.io/greta/get_started.html) as well as [examples](https://greta-dev.github.io/greta/example_models.html) are available. In the following section, we use greta with a simple dynamic model, for which there is no example on greta's website.
 
 # Gaussian State Space model with greta
 The latent process $X$ is assumed to be an independent random walk, which is a cumulative sum of a sequence of independent process errors $\epsilon_x$. 
@@ -76,7 +76,7 @@ for (t in 2:N){
 ```
 
 ### greta data and priors
-
+The first step is to declare data for greta, assign priors to unknown parameters and provide distribution to random variables:
 
 ```{r greta1}
 # greta's data 
@@ -92,25 +92,18 @@ r_x <- r_x_true # parameter fixed to the true value
 
 # creation of an empty greta array
 epsilon_x <- normal(0, sd_x, dim = N)
-print(epsilon_x)
+```
+A prior gamma distribution is assigned to $\rho_y$
+```{r greta1c}
+print(r_y)
 ```
 
+*\epsilon_x* is an empty greta array
+```{r greta1a}
+print(epsilon_x)
+```
+the same process is used to define the latent variable $X$ for greta
 ```{r greta1b}
-
-# greta's data 
-obs <- as_data(y)
-
-# priors
-r_y <- gamma(1, 1) # gamma prior set to r_y
-sd_x <- inverse_gamma(1, 1) # inv-gamma prior set to sd_x
-
-# fixed parameters
-sd_y <- sd_y_true # parameter fixed to the true value
-r_x <- r_x_true # parameter fixed to the true value
-
-# creation of an empty greta array for the epsilon
-epsilon_x <- normal(0, sd_x, dim = N)
-
 # creation of an empty greta array for the X
 X <- greta_array(data = 0, dim = c(N, 1))
 # definition of the latent process interpreted by greta
@@ -152,13 +145,13 @@ draws <- greta::mcmc(model_greta, n_samples = 1000)
 load('greta_draws.RData')
 ```
 
-Results of draws are retruned as an mcmc.list object and can be summarized with:
+Results of draws are returned as an mcmc.list object and can be summarized with:
 ```{r greta6}
 # print summary of mcmc.list
 summary(draws)
 ```
 
-
+Using the tidyverse, a plot reprsenting simulated data, and posterior distributions is generated  
 ```{r greta7, eval = TRUE, message = FALSE}
 ### extract data from mcmc.list object to tibble for easy plotting with ggplot2
 bounds <- as_tibble(t(apply(draws[[1]][, -c(21, 22)],2,function(x) quantile(x,c(0.025,0.5,0.975)))))
@@ -175,7 +168,7 @@ data <- left_join(ggdraws,bounds,by="param")
 data <- left_join(data,true,by="param")
 data <- left_join(data,obs,by="param")
 
-### 
+### generating plot 
 ggplot(data, aes(param, value)) +
   geom_point(size = 0.2) +
   geom_ribbon(aes(ymin = min, ymax = max), fill = "gold", alpha = 0.2) +
