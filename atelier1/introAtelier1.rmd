@@ -34,7 +34,8 @@ L'élément h1 a  trois noeuds enfants et un noeud associé : les nouds enfants 
 
 De manière graphique on peut représenter une page HTML sous forme d'un arbre :
 
-!(HTMLDOMTree.png)
+
+![Représentation page HTML](HTMLDOMTree.png)
 
 Enfin il faut se rappeler que :
 
