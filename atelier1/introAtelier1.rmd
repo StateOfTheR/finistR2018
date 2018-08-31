@@ -30,15 +30,15 @@ Prenons un exemple de ligne html
       <h1 class="centre">Bonjour <i>tout le monde</i>&nbsp;!</h1>
 
 
-L'élément h1 a  trois noeuds enfants et un noeud associé : les nouds enfants sont le noeud texte avec le mot « Bonjour » suivi d'un espace, le noeuds élément de l'élément i, enfin le noeud texte constitué de la chaîne de caractères "&nbsp;!". L'attribut class dans la balise ouvrante `<h1>` n'est pas un noeud enfant mais un noeud associé. Le noeud attribut a cependant un noeud enfant : la valeur affectée (centre). 
+L'élément h1 a  trois noeuds enfants et un noeud associé : les nouds enfants sont le noeud texte avec le mot « Bonjour » suivi d'un espace, le noeuds élément de l'élément i, enfin le noeud texte constitué de la chaîne de caractères `"&nbsp;!"`. L'attribut class dans la balise ouvrante `<h1>` n'est pas un noeud enfant mais un noeud associé. Le noeud attribut a cependant un noeud enfant : la valeur affectée (`centre`). 
 
 De manière graphique on peut représenter une page HTML sous forme d'un arbre
 
 !(HTMLDOMTree.png)
 
-Enfin il faut se rappeler que les attributs
+`<h1>`, `<a>`, `<p>`,`<div>` ou `<span>` sont des balises. Notez que pour les attributs
 
-* un id s'applique à un objet unique : il ne peut pas y avoir deux mêmes id dans une page
-* une classe peut caractériser plusieurs objets (identiques ou non)
+* `id` s'applique à un objet unique : il ne peut pas y avoir deux mêmes id dans une page
+* `class` peut caractériser plusieurs objets (identiques ou non)
 
-Dans une feuille de style CSS, les id seront écrites avec la syntaxe #nom_id et on trouve .nom_de_classe pour les class.
+Si l'attribut place le texte en haut de la page, il ne peut y avoir qu'un paragraphe de ce type dans la page. Si l'attribut met le texte en rouge il peut y avoir plusieurs paragraphes en rouge dans la page. Dans une feuille de style CSS, les id seront écrites avec la syntaxe #nom_id et on trouve .nom_de_classe pour les class.
