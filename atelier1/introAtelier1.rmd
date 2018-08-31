@@ -1,7 +1,7 @@
 ---
 title: "Untitled"
 author: "Avner"
-date: "31 aoÃ»t 2018"
+date: "31 août 2018"
 output: html_document
 ---
 
@@ -11,45 +11,35 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction au Webscrapping
 
-Le Web scraping est une technique permettant de convertir des donnÃ©es prÃ©sentes dans un format non structurÃ© (balises HTML) sur le Web en un format structurÃ© facilement utilisable. Les exemples peuvent aller du texte sur Wikipedia, Ã  des images sur Flickr en passant par les commentaires sur TripAdvisor, les articles d'actualitÃ© ou de chercheurs ou n'importe quelle page web prÃ©sente sur Internet.
+Le Web scraping est une technique permettant de convertir des données présentes dans un format non structuré (balises HTML) sur le Web en un format structuré facilement utilisable. Les exemples peuvent aller du texte sur Wikipedia, à des images sur Flickr en passant par les commentaires sur TripAdvisor, les articles d'actualité ou de chercheurs ou n'importe quelle page web présente sur Internet.
 
-Il existe plusieurs faÃ§ons de rÃ©cupÃ©rer les donnÃ©es du Web. Certains des moyens les plus populaires sont :
+Il existe plusieurs façons de récupérer les données du Web. Certains des moyens les plus populaires sont :
 
-* Copier-coller manuel : c'est un moyen lent mais efficace de scraper les donnÃ©es du Web. On peut aussi copier la page Web intÃ©gralement puis utiliser des expressions rÃ©guliÃ¨res pour extraire l'info recherchÃ©e.
-* Interface API: De nombreux sites Web tels que Facebook, Twitter, LinkedIn, etc. fournissent des API publiques et / ou privÃ©es pouvant Ãªtre appelÃ©es Ã  l'aide d'un code standard pour rÃ©cupÃ©rer les donnÃ©es dans le format prescrit. Il existe pas mal de librairies R qui permettent d'utiliser ces API directement dans R.
+* Copier-coller manuel : c'est un moyen lent mais efficace pour scraper les données du Web. On peut aussi copier la page Web intégralement puis utiliser des expressions régulières pour extraire l'info recherchée.
+* Interface API: De nombreux sites Web tels que Facebook, Twitter, LinkedIn, etc. fournissent des API publiques et / ou privées pouvant être appelées à l'aide d'un code standard pour récupérer les données dans le format prescrit. Il existe pas mal de librairies R qui permettent d'utiliser ces API directement dans R.
   
-Une connaissance minimale du HTML et des CSS peut Ãªtre utile. L'extension Selector Gadget sur Chrome permet d'inspecter la structure d'une page web et va Ãªtre trÃ¨s utile.
+Une connaissance minimale du HTML et des CSS peut être utile. L'extension Selector Gadget sur Chrome permet d'inspecter la structure d'une page web et va être très utile.
 
-## Introduction Ã  l'HTML
-L'idÃ©e du HTML est d'avoir des balises qui permettent de donner un sens Ã  des partis de texte (est-ce un paragraphe ? est-ce une liste Ã  puces ? est-ce une partie de tableau ?), pour structurer un document en sections logiques (a-t-on une en-tÃªte ? un tableau ? combie de colonnes ? y-a-t-il un menu de navigation ?) ainsi que pour intÃ©grer du contenu comme images ou vidÃ©os dans une page.
+## Introduction à l'HTML
+L'idée du HTML est d'avoir des balises qui permettent de donner un sens à des partis de texte (est-ce un paragraphe ? Est-ce une liste à puces ? Est-ce une partie de tableau ?), pour structurer un document en sections logiques (a-t-on une en-tête ? Un tableau ? Combien de colonnes ? Y-a-t-il un menu de navigation ?) ainsi que pour intégrer du contenu comme des images ou des vidéos dans une page.
 
-Un langage de marquage comme HTML ou XML peut Ãªtre schÃ©matisÃ© comme une arborescence hiÃ©rarchisÃ©e. Les diffÃ©rentes composantes de l'arborescence sont appelÃ©s _noeuds_. Il existe diffÃ©rents types de noeuds et dans un document HTML il y a au moins trois types de noeuds : les noeud-Ã©lÃ©ment, les noeud-attribut, et les noeud-texte.
+Un langage de marquage comme HTML ou XML peut être schématisé comme une arborescence hiérarchisée. Les différentes composantes de l'arborescence sont appelés _noeuds_. Il existe différents types de noeuds et dans un document HTML il y a au moins trois types de noeuds : les noeud-élément, les noeud-attribut, et les noeud-texte.
 
 Prenons un exemple de ligne html
 
       <h1 class="centre">Bonjour <i>tout le monde</i>&nbsp;!</h1>
 
 
-<<<<<<< HEAD
-L'élément h1 a  trois noeuds enfants et un noeud associé : les nouds enfants sont le noeud texte avec le mot « Bonjour » suivi d'un espace, le noeuds élément de l'élément i, enfin le noeud texte constitué de la chaîne de caractères `"&nbsp;!"`. L'attribut class dans la balise ouvrante `<h1>` n'est pas un noeud enfant mais un noeud associé. Le noeud attribut a cependant un noeud enfant : la valeur affectée (`centre`). 
-=======
-L'Ã©lÃ©ment h1 a  trois noeuds enfants et un noeud associÃ© : les nouds enfants sont le noeud texte avec le mot Â« Bonjour Â» suivi d'un espace, le noeuds Ã©lÃ©ment de l'Ã©lÃ©ment i, enfin le noeud texte constituÃ© de la chaÃ®ne de caractÃ¨res "&nbsp;!". L'attribut class dans la balise ouvrante `<h1>` n'est pas un noeud enfant mais un noeud associÃ©. Le noeud attribut a cependant un noeud enfant : la valeur affectÃ©e (centre). 
->>>>>>> d35eb20da8d3861709ec78775c531e30d0bd370d
+L'élément h1 a  trois noeuds enfants et un noeud associé : les nouds enfants sont le noeud texte avec le mot « Bonjour » suivi d'un espace, le noeuds élément de l'élément i, enfin le noeud texte constitué de la chaîne de caractères `&nbsp;!`. L'attribut class dans la balise ouvrante `<h1>` n'est pas un noeud enfant mais un noeud associé. Le noeud attribut a cependant un noeud enfant : la valeur affectée (`centre`). 
 
-De maniÃ¨re graphique on peut reprÃ©senter une page HTML sous forme d'un arbre
+De manière graphique on peut représenter une page HTML sous forme d'un arbre :
 
-!(HTMLDOMTree.png)
 
-`<h1>`, `<a>`, `<p>`,`<div>` ou `<span>` sont des balises. Notez que pour les attributs
+![Représentation page HTML](HTMLDOMTree.png)
 
-<<<<<<< HEAD
-* `id` s'applique à un objet unique : il ne peut pas y avoir deux mêmes id dans une page
-* `class` peut caractériser plusieurs objets (identiques ou non)
+Enfin il faut se rappeler que :
 
-Si l'attribut place le texte en haut de la page, il ne peut y avoir qu'un paragraphe de ce type dans la page. Si l'attribut met le texte en rouge il peut y avoir plusieurs paragraphes en rouge dans la page. Dans une feuille de style CSS, les id seront écrites avec la syntaxe #nom_id et on trouve .nom_de_classe pour les class.
-=======
-* un id s'applique Ã  un objet unique : il ne peut pas y avoir deux mÃªmes id dans une page
-* une classe peut caractÃ©riser plusieurs objets (identiques ou non)
+* un id s'applique à un objet unique : il ne peut pas y avoir deux mêmes id dans une page
+* une classe peut caractériser plusieurs objets (identiques ou non).
 
-Dans une feuille de style CSS, les id seront Ã©crites avec la syntaxe #nom_id et on trouve .nom_de_classe pour les class.
->>>>>>> d35eb20da8d3861709ec78775c531e30d0bd370d
+Dans une feuille de style CSS, les id seront écrits avec la syntaxe #nom_id et on trouve .nom_de_classe pour les classes.
