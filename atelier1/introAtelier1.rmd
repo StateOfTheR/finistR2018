@@ -15,10 +15,10 @@ Le Web scraping est une technique permettant de convertir des données présente
 
 Il existe plusieurs façons de récupérer les données du Web. Certains des moyens les plus populaires sont :
 
-* Copier-coller manuel : c'est un moyen lent mais efficace de scraper les données du Web. On peut aussi copier la page Web intégralement puis utiliser des expressions régulières pour extraire l'info recherché.
-* Interface API: De nombreux sites Web tels que Facebook, Twitter, LinkedIn, etc. fournissent des API publiques et / ou privées pouvant être appelées à l'aide d'un code standard pour récupérer les données dans le format prescrit. Il existe pas mal de librairies R qui permettent d'utiliser ces API directement dans R
+* Copier-coller manuel : c'est un moyen lent mais efficace de scraper les données du Web. On peut aussi copier la page Web intégralement puis utiliser des expressions régulières pour extraire l'info recherchée.
+* Interface API: De nombreux sites Web tels que Facebook, Twitter, LinkedIn, etc. fournissent des API publiques et / ou privées pouvant être appelées à l'aide d'un code standard pour récupérer les données dans le format prescrit. Il existe pas mal de librairies R qui permettent d'utiliser ces API directement dans R.
   
-Une connaissance minimal du HTML et des CSS peuvent être utile. L'extension Selector Gadget sur Chrome permet d'inspecter la structure d'une page web et va être très utile
+Une connaissance minimale du HTML et des CSS peut être utile. L'extension Selector Gadget sur Chrome permet d'inspecter la structure d'une page web et va être très utile.
 
 ## Introduction à l'HTML
 L'idée du HTML est d'avoir des balises qui permettent de donner un sens à des partis de texte (est-ce un paragraphe ? est-ce une liste à puces ? est-ce une partie de tableau ?), pour structurer un document en sections logiques (a-t-on une en-tête ? un tableau ? combie de colonnes ? y-a-t-il un menu de navigation ?) ainsi que pour intégrer du contenu comme images ou vidéos dans une page.
