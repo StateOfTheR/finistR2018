@@ -1,0 +1,52 @@
+name: "FinistR, édition 2018"
+navbar:
+  title: "FinistR 2018"
+  left:
+  - text: "Home"
+    href: index.html
+  right:
+  - text: "Webscrapping"
+    href: atelier1_webscraping.html
+    menu:
+      - text: "Simple Example"
+        href: atelier1_webscraping_simple.html
+      - text: "Genealogie mathématique"
+        href: atelier1_webscraping_genealogie.html
+      - text: "Trip advisor"
+        href: atelier1_webscraping_tripadvisor.html
+      - text: "Google Fight"
+        href: atelier1_webscraping_googlefight.html
+      - text: "Google News"
+        href: atelier1_webscraping_googlenews.html
+      - text: "Youtube"
+        href: atelier1_webscraping_youtube.html
+        
+  - text: "Optimisation et accélération"
+    href: atelier2_acceleration.html
+    menu:
+      - text: "R et GPU"
+        href: atelier2_rgpu.html
+      - text: "TensorFlow"
+        href: atelier2_tensorflow.html
+      - text: "Julia"
+        href: atelier2_julia.html
+      - text: "Rcpp"
+        href: atelier2_rcpp_modules.html
+  - text: "Bonnes pratiques"
+    href: atelier3_bp.html
+    menu:
+      - text: "Versionning"
+        href: atelier3_git.html
+      - text: "Package"
+        href: atelier3_package.html
+        menu: 
+          - text: "Création"
+            href: atelier3_package_creation.html
+          - text: "Développement et tests"
+            href: atelier3_package_dvp.html
+      - text: "Production de documents"
+        href: atelier3_advancedrmd.html
+output:
+  html_document:
+    theme: cosmo
+    highlight: textmate

@@ -1,0 +1,7 @@
+---
+  title: "FinistR à Beg Meil"
+---
+  
+  Le site agrocampus Ouest de Beg Meil a accueilli du 27 au 31 aoùt 2018, le deuxième R Bootcamp du groupe State Of The R. 
+  Cette semaine a été consacré à approfondir divers aspects du logiciel R. Ce site propose un compte rendu des différents thèmes abordés.
+  

@@ -1,0 +1,220 @@
+---
+title: "Mathematical genealogy scraping"
+author: "Antoine Bichat"
+date: "27/08/2018"
+output: 
+  html_document:
+   toc: true
+   toc_float: true
+   number_sections: false
+   highlight: tango
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache=TRUE)
+```
+
+```{r library, message=FALSE}
+library(tidyverse)
+library(rvest)
+library(glue)
+library(tidygraph)
+library(ggraph)
+```
+
+# A la main
+
+## Rémi Peyre
+
+```{r rp, cache=TRUE, cache.lazy=FALSE}
+remi_peyre <- "https://www.genealogy.math.ndsu.nodak.edu/id.php?id=150077"
+
+remi_peyre %>% 
+  read_html() %>% 
+  html_node(xpath = '//*[@id="paddingWrapper"]/p[2]/a')
+
+remi_peyre_adv <-
+  remi_peyre %>% 
+  read_html() %>% 
+  html_node(xpath = '//*[@id="paddingWrapper"]/p[2]/a') %>% 
+  html_text()
+remi_peyre_adv
+
+remi_peyre_adv_id <-
+  remi_peyre %>% 
+  read_html() %>% 
+  html_node(xpath = '//*[@id="paddingWrapper"]/p[2]/a') %>% 
+  html_attr("href") %>% 
+  str_extract("[0-9]+")
+remi_peyre_adv_id
+
+remi_peyre %>% 
+  html_session() %>% 
+  follow_link(remi_peyre_adv) %>% 
+  session_history()
+```
+
+## Haim Brezis
+
+```{r hb, cache=TRUE, cache.lazy=FALSE}
+haim_brezis <- "https://www.genealogy.math.ndsu.nodak.edu/id.php?id=39923"
+
+# //*[@id="paddingWrapper"]/p[2]/a[1]
+# //*[@id="paddingWrapper"]/p[2]/a[2]
+
+haim_brezis_adv <-
+  haim_brezis %>% 
+  read_html() %>% 
+  html_nodes(xpath = '//*[@id="paddingWrapper"]/p[2]/a[.]') %>% 
+  html_text()
+haim_brezis_adv
+
+haim_brezis_adv_id <-
+  haim_brezis %>% 
+  read_html() %>% 
+  html_nodes(xpath = '//*[@id="paddingWrapper"]/p[2]/a[.]') %>% 
+  html_attr("href") %>% 
+  str_extract("[0-9]+")
+haim_brezis_adv_id
+```
+
+## Ulrich Zasius
+
+```{r uz, cache=TRUE, cache.lazy=FALSE}
+ulrich_zasius <- "https://www.genealogy.math.ndsu.nodak.edu/id.php?id=126659"
+
+ulrich_zasius_adv <-
+  ulrich_zasius %>% 
+  read_html() %>% 
+  html_nodes(xpath = '//*[@id="paddingWrapper"]/p[2]/a[.]') %>% 
+  html_text()
+ulrich_zasius_adv
+
+ulrich_zasius_adv_id <-
+  ulrich_zasius %>% 
+  read_html() %>% 
+  html_nodes(xpath = '//*[@id="paddingWrapper"]/p[2]/a[.]') %>% 
+  html_attr("href") %>% 
+  str_extract("[0-9]+")
+ulrich_zasius_adv_id
+```
+
+
+# Quelques fonctions
+
+
+```{r functions}
+generate_page <- function(id){
+  glue("https://www.genealogy.math.ndsu.nodak.edu/id.php?id={id}")
+}
+
+get_adv_id <- function(page){
+  page %>% 
+  read_html() %>% 
+  html_nodes(xpath = '//*[@id="paddingWrapper"]/p[2]/a[.]') %>% 
+  html_attr("href") %>% 
+  str_extract("[0-9]+")
+} 
+```
+
+
+# Récupération de la structure de graphe
+
+
+```{r recursive}
+create_edgelist <- function(id){
+  advisors_id <- get_adv_id(generate_page(id))
+  L <- length(advisors_id)
+  if(L == 0){
+    return(matrix(ncol = 2, nrow = 0))
+  } 
+  if(L == 1){
+    return(rbind(matrix(c(rep(id, L), advisors_id[1]), ncol = 2), 
+                 create_edgelist(advisors_id[1])))
+  }
+  if(L == 2){
+    return(rbind(matrix(c(rep(id, L), advisors_id), ncol = 2), 
+                 create_edgelist(advisors_id[1]), 
+                 create_edgelist(advisors_id[2])))
+  }
+}
+
+```
+
+```{r dfPeyre, cache=TRUE, cache.lazy=FALSE}
+id_peyre <- 150077
+df_edgelist <-
+  id_peyre %>% 
+  create_edgelist() %>% 
+  as_tibble()
+```
+
+```{r}
+nrow(df_edgelist)
+df_edgelist <- unique(df_edgelist)
+print(df_edgelist, n = Inf)
+```
+
+# Récupération des données complémentaires
+
+```{r}
+get_name <- function(xml_page){
+  xml_page %>% 
+    html_node(xpath = '//*[@id="paddingWrapper"]/h2') %>% 
+    html_text() %>% 
+    str_remove_all("\n") %>% 
+    str_replace_all("  ", " ")
+}
+
+get_infos <- function(page){
+  xml_page <- read_html(page)
+  tibble(label = get_name(xml_page))
+}
+
+```
+
+```{r dfnodes, cache=TRUE, cache.lazy=FALSE}
+df_nodes <- 
+  df_edgelist %>% 
+  gather() %>% 
+  pull(value) %>% 
+  unique() %>% 
+  tibble(id = .) %>% 
+  mutate(page = map_chr(id, generate_page),
+         infos = map(page, get_infos)) %>% 
+  unnest(infos) %>% 
+  select(-page)
+```
+
+```{r}
+df_nodes
+```
+
+
+# Graphe
+
+```{r}
+G <- 
+  df_edgelist %>% 
+  select(V2, V1) %>% 
+  as_tbl_graph()
+G
+G <- left_join(G, df_nodes, c("name" = "id"))
+G
+```
+
+
+```{r graph,  out.width="100%"}
+ggraph(G, layout = "fr") +
+  geom_edge_link(colour = "grey",
+                 arrow = arrow(length = unit(1, 'mm')), 
+                 start_cap = circle(1, 'mm'),
+                 end_cap = circle(1, 'mm')) +
+  geom_node_text(aes(label = label), size = 2) +
+  theme_void()
+```
+
+
+
+
+
