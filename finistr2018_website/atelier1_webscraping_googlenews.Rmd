@@ -5,7 +5,7 @@ date: "August 27, 2018"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, eval=TRUE}
 knitr::opts_chunk$set(echo = TRUE)
 library('rvest')
 library('glue') # pour les jolies concaténations
@@ -14,196 +14,196 @@ library('ggplot2')
 library('tidyverse')
 ```
 
-## Construire la requete
+<!-- ## Construire la requete -->
 
-On veut lister tous les résultats dans les news référrencées par google concernant un mot clé : 'vegan'
+<!-- On veut lister tous les résultats dans les news référrencées par google concernant un mot clé : 'vegan' -->
 
-```{r}
-keyword <- 'vegan'
-source  <- 'nws'
-```
+<!-- ```{r} -->
+<!-- keyword <- 'carnivore' -->
+<!-- source  <- 'nws' -->
+<!-- ``` -->
 
-On peut utiliser le package RCurl qui télécharge des pages web :
+<!-- On peut utiliser le package RCurl qui télécharge des pages web : -->
 
-```{r}
-res_curl <- getURL(paste0("https://www.google.com/search?q=", keyword,"&tbm=",source))
-class(res_curl)
-```
+<!-- ```{r} -->
+<!-- res_curl <- getURL(paste0("https://www.google.com/search?q=", keyword,"&tbm=",source)) -->
+<!-- class(res_curl) -->
+<!-- ``` -->
 
-Mais le résultat n'est pas très lisible, comme le montre la sortie suivante qui affiche les 1000 premiers caractères.
+<!-- Mais le résultat n'est pas très lisible, comme le montre la sortie suivante qui affiche les 1000 premiers caractères. -->
 
-```{r}
-stringr::str_sub(res_curl, end = 500)
-```
+<!-- ```{r} -->
+<!-- stringr::str_sub(res_curl, end = 500) -->
+<!-- ``` -->
 
-Dans ce cas le document n'est pas structuré, c'est du html et non xml.
-
-
-Utiliser le package `rvest` permet d'obtenir un fichier xml structuré plus facile à parcourir et analyser.
-
-```{r}
-res_rvest <- read_html(paste0("https://www.google.com/search?q=",keyword,"&tbm=", source))
-res_rvest
-```
-
-Si on veut chercher une experession plus complexe avec plusieurs mots, il faut créer une requete avec des guillemets. Par exemple 'vegan et boucher'
-
-```{r}
-keyword2 <- 'vegan+boucher'
-res2_rvest <- read_html(paste0("https://www.google.com/search?q=", keyword2))
-res2_rvest
-```
+<!-- Dans ce cas le document n'est pas structuré, c'est du html et non xml. -->
 
 
-## Extraire l'information 
+<!-- Utiliser le package `rvest` permet d'obtenir un fichier xml structuré plus facile à parcourir et analyser. -->
 
-On souhaite pour chaque résultat de la page, extraire le journal et la date de la parution.
+<!-- ```{r} -->
+<!-- res_rvest <- read_html(paste0("https://www.google.com/search?q=",keyword,"&tbm=", source)) -->
+<!-- res_rvest -->
+<!-- ``` -->
 
-Pour chaque résultat, on a une balise 'slp' qui contient l'origine et la date. On peut accéder à son contenu grâce à la fonction `html_nodes`. La fonction `html_node` ne donne accès qu'à la première occurrence de cette balise. Pour accèder à ce qui se trouve au sein de cette balise, on peut enchaîner avec la fonction `html_children` qui donne accès au contenu de cette balise.
+<!-- Si on veut chercher une experession plus complexe avec plusieurs mots, il faut créer une requete avec des guillemets. Par exemple 'vegan et boucher' -->
 
-```{r}
-html_nodes(res_rvest,".slp") %>% html_children
-```
-
-Seuls  10 résultats apparaissent : les 10 suivants peuvent être obtenus en indiquant à google de commencer au 11eme résultat.
-
-```{r}
-debut <- 10
-res_rvest <- read_html(glue('https://www.google.com/search?q={                              keyword}&tbm={source}&start={debut}'))
-html_nodes(res_rvest,".slp") %>% html_children
-```
-
-Pour voir la structure de la page
-```{r, eval=FALSE}
-res_rvest %>%html_structure()
-```
+<!-- ```{r} -->
+<!-- keyword2 <- 'veg+boucher' -->
+<!-- res2_rvest <- read_html(paste0("https://www.google.com/search?q=", keyword2)) -->
+<!-- res2_rvest -->
+<!-- ``` -->
 
 
-# Traiter les sorties pour en faire une info exploitable
+<!-- ## Extraire l'information  -->
 
-La requete est donnée donc par 
-```{r}
-req <- glue('https://www.google.com/search?q={                        keyword}&tbm={source}&start={debut}')
-```
+<!-- On souhaite pour chaque résultat de la page, extraire le journal et la date de la parution. -->
 
-## le titre
+<!-- Pour chaque résultat, on a une balise 'slp' qui contient l'origine et la date. On peut accéder à son contenu grâce à la fonction `html_nodes`. La fonction `html_node` ne donne accès qu'à la première occurrence de cette balise. Pour accèder à ce qui se trouve au sein de cette balise, on peut enchaîner avec la fonction `html_children` qui donne accès au contenu de cette balise. -->
 
-Le titre se trouve dans une blaise de class `.g` 
-```{r}
-title <-  read_html(req) %>%
-  html_nodes(css=".g") %>% html_text() %>% stringr::str_split(' - ')%>%
-  sapply(function(d_){d_[1]}) %>% as.character()
-```
+<!-- ```{r} -->
+<!-- html_nodes(res_rvest,".slp") %>% html_children -->
+<!-- ``` -->
 
-Le titre contient encore le nom du journal qu'il faut supprimer.
+<!-- Seuls  10 résultats apparaissent : les 10 suivants peuvent être obtenus en indiquant à google de commencer au 11eme résultat. -->
 
-## le nom du journal
-```{r}
-  res <- read_html(req) %>%
-    html_nodes(css=".slp") %>% 
-    html_children %>% 
-    html_text
-origin <- sapply(
-    stringr::str_split(res, ' - '), function(s_){s_[1]})
-```
+<!-- ```{r} -->
+<!-- debut <- 10 -->
+<!-- res_rvest <- read_html(glue('https://www.google.com/search?q={                              keyword}&tbm={source}&start={debut}')) -->
+<!-- html_nodes(res_rvest,".slp") %>% html_children -->
+<!-- ``` -->
+
+<!-- Pour voir la structure de la page -->
+<!-- ```{r, eval=FALSE} -->
+<!-- res_rvest %>%html_structure() -->
+<!-- ``` -->
 
 
-On peut maintenant supprimer le nom du journal du titre.
+<!-- # Traiter les sorties pour en faire une info exploitable -->
 
-```{r}
-title <- stringr::str_remove(title, origin)
-title
-```
+<!-- La requete est donnée donc par  -->
+<!-- ```{r} -->
+<!-- req <- glue('https://www.google.com/search?q={                        keyword}&tbm={source}&start={debut}') -->
+<!-- ``` -->
 
-## la date de la publication
+<!-- ## le titre -->
 
-```{r}
-date <- sapply( stringr::str_split(res, ' - '), function(s_){s_[2]})
-```  
+<!-- Le titre se trouve dans une blaise de class `.g`  -->
+<!-- ```{r} -->
+<!-- title <-  read_html(req) %>% -->
+<!--   html_nodes(css=".g") %>% html_text() %>% stringr::str_split(' - ')%>% -->
+<!--   sapply(function(d_){d_[1]}) %>% as.character() -->
+<!-- ``` -->
 
-Le problème est que la date n'a pas toujours le même format. Elle est parfois donnée sous la forme "il y a 6 jours", "il y a 2h". Le cas échéant on va donc recréer une date correcte à partir de la date actuelle à laquelle on retranche la durée indiquée.
+<!-- Le titre contient encore le nom du journal qu'il faut supprimer. -->
 
-
-```{r}
-  date_propre <- sapply(date, function(d_){
-    if(stringr::str_detect(d_, 'il y a')){
-      nunits <- as.numeric(stringr::str_extract(d_, "[0-9]+"))
-      unit <- ifelse( stringr::str_detect(d_, 'jours'), 'days', 'hours' )
-      dt <- as.difftime(nunits, units = unit)
-      r <- Sys.time() - dt
-      r <- round.POSIXt(r, units = 'days')
-    } else
-    {
-      r <- strptime(d_, format = "%d %b %Y")
-    }
-    return(as.character(r))
-  })
-  date_propre
-```  
-  
-
-La fonction `extractGoogleRes` prend en paramètre un numero de pages et renvoie le tableau contenant le titre, la date et le journal.
-
-```{r}
-extractGoogleRes <- function(p_){
-  debut <- p_ * 10
-  req   <- req <- glue('https://www.google.com/search?q={                        keyword}&tbm={source}&start={debut}')
-  
-  title <-  read_html(req) %>%
-    html_nodes(css=".g") %>% html_text() %>% stringr::str_split(' - ') %>%
-    sapply(function(d_){d_[1]}) %>% as.character()
-  
-  res <- read_html(req) %>%
-    html_nodes(css=".slp") %>% 
-    html_children %>% 
-    html_text
-  
-  origin <- sapply(
-    stringr::str_split(res, ' - '), function(s_){s_[1]})
-  
-  title <- stringr::str_remove(title, origin)
-  
-  date <- sapply( stringr::str_split(res, ' - '), function(s_){s_[2]})
-  
-  date_propre <- sapply(date, function(d_){
-    if(stringr::str_detect(d_, 'il y a')){
-      nunits <- as.numeric(stringr::str_extract(d_, "[0-9]+"))
-      unit <- ifelse( stringr::str_detect(d_, 'jours'), 'days', 'hours' )
-      dt <- as.difftime(nunits, units = unit)
-      r <- Sys.time() - dt
-      r <- round.POSIXt(r, units = 'days')
-    } else
-    {
-      r <- strptime(d_, format = "%d %b %Y")
-    }
-    return(as.character(r))
-  })
-  return(data.frame(title=title, jour=date_propre, origin=origin))  
-}
-
-extractGoogleRes(2)
-```
+<!-- ## le nom du journal -->
+<!-- ```{r} -->
+<!--   res <- read_html(req) %>% -->
+<!--     html_nodes(css=".slp") %>%  -->
+<!--     html_children %>%  -->
+<!--     html_text -->
+<!-- origin <- sapply( -->
+<!--     stringr::str_split(res, ' - '), function(s_){s_[1]}) -->
+<!-- ``` -->
 
 
-## Obtenir les 260 résultats autorisés par Google
+<!-- On peut maintenant supprimer le nom du journal du titre. -->
 
-Google limite le nombre de pages accessibles à 26.  On va doncappelr successivement chaune de ces pages.
+<!-- ```{r} -->
+<!-- title <- stringr::str_remove(title, origin) -->
+<!-- title -->
+<!-- ``` -->
 
-```{r}
-pages <- 0:25
-res   <- lapply(pages, extractGoogleRes)
-df <- do.call(rbind, res)
-summary(df)
-```
+<!-- ## la date de la publication -->
+
+<!-- ```{r} -->
+<!-- date <- sapply( stringr::str_split(res, ' - '), function(s_){s_[2]}) -->
+<!-- ```   -->
+
+<!-- Le problème est que la date n'a pas toujours le même format. Elle est parfois donnée sous la forme "il y a 6 jours", "il y a 2h". Le cas échéant on va donc recréer une date correcte à partir de la date actuelle à laquelle on retranche la durée indiquée. -->
 
 
-## Représentation graphique
+<!-- ```{r} -->
+<!--   date_propre <- sapply(date, function(d_){ -->
+<!--     if(stringr::str_detect(d_, 'il y a')){ -->
+<!--       nunits <- as.numeric(stringr::str_extract(d_, "[0-9]+")) -->
+<!--       unit <- ifelse( stringr::str_detect(d_, 'jours'), 'days', 'hours' ) -->
+<!--       dt <- as.difftime(nunits, units = unit) -->
+<!--       r <- Sys.time() - dt -->
+<!--       r <- round.POSIXt(r, units = 'days') -->
+<!--     } else -->
+<!--     { -->
+<!--       r <- strptime(d_, format = "%d %b %Y") -->
+<!--     } -->
+<!--     return(as.character(r)) -->
+<!--   }) -->
+<!--   date_propre -->
+<!-- ```   -->
 
-```{r}
-df %>%
-  group_by(jour) %>%
-  summarise(cnt = n()) %>% mutate(date_pub= as.POSIXct(strptime(jour, format = "%Y-%m-%d",  tz="GMT"))) %>%
-  ggplot(aes(x = (date_pub), y = cnt)) +
-  geom_bar(stat = "identity") 
-```
+
+<!-- La fonction `extractGoogleRes` prend en paramètre un numero de pages et renvoie le tableau contenant le titre, la date et le journal. -->
+
+<!-- ```{r} -->
+<!-- extractGoogleRes <- function(p_){ -->
+<!--   debut <- p_ * 10 -->
+<!--   req   <- req <- glue('https://www.google.com/search?q={                        keyword}&tbm={source}&start={debut}') -->
+
+<!--   title <-  read_html(req) %>% -->
+<!--     html_nodes(css=".g") %>% html_text() %>% stringr::str_split(' - ') %>% -->
+<!--     sapply(function(d_){d_[1]}) %>% as.character() -->
+
+<!--   res <- read_html(req) %>% -->
+<!--     html_nodes(css=".slp") %>%  -->
+<!--     html_children %>%  -->
+<!--     html_text -->
+
+<!--   origin <- sapply( -->
+<!--     stringr::str_split(res, ' - '), function(s_){s_[1]}) -->
+
+<!--   title <- stringr::str_remove(title, origin) -->
+
+<!--   date <- sapply( stringr::str_split(res, ' - '), function(s_){s_[2]}) -->
+
+<!--   date_propre <- sapply(date, function(d_){ -->
+<!--     if(stringr::str_detect(d_, 'il y a')){ -->
+<!--       nunits <- as.numeric(stringr::str_extract(d_, "[0-9]+")) -->
+<!--       unit <- ifelse( stringr::str_detect(d_, 'jours'), 'days', 'hours' ) -->
+<!--       dt <- as.difftime(nunits, units = unit) -->
+<!--       r <- Sys.time() - dt -->
+<!--       r <- round.POSIXt(r, units = 'days') -->
+<!--     } else -->
+<!--     { -->
+<!--       r <- strptime(d_, format = "%d %b %Y") -->
+<!--     } -->
+<!--     return(as.character(r)) -->
+<!--   }) -->
+<!--   return(data.frame(title=title, jour=date_propre, origin=origin))   -->
+<!-- } -->
+
+<!-- extractGoogleRes(2) -->
+<!-- ``` -->
+
+
+<!-- ## Obtenir les 260 résultats autorisés par Google -->
+
+<!-- Google limite le nombre de pages accessibles à 26.  On va doncappelr successivement chaune de ces pages. -->
+
+<!-- ```{r} -->
+<!-- pages <- 0:25 -->
+<!-- res   <- lapply(pages, extractGoogleRes) -->
+<!-- df <- do.call(rbind, res) -->
+<!-- summary(df) -->
+<!-- ``` -->
+
+
+<!-- ## Représentation graphique -->
+
+<!-- ```{r} -->
+<!-- df %>% -->
+<!--   group_by(jour) %>% -->
+<!--   summarise(cnt = n()) %>% mutate(date_pub= as.POSIXct(strptime(jour, format = "%Y-%m-%d",  tz="GMT"))) %>% -->
+<!--   ggplot(aes(x = (date_pub), y = cnt)) + -->
+<!--   geom_bar(stat = "identity")  -->
+<!-- ``` -->
 

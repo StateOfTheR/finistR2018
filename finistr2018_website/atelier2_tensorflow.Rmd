@@ -1,0 +1,263 @@
+---
+title: "Introduction à Tensorflow"
+author: "Sophie Donnet, Saint-Clair"
+date: "28 août 2018"
+output: 
+  html_document:
+   toc: true
+   toc_float: true
+   number_sections: false
+   highlight: tango
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache=TRUE)
+```
+
+
+## Tensorflow en quelques mots
+
+TensorFlow est essentiellement connu comme l'optimiseur permettant d'ajuster des modèles d'apprentissage profond. Cet ensemble de codes a été développé par Google.
+Dans cette introduction, on s'intéresse au principe de fonctionnement de TensorFlow. L'idée est que l'on peut espérer comprendre les principes de base et accéder aux fonctions code afin d'optimiser n'importe quelle autre fonction telle qu'une vraisemblance, des moindres carrés pénalisés, etc... 
+
+
+
+Pour minimiser une fonction,  on a par exemple  recourt à un algorithme de descente de gradient plus ou moins complexe (stochastique ou non, contraint ou non). Par défaut, on utilisera sour R la fonction  `optim`. Deux cas se présentent : soit le gradient est calculable à la main et alors on peut le fournir comme argument de la fonction `optim`, ou alors par défaut ce gradient est approché numériquement. L'approximation numérique du gradient conduit à des temps de calculs élévés. 
+
+
+La puissance de TensorFlow est de faire appel à la différenciation automatique pour calculer le gradient.
+La différenciation automatique est introduite sur la page Wikipedia correspondante
+< https://en.wikipedia.org/wiki/Automatic_differentiation>. 
+En quelques mots, si $f$ est la fonction d'intéret, la différenciation automatique commence par décomposer cette fonction $f$ en opérations simples telles que des sommes, produits, puissances, exponentielles, etc. On obtient alors la représentation de la fonction $f$ sous forme d'arbre, où les noeuds dont les opérations et les arêtes représentent le flux des données/variables. 
+Par exemple, on peut décomposer la densité de la gaussienne selon le schéma suivant: 
+
+
+<center>
+![Décomposition de la densité d'une gaussienne](gaussian_tensor_flow.png){width=400px}
+</center>
+
+
+
+Une fois la fonction encodée sous forme d'arbre composée d'opérations simples, les dérivées partielels sont obtenues par l'application de la Chain Rule (dérivation des fonctions composées). Ces dérivées peuvent être obtenues en remontant l'arbre ou en le descendant, aboutissant ainsi à deux algorithmes: forward et backward. 
+
+Cette méthode de calcul des dérivées est connue pour être efficace. C'est ce qui a permis entre autre le développement des méthodes d'apprentissage profond.    Nous pouvons espérer utiliser cette puissance au service d'autres problèmes d'optimisation. 
+
+Pour cela, il faut revenir au choeur de TensorFlow pour aller chercher les méthodes propres à la différenciation automatique. Il est plus facile d'appeler TensorFlow en python. Mais il est aussi possible d'utiliser TensorFlow en R.  Nous proposons des exemples en Pythons et en . 
+
+
+
+
+
+
+
+
+## Minimiser une fonction quelconque par `TensorFlow` sous R. 
+
+
+### Installation de TensorFlow. 
+
+TensorFlow doit d'abord être installé sur la machine. Les étapes sont les suivantes. 
+Préalablement au lancement de `RStudio` il faut  
+
+  - Vérifier que  `python 3.6` est installé (ou bien l'installer)
+  - Installer `miniconda` (https://conda.io/miniconda.html)
+
+Puis depuis `RStudio`
+
+```{r installation, eval=FALSE}
+install.packages('tensorflow')
+install_tensorflow()
+```
+L'opération install_tensorflow() est longue et nécéssite une bonne connectin internet. 
+
+
+```{r library, eval=TRUE, echo =TRUE}
+library(tensorflow)
+```
+
+
+
+### Exemple 1 : Estimation d'une régression linéaire simple 
+
+Cet exemple est issu du site <https://tensorflow.rstudio.com/tensorflow/articles/examples/linear_regression_simple.html>. 
+
+On commence par simuler des données. 
+```{r, echo = TRUE}
+x_data <- runif(100, min = 0, max = 1)
+y_data <- x_data * 0.1 + 0.3 + rnorm(100,0,0.1)
+``` 
+
+Puis on va décrire la fonction à optimiser dans le language `TensorFlow`. 
+Tout d'abord nous déclarons les variables qui seront optimisées. 
+```{r define var,echo=TRUE, eval = TRUE}  
+a <- tf$Variable(tf$zeros(shape(1L)))
+b <- tf$Variable(tf$zeros(shape(1L)))
+```
+
+`a` et `b` sont ainsi définies comme les variables à optimiser. A partir de `a` et `b` on définit la fonction à optimiser (ici `loss`). 
+
+```{r define loss,echo=TRUE, eval = TRUE}  
+y <- a * x_data + b
+loss <- tf$reduce_mean((y - y_data) ^ 2)
+loss
+``` 
+On récupère un objet `Tensorflow` illisible. 
+On spécifie maintenant la méthode d'optimisation (ici une descente de gradient) qu'on relie ensuite à la fonction `loss` qui sera minimisée.  
+
+```{r define methode optim loss,echo=TRUE, eval = TRUE}  
+optimizer <- tf$train$GradientDescentOptimizer(0.5)
+train <- optimizer$minimize(loss)
+```
+
+A ce stade, rien n'a été calculé, nous avons juste défini les objets `TensorFlow` nécéssaires à l'exécution.  L'algorithme de minisation par descente de gradient s'écrit de la façon suivante: 
+
+```{r optim execu, echo = TRUE, eval =TRUE}
+# Launch the graph and initialize the variables.
+sess = tf$Session()
+sess$run(tf$global_variables_initializer())
+for (step in 1:201) {
+  sess$run(train)
+  if (step %% 20 == 0)
+    cat(step, "-", sess$run(a), sess$run(b), "\n")
+}
+
+```
+
+
+### Exemple 2 : calcul du mode d'une loi $\Gamma$. 
+
+
+On applique la même procédure pour trouver le mode de la densité d'un loi $\Gamma$ de paramètres $\alpha$ et $\beta$. Ces paramètres sont fixés: 
+```{r, echo=TRUE}
+alpha <- 3
+beta <- 6
+```
+
+On déclare ensuite les objets `TensorFlow` (constantes, variables), etc...: 
+```{r, echo=TRUE}
+# définition des objets tf
+x <- tf$Variable(tf$zeros(shape(1L)))
+alpha.tf <- tf$constant(alpha)
+beta.tf  <- tf$constant(beta)
+gamma.func.tf <- -exp(x)^(alpha.tf - 1) * exp(-beta.tf * exp(x))
+```
+
+Puis la méthode d'optimisation. 
+
+```{r, echo=TRUE}
+optimizer <- tf$train$GradientDescentOptimizer(0.5)
+train <- optimizer$minimize(gamma.func.tf)
+
+# descente de gradient
+sess = tf$Session()
+sess$run(tf$global_variables_initializer())
+for (step in 1:201) {
+  sess$run(train)
+  if (step %% 20 == 0)
+    cat(step, "-", sess$run(exp(x)), "\n")
+}
+
+```
+
+
+##Session interactive
+
+Afin de profiter des interfaces interactives comme `Rstudio`avec `tensorflow`, il est possible de lancer une session interactive. Cela permet d'exécuter les opérations sur le graphes ligne par ligne et de ne pas bloquer les noms des variables. On ouvre une session interactive avec `tf$InteractiveSession()`. Pour éviter les conflits inhérents au fait d'avoir plusieurs sessions ouvertes en même temps, il est important de les fermer à chaque fois. 
+
+L'exemple ci-dessous est tiré de <https://tensorflow.rstudio.com/tensorflow/articles/basic_usage.html>.
+
+```{r}
+library(tensorflow)
+
+sess <- tf$InteractiveSession()
+
+x <- tf$Variable(c(1.0, 2.0))
+a <- tf$constant(c(3.0, 3.0))
+
+
+
+# Initialize 'x' using the run() method of its initializer op.
+x$initializer$run()
+
+# Add an op to subtract 'a' from 'x'.  Run it and print the result
+sub <- tf$subtract(x, a)
+print(sub$eval())
+sess$close()
+```
+
+Attention ! Les indices des objets de type "Tensor" dans `tensorflow` sont les même qu'en `Python` (indicé à partir de 0 et non à partir de 1 comme en `R`).
+
+```{r}
+sess <- tf$InteractiveSession()
+x <- tf$Variable(seq(-2.0, 2.0, by = 1))
+x$initializer$run()
+abs_x <- tf$abs(x)
+print(abs_x$eval())
+print(abs_x[[1]]$eval())
+print(abs_x[[0]]$eval())
+```
+
+D'autres objets, se présentent sous la forme d'une liste de Tensor. Les listes sont indicées comme en `R`.
+```{r}
+grad_abs <- tf$gradients(abs(x), x)
+str(grad_abs)
+print(grad_abs[[1]]$eval())
+print(grad_abs[[1]][[2]]$eval())
+sess$close()
+```
+
+## Tensorboard, visualisation interactive de graphe
+
+`tensorboard` <https://tensorflow.rstudio.com/tensorflow/articles/howto_summaries_and_tensorboard.html> est un outil de visualisation permettant d'observer de manière interactive les graphes `tensorflow`. Il est possible de s'en servir pour voir les ètapes de différentiation automatique pour le calcul du gradient d'une fonction. `tensorboard` lit un log crée lors de l'exécution de la session. Il est possible de créer toute sorte de statistiques résumant le graphe afin de les visualiser.
+
+
+### Exemple :  dérivée de la densité d'une loi gaussienne 
+
+La fonction à dériver doit être écrite sous forme de fonction mathématique de base `tensorflow` :
+```{r}
+gaussian <- function(x, mu, sig) {
+  1./(sig * tf$sqrt(2. * pi )) * tf$exp(-.5 * ((x - mu)/sig)**2)
+}
+```
+
+
+Il est important de réinitialiser le graphe `tensorflow`. Celui-ci n'est pas stocké dans les variables d'environnement et vider l'environnement de travail sous `Rstudio` ne réinitialise pas le graph `tensorflow`.
+```{r eval=FALSE}
+tf$reset_default_graph()
+mu  <- tf$constant(0.0, name = "mu")
+sig <- tf$constant(1.0, name = "sigma")
+x   <- tf$placeholder(dtype = tf$float32, shape = c(100L), name = "x")
+dgauss <- tf$gradients(gaussian(x, mu, sig), x)
+
+with(tf$Session() %as% sess, {
+  result <- sess$run(dgauss, feed_dict=dict(x = seq(-2, 2, length.out = 100)))
+  writer <- tf$summary$FileWriter("dgauss_log_summary", sess$graph)
+  print(result)
+})
+
+
+tensorboard(log_dir = "dgauss_log_summary")
+```
+
+![Caption](tensorboard.png)
+
+
+<!-- ### Remarques  -->
+
+<!-- Ce que j'aurais voulu faire en plus : récupérer juste la valeur du gradient en un $x$ donné :  -->
+<!-- ```{r, echo=TRUE, eval = FALSE} -->
+<!-- var_grad <- tf$gradients(gamma.func.tf, x) -->
+<!-- var_grad_val <- sess$run(var_grad,feed_dict = dict(x=1,convert=TRUE))  -->
+<!-- ``` -->
+
+<!-- Faisable sous python mais pas réussi sous R?  -->
+
+
+
+
+
+
+
+
+
+

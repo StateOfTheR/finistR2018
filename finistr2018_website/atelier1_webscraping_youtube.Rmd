@@ -1,108 +1,119 @@
-title: "Untitled"
-output: pdf_document
+---
+title: "Scraping Youtube"
+author: "Avner Bar-Hen, Gabriel Lang, Raphaëlle Momal,Bewentaoré Sawadogo "
+date: "August 27, 2018"
+output: 
+  html_document:
+   toc: true
+   toc_float: true
+   number_sections: false
+   highlight: tango
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache=TRUE)
+```
 ## Récolter des données sur Youtube
 
 L'objectif est de récupérer la liste des tendances de Youtube qui se trouvent dans la page. Pour cela on se sert du package rvest et de la sélection par balises.
 On commence par charger le package rvest et lire le fichier html en le désignant par son url.
 
 
-```{r youtube}
-library(rvest)
+<!-- ```{r youtube} -->
+<!-- library(rvest) -->
 
-# Lecture de la page
-youtube <-read_html("https://www.youtube.com/feed/trending")
-```
+<!-- # Lecture de la page -->
+<!-- youtube <-read_html("https://www.youtube.com/feed/trending") -->
+<!-- ``` -->
 
-Pour récupérer un élément, il faut connaître la balise; certaines sont connues à l'avance, d'autres doivent être repérées dans la page.
+<!-- Pour récupérer un élément, il faut connaître la balise; certaines sont connues à l'avance, d'autres doivent être repérées dans la page. -->
 
-#Récolte d'une information par une balise connue
+<!-- #Récolte d'une information par une balise connue -->
 
-Le titre de la page correspond à la balise "title"; pour récupérer cette balise on utilise la fonction html_node.
+<!-- Le titre de la page correspond à la balise "title"; pour récupérer cette balise on utilise la fonction html_node. -->
 
-```{r }
-Balise_titre= html_node(youtube,"title") 
-titre<-html_text(Balise_titre)
-print(titre)
-```
-Il faut ensuite filtrer le caractère spécial par les outils de traitement de chaîne.
+<!-- ```{r } -->
+<!-- Balise_titre= html_node(youtube,"title")  -->
+<!-- titre<-html_text(Balise_titre) -->
+<!-- print(titre) -->
+<!-- ``` -->
+<!-- Il faut ensuite filtrer le caractère spécial par les outils de traitement de chaîne. -->
 
-#Récolte d'une information lorsque la balise n'est pas connue
-On veut récupérer la liste des titre des vidéos. Il faut d'abord repérer la balise correspondante dans le navigateur Internet; 
+<!-- #Récolte d'une information lorsque la balise n'est pas connue -->
+<!-- On veut récupérer la liste des titre des vidéos. Il faut d'abord repérer la balise correspondante dans le navigateur Internet;  -->
 
-##Utilisation du code source de la page
-On peut afficher la source de la page (clic droit, code source), mais le résultat n'est praticable que si la page est simple.
-##Utilisation de l'inspecteur
-On se place avec la souris sur le titre d'une vidéo. On lance l'inspecteur sur cet élément (clic droit, Examiner l'élément), l'inspecteur s'ouvre dans une fenêtre en surlignant la balise correspondante "a".
-```{r, echo=TRUE, eval=FALSE}
-Liste_Balise_a= html_nodes(youtube,"a") 
-Liste_a<-html_text(Liste_Balise_a)
-print(Liste_a)
-```
-La sélection par la balise "a" est trop large. on remarque que les titres sont toujours sous une balise "h3". On utilise le sélecteur "h3 a"
+<!-- ##Utilisation du code source de la page -->
+<!-- On peut afficher la source de la page (clic droit, code source), mais le résultat n'est praticable que si la page est simple. -->
+<!-- ##Utilisation de l'inspecteur -->
+<!-- On se place avec la souris sur le titre d'une vidéo. On lance l'inspecteur sur cet élément (clic droit, Examiner l'élément), l'inspecteur s'ouvre dans une fenêtre en surlignant la balise correspondante "a". -->
+<!-- ```{r, echo=TRUE, eval=FALSE} -->
+<!-- Liste_Balise_a= html_nodes(youtube,"a")  -->
+<!-- Liste_a<-html_text(Liste_Balise_a) -->
+<!-- print(Liste_a) -->
+<!-- ``` -->
+<!-- La sélection par la balise "a" est trop large. on remarque que les titres sont toujours sous une balise "h3". On utilise le sélecteur "h3 a" -->
 
-##Utilisation de selectorgadget
-Il s'agit d'une application java (https://selectorgadget.com/). Une fois lancée, elle examine l'élément sous la souris, le met en surbrillance avec un cadre sur lequel apparaissent les deux balises directement supérieures. Pour le titre de vidéo on obtient bien "h3 a".  
-```{r eval=FALSE}
-Liste_Balise_Titre= html_nodes(youtube,"h3 a") 
-Liste_Titre<-html_text(Liste_Balise_Titre)
-print(Liste_Titre)
-```
-La liste contient encore des éléments ne correspondant pas au titre. Pour éviter ce problème il faut ajouter des conditions à la sélection.
-#Sélecteurs avancés
-Les sélecteurs avancés permettent de spécifier un type de balise en ajoutant une condition sur ses attributs. Il y a deux syntaxes pour ces sélecteurs selon qu'ils portent sur des éléments CSS ou XML.
-##Code CSS
-L'outil sélectorgadget propose un code CSS complet dans un pop-up gris de manière directement utilisable. Il suffit de coller cette expression entre double apostrophes.
-```{r}
-Liste_Balise_Titre= html_node(youtube,"#grid-container :nth-child(1) #dismissable #meta .style-scope") 
-print(Liste_Balise_Titre)
-```
-Malheureusement en raison de la perte de format xml lors des conversions des pages dynamiques ce sélecteur ne fonctionne pas. 
+<!-- ##Utilisation de selectorgadget -->
+<!-- Il s'agit d'une application java (https://selectorgadget.com/). Une fois lancée, elle examine l'élément sous la souris, le met en surbrillance avec un cadre sur lequel apparaissent les deux balises directement supérieures. Pour le titre de vidéo on obtient bien "h3 a".   -->
+<!-- ```{r eval=FALSE} -->
+<!-- Liste_Balise_Titre= html_nodes(youtube,"h3 a")  -->
+<!-- Liste_Titre<-html_text(Liste_Balise_Titre) -->
+<!-- print(Liste_Titre) -->
+<!-- ``` -->
+<!-- La liste contient encore des éléments ne correspondant pas au titre. Pour éviter ce problème il faut ajouter des conditions à la sélection. -->
+<!-- #Sélecteurs avancés -->
+<!-- Les sélecteurs avancés permettent de spécifier un type de balise en ajoutant une condition sur ses attributs. Il y a deux syntaxes pour ces sélecteurs selon qu'ils portent sur des éléments CSS ou XML. -->
+<!-- ##Code CSS -->
+<!-- L'outil sélectorgadget propose un code CSS complet dans un pop-up gris de manière directement utilisable. Il suffit de coller cette expression entre double apostrophes. -->
+<!-- ```{r} -->
+<!-- Liste_Balise_Titre= html_node(youtube,"#grid-container :nth-child(1) #dismissable #meta .style-scope")  -->
+<!-- print(Liste_Balise_Titre) -->
+<!-- ``` -->
+<!-- Malheureusement en raison de la perte de format xml lors des conversions des pages dynamiques ce sélecteur ne fonctionne pas.  -->
 
-##Code XPath
-L'outil sélectorgadget propose de traduire le code CSS en code Xpath plus adapté à la structure xml (Bouton Xpath).La syntaxe d'appel est différente xpath='chemin xpath'. Pour en savoir plus sur la syntaxe Xpath : https://www.w3schools.com/xml/xpath_syntax.asp
+<!-- ##Code XPath -->
+<!-- L'outil sélectorgadget propose de traduire le code CSS en code Xpath plus adapté à la structure xml (Bouton Xpath).La syntaxe d'appel est différente xpath='chemin xpath'. Pour en savoir plus sur la syntaxe Xpath : https://www.w3schools.com/xml/xpath_syntax.asp -->
 
-```{r}
-Liste_Balise_Titre= html_node(youtube,xpath='//*[contains(concat( " ", @class, " " ), concat( " ", "yt-formatted-string", " " ))]') 
-print(Liste_Balise_Titre)
-```
-Malheureusement, ce sélecteur ne fonctionne pas la page Youtube. En conclusion, la récolte sur Youtube nécessite sans doute d'utiliser une API dédiée proposée par Youtube. L'avantage pour Youtube est de pouvoir connaître le type d'information récoltée dans ses pages.
+<!-- ```{r} -->
+<!-- Liste_Balise_Titre= html_node(youtube,xpath='//*[contains(concat( " ", @class, " " ), concat( " ", "yt-formatted-string", " " ))]')  -->
+<!-- print(Liste_Balise_Titre) -->
+<!-- ``` -->
+<!-- Malheureusement, ce sélecteur ne fonctionne pas la page Youtube. En conclusion, la récolte sur Youtube nécessite sans doute d'utiliser une API dédiée proposée par Youtube. L'avantage pour Youtube est de pouvoir connaître le type d'information récoltée dans ses pages. -->
 
-#Récolte des températures sur météo MSN
- Pour  faire une démonstration de l'usage de la syntaxe des sélecteurs, nous recherchons la température courante sur le serveur météo MSN.
- 
-```{r}
-meteo <-read_html("https://www.msn.com/fr-fr/meteo")
-```
-Pour la température courante, Selectorgadget donne la suite de balises "div span" dans la cadre en surbrillance et le sélecteur ".current" dans la boite pop up. On concatène ces deux informations.
+<!-- #Récolte des températures sur météo MSN -->
+<!--  Pour  faire une démonstration de l'usage de la syntaxe des sélecteurs, nous recherchons la température courante sur le serveur météo MSN. -->
 
-```{r}
-Balise_Temp= html_node(meteo, "div span.current") 
-Text_Temp<-html_text(Balise_Temp)
-print(Text_Temp)
-```
-En tapant "div span.current" dans la boîte Selectorgadget on obtient sa traduction Xpath:
-```{r}
-meteo <-read_html("https://www.msn.com/fr-fr/meteo")
-Balise_Temp= html_node(meteo, xpath='//div//span[contains(concat( " ", @class, " " ), concat( " ", "current", " " ))]') 
-Text_Temp<-html_text(Balise_Temp)
-print(Text_Temp)
-```
+<!-- ```{r} -->
+<!-- meteo <-read_html("https://www.msn.com/fr-fr/meteo") -->
+<!-- ``` -->
+<!-- Pour la température courante, Selectorgadget donne la suite de balises "div span" dans la cadre en surbrillance et le sélecteur ".current" dans la boite pop up. On concatène ces deux informations. -->
+
+<!-- ```{r} -->
+<!-- Balise_Temp= html_node(meteo, "div span.current")  -->
+<!-- Text_Temp<-html_text(Balise_Temp) -->
+<!-- print(Text_Temp) -->
+<!-- ``` -->
+<!-- En tapant "div span.current" dans la boîte Selectorgadget on obtient sa traduction Xpath: -->
+<!-- ```{r} -->
+<!-- meteo <-read_html("https://www.msn.com/fr-fr/meteo") -->
+<!-- Balise_Temp= html_node(meteo, xpath='//div//span[contains(concat( " ", @class, " " ), concat( " ", "current", " " ))]')  -->
+<!-- Text_Temp<-html_text(Balise_Temp) -->
+<!-- print(Text_Temp) -->
+<!-- ``` -->
 
 
-Pour récupérer la liste des températures, Selectorgadget propose"#main :nth-child(1)". Ce sélecteur n'est pas assez sélectif ; il faut se limiter aux balises "li p"
-```{r}
-meteo <-read_html("https://www.msn.com/fr-fr/meteo")
-Liste_Balise_Temp= html_nodes(meteo,"li p " )
-Text_Temp<-html_text(Liste_Balise_Temp)
-print(Text_Temp)
-```
-Pour extraire la quatrième valeur, on emploie la fonction magritt2
-```{r}
-Balise_4=magrittr::extract2(Liste_Balise_Temp,4)
-Text_Temp<-html_text(Balise_4)
-print(Text_Temp)
-```
+<!-- Pour récupérer la liste des températures, Selectorgadget propose"#main :nth-child(1)". Ce sélecteur n'est pas assez sélectif ; il faut se limiter aux balises "li p" -->
+<!-- ```{r} -->
+<!-- meteo <-read_html("https://www.msn.com/fr-fr/meteo") -->
+<!-- Liste_Balise_Temp= html_nodes(meteo,"li p " ) -->
+<!-- Text_Temp<-html_text(Liste_Balise_Temp) -->
+<!-- print(Text_Temp) -->
+<!-- ``` -->
+<!-- Pour extraire la quatrième valeur, on emploie la fonction magritt2 -->
+<!-- ```{r} -->
+<!-- Balise_4=magrittr::extract2(Liste_Balise_Temp,4) -->
+<!-- Text_Temp<-html_text(Balise_4) -->
+<!-- print(Text_Temp) -->
+<!-- ``` -->
 
 
