@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title></title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FinistR 2018</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Webscrapping
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier1_webscraping_simple.html">Simple Example</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_genealogie.html">Genealogie mathématique</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_googlefight.html">Google Fight</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_googlenews.html">Google News</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_youtube.html">Youtube</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Optimisation et accélération
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier2_rgpu.html">R et GPU</a>
+    </li>
+    <li>
+      <a href="atelier2_tensorflow.html">TensorFlow</a>
+    </li>
+    <li>
+      <a href="atelier2_julia.html">Julia</a>
+    </li>
+    <li>
+      <a href="atelier2_rcpp_modules.html">Rcpp</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Bonnes pratiques
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier3_git.html">Versionning</a>
+    </li>
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+        Package
+         
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="atelier3_package_creation.html">Création</a>
+        </li>
+        <li>
+          <a href="atelier3_package_dvp.html">Développement et tests</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="atelier3_advancedrmd.html">Production de documents</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<div id="about-dropbox" class="section level1">
+<h1>About Dropbox</h1>
+<ul>
+<li>Dropbox versioning is not free.</li>
+<li>Only keep your edits over a period of 30 days.</li>
+<li>Privacy and Security ?</li>
+<li>No differences display.</li>
+<li>The service have the right to delete information from free and inactive accounts.</li>
+<li>Users are not allowed to perform encryption.</li>
+</ul>
+</div>
+<div id="dropbox-shares-your-data" class="section level1">
+<h1>Dropbox shares your data</h1>
+<p><a href="https://twitter.com/kopfnuss/status/1020575998205710336"> <img src="images/tweet_dropbox.png" width=600> </a></p>
+</div>
+<div id="new-products-based-on-a-git-server-for-collaborating-writing." class="section level1">
+<h1>New products based on a git server for collaborating writing.</h1>
+<ul>
+<li>ShareLaTeX (<a href="https://fr.sharelatex.com" class="uri">https://fr.sharelatex.com</a>)</li>
+<li>Authorea (<a href="https://www.authorea.com" class="uri">https://www.authorea.com</a>)</li>
+<li>Overleaf (<a href="https://www.overleaf.com" class="uri">https://www.overleaf.com</a>)</li>
+<li>PLMLateX (<a href="https://plmlatex.math.cnrs.fr/" class="uri">https://plmlatex.math.cnrs.fr/</a>)</li>
+</ul>
+</div>
+<div id="about-version-control" class="section level1">
+<h1>About Version Control</h1>
+<ul>
+<li>Records changes to a file or set of files over time.</li>
+<li>You can recall specific versions later.</li>
+<li>You can use it with nearly any type of file on a computer.</li>
+<li>This is the better way to collaborate on the same document.</li>
+<li>Every change is committed with an author and a date.</li>
+<li>Figures are downloaded from <a href="http://git-scm.com/book">Pro Git book</a>.</li>
+<li>“Become a git guru” tutorial (<a href="https://www.atlassian.com/git/tutorials" class="uri">https://www.atlassian.com/git/tutorials</a>).</li>
+</ul>
+</div>
+<div id="local-version-control-systems" class="section level1">
+<h1>Local Version Control Systems</h1>
+<div class="figure">
+<img src="atelier3_images/local.png" alt="Local" style="width:50.0%" />
+<p class="caption">Local</p>
+</div>
+<ul>
+<li>One of the most saving popular was a system called RCS</li>
+<li>Available with the Developer Tools with Mac OS X</li>
+<li>Collaboration is not really possible.</li>
+</ul>
+</div>
+<div id="centralized-version-control-systems" class="section level1">
+<h1>Centralized Version Control Systems</h1>
+<div class="figure">
+<img src="atelier3_images/cvs.png" alt="CVS" style="width:50.0%" />
+<p class="caption">CVS</p>
+</div>
+<ul>
+<li>Clients check out files from a central place.</li>
+<li>You know what everyone else on the project is doing</li>
+<li>A single server contains all the versioned files.</li>
+<li>For many years, this has been the standard (CVS, SVN).</li>
+<li>You always need network connection.</li>
+<li>If the server is corrupted, with no backup, you lose everything !</li>
+</ul>
+</div>
+<div id="distributed-version-control-systems" class="section level1">
+<h1>Distributed Version Control Systems</h1>
+<div class="figure">
+<img src="atelier3_images/git.png" alt="Git" style="width:30.0%" />
+<p class="caption">Git</p>
+</div>
+<ul>
+<li>Clients fully mirror the repository.</li>
+<li>You can collaborate with different groups of people in different ways simultaneously within the same project.</li>
+<li>No need of network connection.</li>
+<li>Multiple backups.</li>
+</ul>
+</div>
+<div id="configure-git" class="section level1">
+<h1>Configure Git</h1>
+<p>Install git on windows <a href="https://gitforwindows.org" class="uri">https://gitforwindows.org</a></p>
+<pre class="bash"><code>$ git config --global user.name &quot;Pierre Navaro&quot;
+$ git config --global user.email &quot;pierre.navaro@univ-rennes1.fr&quot;
+$ git config --global core.editor mvim
+$ git config --global merge.tool opendiff</code></pre>
+<pre class="bash"><code>$ git config --list
+   user.name=Pierre Navaro
+   user.email=pierre.navaro@univ-rennes1.fr
+   core.editor=mvim
+   merge.tool=opendiff</code></pre>
+<p>Settings are saved on the computer for all your git repositories.</p>
+</div>
+<div id="four-file-status-in-the-repository" class="section level1">
+<h1>Four File status in the repository</h1>
+<div class="figure">
+<img src="atelier3_images/18333fig0201-tn.png" alt="Status" style="width:50.0%" />
+<p class="caption">Status</p>
+</div>
+</div>
+<div id="initializing-a-repository-in-an-existing-directory" class="section level1">
+<h1>Initializing a repository in an existing directory</h1>
+<pre><code>$ ls article
+    document.tex    figure.png
+$ git init
+    Initialized empty Git repository in /Users/navaro/article/.git/
+$ git status
+    On branch master
+    Initial commit
+    Untracked files:
+     (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+
+        document.tex
+        figure.png
+
+    nothing added to commit but untracked files present
+    (use &quot;git add&quot; to track)</code></pre>
+</div>
+<div id="adding-files-in-your-repository" class="section level1">
+<h1>Adding files in your repository</h1>
+<pre><code>$ git add document.tex
+$ git add figure.png
+$ git status
+    On branch master
+    Initial commit
+    Changes to be committed:
+     (use &quot;git rm --cached &lt;file&gt;...&quot; to unstage)
+
+        new file:   document.tex
+        new file:   figure.png
+
+$ git commit -m &#39;Initial project version&#39;}
+    [master (root-commit) 9d23b49] Initial project version
+    2 files changed, 0 insertions(+), 0 deletions(-)
+    create mode 100644 document.tex
+    create mode 100644 figure.png</code></pre>
+</div>
+<div id="cloning-a-existing-repository" class="section level1">
+<h1>Cloning a existing repository</h1>
+<pre><code>$ git clone git@github.com:pnavaro/irmar-git-project.git
+    Cloning into &#39;projet&#39;...
+    Initialized empty Git repository in /git/repositories/plm/navaro/projet.git/
+    warning: You appear to have cloned an empty repository.
+    Checking connectivity... done.</code></pre>
+</div>
+<div id="add-and-commit-your-files." class="section level1">
+<h1>Add and commit your files.</h1>
+<pre><code>$ cd sandbox/your_name
+$ touch document.tex figure.png
+$ git add document.tex figure.png
+$ git commit -m &#39;Add my contribution to the project&#39;</code></pre>
+<p>Your files are NOT present on the server!</p>
+<pre><code>$ git status
+    On branch master
+    Your branch is ahead of &#39;origin/master&#39; by 1 commit.
+    (use &quot;git push&quot; to publish your local commits)</code></pre>
+</div>
+<div id="synchronizing-your-files-on-the-server" class="section level1">
+<h1>Synchronizing your files on the server</h1>
+<p>By default you are on the “master” branch.</p>
+<pre><code>$ git branch
+    * master</code></pre>
+<p>Upload your files to the server:</p>
+<pre><code>$ git push origin master
+    ...
+    To https://github.com/pnavaro/irmar-git-project
+        ae2ce3c..ed796ea  master -&gt; master</code></pre>
+</div>
+<div id="git-workflow" class="section level1">
+<h1>Git Workflow</h1>
+<div class="figure">
+<img src="atelier3_images/four_stages.png" alt="4-stages" style="width:30.0%" />
+<p class="caption">4-stages</p>
+</div>
+</div>
+<div id="cloning-an-existing-directory" class="section level1">
+<h1>Cloning an Existing Directory</h1>
+<p>Now i change my computer.</p>
+<pre><code>$ git clone git@github.com:pnavaro/irmar-git-project.git
+    Cloning into &#39;irmar-git-project&#39;...
+$ cd irmar-git-project
+$ git log
+    commit ed796ea1cbd15c8f7ec040b303c950569527012c (HEAD -&gt; master, origin/master, origin/HEAD)
+    Author: Pierre Navaro &lt;pierre.navaro@univ-rennes1.fr&gt;
+    Date:   Thu Apr 19 13:26:01 2018 +0200
+
+        Add my contribution to the project</code></pre>
+</div>
+<div id="display-and-create-a-branch" class="section level1">
+<h1>Display and Create a Branch</h1>
+<p>Display all branches :</p>
+<pre><code>$ git branch -a
+    * master
+        remotes/origin/HEAD -&gt; origin/master
+        remotes/origin/master</code></pre>
+<p>Create your own branch and switch:</p>
+<pre><code>$ git branch pierre-branch
+$ git checkout pierre-branch</code></pre>
+<p>Switched to branch ‘pierre-branch’</p>
+<pre><code>$ git branch
+    master
+    * pierre-branch</code></pre>
+<p>Files could be different or non existant between branches but are at the same place on the file system</p>
+</div>
+<div id="contributing" class="section level1">
+<h1>Contributing</h1>
+<p>Modify the file document.tex</p>
+<pre><code>$ git status
+    On branch pierre-branch
+    Changes not staged for commit:
+     (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+     (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+        modified:   document.tex
+    no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+
+$ git diff
+    diff --git a/document.tex b/document.tex
+    index a608114..e69de29 100644
+    --- a/document.tex
+    +++ b/document.tex
+    @@ -1,3 +0,0 @@
+    -Exemple Git pour la journee de rentree</code></pre>
+</div>
+<div id="locally-saving-your-modifications" class="section level1">
+<h1>Locally saving your modifications</h1>
+<pre><code>$ git add document.tex</code></pre>
+<p>Checking which files are ready to be committed.</p>
+<pre><code>$ git status
+On branch pierre-branch
+Changes to be committed:
+  (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+    modified:   document.tex</code></pre>
+<p>Now save your work, the branch is local.</p>
+<pre><code>$ git commit -m &#39;Some modifications&#39;
+[pierre-branch 8c6bf81] Some modification is available
+ 1 file changed, 3 insertions(+)</code></pre>
+</div>
+<div id="fast-commit" class="section level1">
+<h1>Fast commit</h1>
+<p><img src="atelier3_images/index1.png" alt="index1" style="width:50.0%" /> <img src="atelier3_images/index2.png" alt="index2" style="width:50.0%" /></p>
+<p>Use it carefully!</p>
+</div>
+<div id="share-your-work-and-make-it-available-on-the-server" class="section level1">
+<h1>Share your work and make it available on the server</h1>
+<div id="option-1-merge-to-the-main-branch-and-push" class="section level2">
+<h2>Option 1 : Merge to the main branch and push</h2>
+<pre><code>$ git checkout master
+
+    Switched to branch &#39;master&#39;
+    Your branch is up-to-date with &#39;origin/master&#39;.
+
+$ git merge pierre-branch
+
+    Updating 7cef21a..8c6bf81
+    Fast-forward
+    document.tex | 3 +++
+    1 file changed, 3 insertions(+)
+
+$ git push origin master
+
+    Counting objects: 3, done.
+    ...</code></pre>
+</div>
+</div>
+<div id="share-your-work-and-make-it-available-on-the-server-1" class="section level1">
+<h1>Share your work and make it available on the server</h1>
+<div id="option-2-push-your-branch-to-the-server" class="section level2">
+<h2>Option 2 : Push your branch to the server</h2>
+<pre><code>$ git checkout pierre-branch
+
+    Switched to branch &#39;pierre-branch&#39;
+
+$ git push origin pierre-branch
+
+$ git branch -a
+    master
+    * pierre-branch
+    remotes/origin/HEAD -&gt; origin/master
+    remotes/origin/master
+    remotes/origin/pierre-branch</code></pre>
+</div>
+</div>
+<div id="updating-from-the-repository" class="section level1">
+<h1>Updating from the Repository</h1>
+<p>The master branch has changed. To get all new updates :</p>
+<pre class="git"><code>$ git checkout master     
+    Switched to branch &#39;master&#39;
+
+$ git fetch origin         
+    download changes from repository
+
+$ git merge origin/master  
+    update local branch master
+
+$ git checkout pierre-branch
+    Switched to branch &#39;pierre-branch&#39;
+
+$ git merge master          
+    update your branch</code></pre>
+<p>If you did not push your branch, use <code>rebase</code> instead of <code>merge</code></p>
+</div>
+<div id="merge-conflicts" class="section level1">
+<h1>Merge conflicts</h1>
+<p>If you have conflict, no problem just do :</p>
+<pre><code>$ git mergetool</code></pre>
+<p>A nice editor helps you to choose the right version. Close and :</p>
+<pre><code>$ git commit -m &#39;Update and fixed conflicts&#39;</code></pre>
+</div>
+<div id="git-cycle-on-a-single-branch" class="section level1">
+<h1>Git cycle on a single branch</h1>
+<div class="figure">
+<img src="atelier3_images/git_cycle.png" alt="Cycle" style="width:50.0%" />
+<p class="caption">Cycle</p>
+</div>
+</div>
+<div id="progressive-stability-branching" class="section level1">
+<h1>Progressive-stability branching</h1>
+<div class="figure">
+<img src="atelier3_images/lr-branches-2.png" alt="Branches" style="width:50.0%" />
+<p class="caption">Branches</p>
+</div>
+</div>
+<div id="stash" class="section level1">
+<h1>Stash</h1>
+<p>Use itwhen you want to record the current state of the working directory and the index.</p>
+<ul>
+<li>Modify a file in the repository and save it with</li>
+</ul>
+<pre><code>$ git stash</code></pre>
+<ul>
+<li>You can display saved changes with</li>
+</ul>
+<pre><code>$ git stash show</code></pre>
+<ul>
+<li>Apply the modifications with</li>
+</ul>
+<pre><code>git stash pop (or apply)</code></pre>
+<p>or drop them with</p>
+<pre><code>$ git stash drop</code></pre>
+</div>
+<div id="why-git" class="section level1">
+<h1>Why Git?</h1>
+<ul>
+<li>Tracking and controlling changes in the software.</li>
+<li>Branches : Frictionless Context Switching, Role-Based Codelines.</li>
+<li>Everything is local : Git is fast.</li>
+<li>Multiple Backups.</li>
+<li>It’s impossible to get anything out of Git other than the exact bits you put in.</li>
+<li>Staging Area : intermediate index between working directory and repository.</li>
+<li>Pull-request is a nice feature for code reviewing and protect the stable branch.</li>
+</ul>
+</div>
+<div id="why-not" class="section level1">
+<h1>Why not</h1>
+<ul>
+<li>Sometimes confusing for new users coming from CVS or subversion.</li>
+<li>Crazy command line syntax.</li>
+<li>Simple tasks need many commands.</li>
+<li>Git history is often strange.</li>
+<li>It is possible to destroy the repository on the remote server.</li>
+<li>Power for the maintainer, at the expense of the contributor.</li>
+</ul>
+</div>
+<div id="some-useful-commands" class="section level1">
+<h1>Some useful commands</h1>
+<ul>
+<li>Showing which files have changed between git branches</li>
+</ul>
+<pre><code>$ git diff --name-status master..mybranch</code></pre>
+<ul>
+<li>Compare the master version of a file to my current branch version</li>
+</ul>
+<pre><code>$ git diff mybranch master -- myfile.F90</code></pre>
+<ul>
+<li>Remove all ignored files (do it after a commit)</li>
+</ul>
+<pre><code>$ git clean -xdf</code></pre>
+<ul>
+<li>To revert to a previous commit, ignoring any changes:</li>
+</ul>
+<pre><code>$ git checkout myfile.cpp
+$ git reset --hard</code></pre>
+</div>
+<div id="git-through-ide" class="section level1">
+<h1>Git through IDE</h1>
+<ul>
+<li>Install bash-completion and source git-prompt.sh.</li>
+<li>Use Gui tools:
+<ul>
+<li><a href="https://desktop.github.com/">GitHub Desktop</a></li>
+<li><a href="https://fr.atlassian.com/software/sourcetree">Sourcetree</a></li>
+<li><a href="https://www.gitkraken.com/">GitKraken</a></li>
+</ul></li>
+<li>VCS plugin of IDE
+<ul>
+<li><a href="https://www.rstudio.com/">RStudio</a></li>
+<li><a href="https://www.eclipse.org/downloads/">Eclipse</a></li>
+<li><a href="www.texstudio.org/">TeXstudio</a></li>
+<li><a href="https://www.jetbrains.com/">JetBrains</a></li>
+</ul></li>
+</ul>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

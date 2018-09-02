@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Antoine Bichat" />
+
+
+<title>Mathematical genealogy scraping</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FinistR 2018</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Webscrapping
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier1_webscraping_simple.html">Simple Example</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_genealogie.html">Genealogie mathématique</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_googlefight.html">Google Fight</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_googlenews.html">Google News</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_youtube.html">Youtube</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Optimisation et accélération
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier2_rgpu.html">R et GPU</a>
+    </li>
+    <li>
+      <a href="atelier2_tensorflow.html">TensorFlow</a>
+    </li>
+    <li>
+      <a href="atelier2_julia.html">Julia</a>
+    </li>
+    <li>
+      <a href="atelier2_rcpp_modules.html">Rcpp</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Bonnes pratiques
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier3_git.html">Versionning</a>
+    </li>
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+        Package
+         
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="atelier3_package_creation.html">Création</a>
+        </li>
+        <li>
+          <a href="atelier3_package_dvp.html">Développement et tests</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="atelier3_advancedrmd.html">Production de documents</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Mathematical genealogy scraping</h1>
+<h4 class="author"><em>Antoine Bichat</em></h4>
+<h4 class="date"><em>27/08/2018</em></h4>
+
+</div>
+
+
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(rvest)
+<span class="kw">library</span>(glue)
+<span class="kw">library</span>(tidygraph)
+<span class="kw">library</span>(ggraph)</code></pre></div>
+<div id="a-la-main" class="section level1">
+<h1>A la main</h1>
+<div id="remi-peyre" class="section level2">
+<h2>Rémi Peyre</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remi_peyre &lt;-<span class="st"> &quot;https://www.genealogy.math.ndsu.nodak.edu/id.php?id=150077&quot;</span>
+
+remi_peyre <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">read_html</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">html_node</span>(<span class="dt">xpath =</span> <span class="st">&#39;//*[@id=&quot;paddingWrapper&quot;]/p[2]/a&#39;</span>)</code></pre></div>
+<pre><code>## {xml_node}
+## &lt;a href=&quot;id.php?id=56307&quot;&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remi_peyre_adv &lt;-
+<span class="st">  </span>remi_peyre <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">read_html</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">html_node</span>(<span class="dt">xpath =</span> <span class="st">&#39;//*[@id=&quot;paddingWrapper&quot;]/p[2]/a&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">html_text</span>()
+remi_peyre_adv</code></pre></div>
+<pre><code>## [1] &quot;Cédric  Villani&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remi_peyre_adv_id &lt;-
+<span class="st">  </span>remi_peyre <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">read_html</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">html_node</span>(<span class="dt">xpath =</span> <span class="st">&#39;//*[@id=&quot;paddingWrapper&quot;]/p[2]/a&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">html_attr</span>(<span class="st">&quot;href&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">str_extract</span>(<span class="st">&quot;[0-9]+&quot;</span>)
+remi_peyre_adv_id</code></pre></div>
+<pre><code>## [1] &quot;56307&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remi_peyre <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">html_session</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">follow_link</span>(remi_peyre_adv) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">session_history</span>()</code></pre></div>
+<pre><code>## Navigating to id.php?id=56307</code></pre>
+<pre><code>##   https://www.genealogy.math.ndsu.nodak.edu/id.php?id=150077
+## - https://www.genealogy.math.ndsu.nodak.edu/id.php?id=56307</code></pre>
+</div>
+<div id="haim-brezis" class="section level2">
+<h2>Haim Brezis</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">haim_brezis &lt;-<span class="st"> &quot;https://www.genealogy.math.ndsu.nodak.edu/id.php?id=39923&quot;</span>
+
+<span class="co"># //*[@id=&quot;paddingWrapper&quot;]/p[2]/a[1]</span>
+<span class="co"># //*[@id=&quot;paddingWrapper&quot;]/p[2]/a[2]</span>
+
+haim_brezis_adv &lt;-
+<span class="st">  </span>haim_brezis <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">read_html</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">html_nodes</span>(<span class="dt">xpath =</span> <span class="st">&#39;//*[@id=&quot;paddingWrapper&quot;]/p[2]/a[.]&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">html_text</span>()
+haim_brezis_adv</code></pre></div>
+<pre><code>## [1] &quot;Gustave  Choquet&quot;     &quot;Jacques-Louis  Lions&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">haim_brezis_adv_id &lt;-
+<span class="st">  </span>haim_brezis <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">read_html</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">html_nodes</span>(<span class="dt">xpath =</span> <span class="st">&#39;//*[@id=&quot;paddingWrapper&quot;]/p[2]/a[.]&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">html_attr</span>(<span class="st">&quot;href&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">str_extract</span>(<span class="st">&quot;[0-9]+&quot;</span>)
+haim_brezis_adv_id</code></pre></div>
+<pre><code>## [1] &quot;15600&quot; &quot;36703&quot;</code></pre>
+</div>
+<div id="ulrich-zasius" class="section level2">
+<h2>Ulrich Zasius</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ulrich_zasius &lt;-<span class="st"> &quot;https://www.genealogy.math.ndsu.nodak.edu/id.php?id=126659&quot;</span>
+
+ulrich_zasius_adv &lt;-
+<span class="st">  </span>ulrich_zasius <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">read_html</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">html_nodes</span>(<span class="dt">xpath =</span> <span class="st">&#39;//*[@id=&quot;paddingWrapper&quot;]/p[2]/a[.]&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">html_text</span>()
+ulrich_zasius_adv</code></pre></div>
+<pre><code>## character(0)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ulrich_zasius_adv_id &lt;-
+<span class="st">  </span>ulrich_zasius <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">read_html</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">html_nodes</span>(<span class="dt">xpath =</span> <span class="st">&#39;//*[@id=&quot;paddingWrapper&quot;]/p[2]/a[.]&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">html_attr</span>(<span class="st">&quot;href&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">str_extract</span>(<span class="st">&quot;[0-9]+&quot;</span>)
+ulrich_zasius_adv_id</code></pre></div>
+<pre><code>## character(0)</code></pre>
+</div>
+</div>
+<div id="quelques-fonctions" class="section level1">
+<h1>Quelques fonctions</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">generate_page &lt;-<span class="st"> </span><span class="cf">function</span>(id){
+  <span class="kw">glue</span>(<span class="st">&quot;https://www.genealogy.math.ndsu.nodak.edu/id.php?id={id}&quot;</span>)
+}
+
+get_adv_id &lt;-<span class="st"> </span><span class="cf">function</span>(page){
+  page <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">read_html</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">html_nodes</span>(<span class="dt">xpath =</span> <span class="st">&#39;//*[@id=&quot;paddingWrapper&quot;]/p[2]/a[.]&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">html_attr</span>(<span class="st">&quot;href&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">str_extract</span>(<span class="st">&quot;[0-9]+&quot;</span>)
+} </code></pre></div>
+</div>
+<div id="recuperation-de-la-structure-de-graphe" class="section level1">
+<h1>Récupération de la structure de graphe</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">create_edgelist &lt;-<span class="st"> </span><span class="cf">function</span>(id){
+  advisors_id &lt;-<span class="st"> </span><span class="kw">get_adv_id</span>(<span class="kw">generate_page</span>(id))
+  L &lt;-<span class="st"> </span><span class="kw">length</span>(advisors_id)
+  <span class="cf">if</span>(L <span class="op">==</span><span class="st"> </span><span class="dv">0</span>){
+    <span class="kw">return</span>(<span class="kw">matrix</span>(<span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">nrow =</span> <span class="dv">0</span>))
+  } 
+  <span class="cf">if</span>(L <span class="op">==</span><span class="st"> </span><span class="dv">1</span>){
+    <span class="kw">return</span>(<span class="kw">rbind</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="kw">rep</span>(id, L), advisors_id[<span class="dv">1</span>]), <span class="dt">ncol =</span> <span class="dv">2</span>), 
+                 <span class="kw">create_edgelist</span>(advisors_id[<span class="dv">1</span>])))
+  }
+  <span class="cf">if</span>(L <span class="op">==</span><span class="st"> </span><span class="dv">2</span>){
+    <span class="kw">return</span>(<span class="kw">rbind</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="kw">rep</span>(id, L), advisors_id), <span class="dt">ncol =</span> <span class="dv">2</span>), 
+                 <span class="kw">create_edgelist</span>(advisors_id[<span class="dv">1</span>]), 
+                 <span class="kw">create_edgelist</span>(advisors_id[<span class="dv">2</span>])))
+  }
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">id_peyre &lt;-<span class="st"> </span><span class="dv">150077</span>
+df_edgelist &lt;-
+<span class="st">  </span>id_peyre <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">create_edgelist</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">as_tibble</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(df_edgelist)</code></pre></div>
+<pre><code>## [1] 151</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_edgelist &lt;-<span class="st"> </span><span class="kw">unique</span>(df_edgelist)
+<span class="kw">print</span>(df_edgelist, <span class="dt">n =</span> <span class="ot">Inf</span>)</code></pre></div>
+<pre><code>## # A tibble: 57 x 2
+##    V1     V2    
+##    &lt;chr&gt;  &lt;chr&gt; 
+##  1 150077 56307 
+##  2 56307  13140 
+##  3 13140  39923 
+##  4 39923  15600 
+##  5 39923  36703 
+##  6 15600  24548 
+##  7 24548  105158
+##  8 105158 34266 
+##  9 34266  34254 
+## 10 34254  26995 
+## 11 26995  17865 
+## 12 17865  17864 
+## 13 17865  108295
+## 14 17864  38586 
+## 15 38586  53410 
+## 16 53410  54440 
+## 17 53410  129628
+## 18 54440  143084
+## 19 143084 143083
+## 20 143083 143082
+## 21 143082 143045
+## 22 143045 182092
+## 23 182092 131399
+## 24 131399 126659
+## 25 129628 125125
+## 26 129628 129708
+## 27 125125 130248
+## 28 130248 182090
+## 29 182090 158329
+## 30 158329 119159
+## 31 119159 126571
+## 32 126571 127181
+## 33 127181 131446
+## 34 127181 131447
+## 35 131447 131535
+## 36 131535 131539
+## 37 131535 131540
+## 38 131539 131444
+## 39 131444 131561
+## 40 131561 131575
+## 41 131575 134780
+## 42 131575 134781
+## 43 134780 146365
+## 44 146365 176844
+## 45 176844 184631
+## 46 184631 184632
+## 47 184632 201288
+## 48 201288 204293
+## 49 204293 217509
+## 50 217509 223724
+## 51 223724 230926
+## 52 129708 125125
+## 53 108295 108266
+## 54 36703  34233 
+## 55 34233  73816 
+## 56 73816  39071 
+## 57 39071  34254</code></pre>
+</div>
+<div id="recuperation-des-donnees-complementaires" class="section level1">
+<h1>Récupération des données complémentaires</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_name &lt;-<span class="st"> </span><span class="cf">function</span>(xml_page){
+  xml_page <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">html_node</span>(<span class="dt">xpath =</span> <span class="st">&#39;//*[@id=&quot;paddingWrapper&quot;]/h2&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">html_text</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">str_remove_all</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">str_replace_all</span>(<span class="st">&quot;  &quot;</span>, <span class="st">&quot; &quot;</span>)
+}
+
+get_infos &lt;-<span class="st"> </span><span class="cf">function</span>(page){
+  xml_page &lt;-<span class="st"> </span><span class="kw">read_html</span>(page)
+  <span class="kw">tibble</span>(<span class="dt">label =</span> <span class="kw">get_name</span>(xml_page))
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_nodes &lt;-<span class="st"> </span>
+<span class="st">  </span>df_edgelist <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">gather</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">pull</span>(value) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">unique</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">tibble</span>(<span class="dt">id =</span> .) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">page =</span> <span class="kw">map_chr</span>(id, generate_page),
+         <span class="dt">infos =</span> <span class="kw">map</span>(page, get_infos)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">unnest</span>(infos) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>page)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_nodes</code></pre></div>
+<pre><code>## # A tibble: 56 x 2
+##    id     label                       
+##    &lt;chr&gt;  &lt;chr&gt;                       
+##  1 150077 &quot;Rémi Peyre &quot;               
+##  2 56307  &quot;Cédric Villani &quot;           
+##  3 13140  &quot;Pierre-Louis Lions &quot;       
+##  4 39923  &quot;Haim Brezis &quot;              
+##  5 15600  &quot;Gustave Choquet &quot;          
+##  6 24548  &quot;Arnaud Denjoy &quot;            
+##  7 105158 &quot;René-Louis Baire &quot;         
+##  8 34266  &quot;C. Émile (Charles) Picard &quot;
+##  9 34254  &quot;Gaston Darboux &quot;           
+## 10 26995  &quot;Michel Chasles &quot;           
+## # ... with 46 more rows</code></pre>
+</div>
+<div id="graphe" class="section level1">
+<h1>Graphe</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">G &lt;-<span class="st"> </span>
+<span class="st">  </span>df_edgelist <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(V2, V1) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">as_tbl_graph</span>()
+G</code></pre></div>
+<pre><code>## # A tbl_graph: 56 nodes and 57 edges
+## #
+## # A directed acyclic simple graph with 1 component
+## #
+## # Node Data: 56 x 1 (active)
+##   name 
+##   &lt;chr&gt;
+## 1 56307
+## 2 13140
+## 3 39923
+## 4 15600
+## 5 36703
+## 6 24548
+## # ... with 50 more rows
+## #
+## # Edge Data: 57 x 2
+##    from    to
+##   &lt;int&gt; &lt;int&gt;
+## 1     1    56
+## 2     2     1
+## 3     3     2
+## # ... with 54 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">G &lt;-<span class="st"> </span><span class="kw">left_join</span>(G, df_nodes, <span class="kw">c</span>(<span class="st">&quot;name&quot;</span> =<span class="st"> &quot;id&quot;</span>))
+G</code></pre></div>
+<pre><code>## # A tbl_graph: 56 nodes and 57 edges
+## #
+## # A directed acyclic simple graph with 1 component
+## #
+## # Node Data: 56 x 2 (active)
+##   name  label                 
+##   &lt;chr&gt; &lt;chr&gt;                 
+## 1 56307 &quot;Cédric Villani &quot;     
+## 2 13140 &quot;Pierre-Louis Lions &quot; 
+## 3 39923 &quot;Haim Brezis &quot;        
+## 4 15600 &quot;Gustave Choquet &quot;    
+## 5 36703 &quot;Jacques-Louis Lions &quot;
+## 6 24548 &quot;Arnaud Denjoy &quot;      
+## # ... with 50 more rows
+## #
+## # Edge Data: 57 x 2
+##    from    to
+##   &lt;int&gt; &lt;int&gt;
+## 1     1    56
+## 2     2     1
+## 3     3     2
+## # ... with 54 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggraph</span>(G, <span class="dt">layout =</span> <span class="st">&quot;fr&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_edge_link</span>(<span class="dt">colour =</span> <span class="st">&quot;grey&quot;</span>,
+                 <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">length =</span> <span class="kw">unit</span>(<span class="dv">1</span>, <span class="st">&#39;mm&#39;</span>)), 
+                 <span class="dt">start_cap =</span> <span class="kw">circle</span>(<span class="dv">1</span>, <span class="st">&#39;mm&#39;</span>),
+                 <span class="dt">end_cap =</span> <span class="kw">circle</span>(<span class="dv">1</span>, <span class="st">&#39;mm&#39;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_node_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> label), <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_void</span>()</code></pre></div>
+<p><img src="atelier1_webscraping_genealogie_files/figure-html/graph-1.png" width="100%" /></p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,10 +1,11 @@
 name: "FinistR, édition 2018"
+output_dir: "../docs"
 navbar:
-  title: "FinistR 2018"
-  left:
+ title: "FinistR 2018"
+ left:
   - text: "Home"
     href: index.html
-  right:
+ right:
   - text: "Webscrapping"
     href: atelier1_webscraping.html
     menu:

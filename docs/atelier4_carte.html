@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Antoine Bichat" />
+
+
+<title>Carte des participants</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FinistR 2018</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Webscrapping
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier1_webscraping_simple.html">Simple Example</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_genealogie.html">Genealogie mathématique</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_googlefight.html">Google Fight</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_googlenews.html">Google News</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_youtube.html">Youtube</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Optimisation et accélération
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier2_rgpu.html">R et GPU</a>
+    </li>
+    <li>
+      <a href="atelier2_tensorflow.html">TensorFlow</a>
+    </li>
+    <li>
+      <a href="atelier2_julia.html">Julia</a>
+    </li>
+    <li>
+      <a href="atelier2_rcpp_modules.html">Rcpp</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Bonnes pratiques
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier3_git.html">Versionning</a>
+    </li>
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+        Package
+         
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="atelier3_package_creation.html">Création</a>
+        </li>
+        <li>
+          <a href="atelier3_package_dvp.html">Développement et tests</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="atelier3_advancedrmd.html">Production de documents</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Carte des participants</h1>
+<h4 class="author"><em>Antoine Bichat</em></h4>
+<h4 class="date"><em>31/08/2018</em></h4>
+
+</div>
+
+
+<style>
+/* center widgets */
+.html-widget {
+    margin: auto;
+}
+</style>
+<div id="packages" class="section level1">
+<h1>Packages</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(leaflet)
+<span class="kw">library</span>(glue)</code></pre></div>
+</div>
+<div id="data" class="section level1">
+<h1>Data</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_participants &lt;-
+<span class="st">  </span><span class="kw">tribble</span>(<span class="op">~</span>Prenom, <span class="op">~</span>Nom, <span class="op">~</span>Labo,
+       <span class="st">&quot;Avner&quot;</span>, <span class="st">&quot;Bar-Hen&quot;</span>, <span class="st">&quot;(CNAM)&quot;</span>,
+       <span class="st">&quot;Antoine&quot;</span>, <span class="st">&quot;Bichat&quot;</span>, <span class="st">&quot;(LaMME - INRA Jouy-en-Josas - Enterome)&quot;</span>,
+       <span class="st">&quot;Mathieu&quot;</span>, <span class="st">&quot;Carmassi&quot;</span>, <span class="st">&quot;(AgroParisTech - EDF Lab Les Renardières)&quot;</span>,
+       <span class="st">&quot;Saint-Clair&quot;</span>, <span class="st">&quot;Chabert-Liddell&quot;</span>, <span class="st">&quot;(AgroParisTech)&quot;</span>,
+       <span class="st">&quot;Félix&quot;</span>, <span class="st">&quot;Cheysson&quot;</span>, <span class="st">&quot;(AgroParisTech - Institut Pasteur)&quot;</span>,
+       <span class="st">&quot;Julien&quot;</span>, <span class="st">&quot;Chiquet&quot;</span>, <span class="st">&quot;(AgroParisTech)&quot;</span>,
+       <span class="st">&quot;Sophie&quot;</span>, <span class="st">&quot;Donnet&quot;</span>, <span class="st">&quot;(AgroParisTech)&quot;</span>,
+       <span class="st">&quot;Marie-Pierre&quot;</span>, <span class="st">&quot;Étienne&quot;</span>, <span class="st">&quot;(IRMAR - Agrocampus Ouest)&quot;</span>,
+       <span class="st">&quot;Pierre&quot;</span>, <span class="st">&quot;Gloaguen&quot;</span>, <span class="st">&quot;(AgroParisTech)&quot;</span>,
+       <span class="st">&quot;Gabriel&quot;</span>, <span class="st">&quot;Lang&quot;</span>, <span class="st">&quot;(AgroParisTech)&quot;</span>,
+       <span class="st">&quot;Jean-Baptiste&quot;</span>, <span class="st">&quot;Lecomte&quot;</span>, <span class="st">&quot;(Agrocampus Ouest)&quot;</span>,
+       <span class="st">&quot;Raphaëlle&quot;</span>, <span class="st">&quot;Momal&quot;</span>, <span class="st">&quot;(AgroParisTech)&quot;</span>,
+       <span class="st">&quot;Pierre&quot;</span>, <span class="st">&quot;Navaro&quot;</span>, <span class="st">&quot;(IRMAR - Université de Rennes)&quot;</span>,
+       <span class="st">&quot;Éric&quot;</span>, <span class="st">&quot;Parent&quot;</span>, <span class="st">&quot;(AgroParisTech)&quot;</span>,
+       <span class="st">&quot;Marie&quot;</span>, <span class="st">&quot;Perrot&quot;</span>, <span class="st">&quot;(AgroParisTech)&quot;</span>,
+       <span class="st">&quot;Bewentaoré&quot;</span>, <span class="st">&quot;Sawadogo&quot;</span>, <span class="st">&quot;(AgroParisTech)&quot;</span>,
+       <span class="st">&quot;Timothée&quot;</span>, <span class="st">&quot;Tabouy&quot;</span>, <span class="st">&quot;(AgroParisTech)&quot;</span>,
+       <span class="st">&quot;Vincent&quot;</span>, <span class="st">&quot;Runge&quot;</span>, <span class="st">&quot;(LaMME)&quot;</span>)
+df_participants</code></pre></div>
+<pre><code>## # A tibble: 18 x 3
+##    Prenom        Nom             Labo                                     
+##    &lt;chr&gt;         &lt;chr&gt;           &lt;chr&gt;                                    
+##  1 Avner         Bar-Hen         (CNAM)                                   
+##  2 Antoine       Bichat          (LaMME - INRA Jouy-en-Josas - Enterome)  
+##  3 Mathieu       Carmassi        (AgroParisTech - EDF Lab Les Renardières)
+##  4 Saint-Clair   Chabert-Liddell (AgroParisTech)                          
+##  5 Félix         Cheysson        (AgroParisTech - Institut Pasteur)       
+##  6 Julien        Chiquet         (AgroParisTech)                          
+##  7 Sophie        Donnet          (AgroParisTech)                          
+##  8 Marie-Pierre  Étienne         (IRMAR - Agrocampus Ouest)               
+##  9 Pierre        Gloaguen        (AgroParisTech)                          
+## 10 Gabriel       Lang            (AgroParisTech)                          
+## 11 Jean-Baptiste Lecomte         (Agrocampus Ouest)                       
+## 12 Raphaëlle     Momal           (AgroParisTech)                          
+## 13 Pierre        Navaro          (IRMAR - Université de Rennes)           
+## 14 Éric          Parent          (AgroParisTech)                          
+## 15 Marie         Perrot          (AgroParisTech)                          
+## 16 Bewentaoré    Sawadogo        (AgroParisTech)                          
+## 17 Timothée      Tabouy          (AgroParisTech)                          
+## 18 Vincent       Runge           (LaMME)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_labos &lt;-<span class="st"> </span>
+<span class="st">  </span><span class="kw">tribble</span>(<span class="op">~</span>Labo, <span class="op">~</span>Lat, <span class="op">~</span>Long,
+          <span class="st">&quot;CNAM&quot;</span>, <span class="fl">48.866456</span>, <span class="fl">2.355539</span>,
+          <span class="st">&quot;LaMME&quot;</span>, <span class="fl">48.625671</span>, <span class="fl">2.439936</span>,
+          <span class="st">&quot;INRA Jouy-en-Josas&quot;</span>, <span class="fl">48.766096</span>, <span class="fl">2.182927</span>,
+          <span class="st">&quot;Enterome&quot;</span>, <span class="fl">48.851725</span>, <span class="fl">2.376756</span>,
+          <span class="st">&quot;EDF Lab Les Renardières&quot;</span>, <span class="fl">48.375008</span>, <span class="fl">2.843243</span>,
+          <span class="st">&quot;Institut Pasteur&quot;</span>, <span class="fl">48.840352</span>, <span class="fl">2.311357</span>,
+          <span class="st">&quot;IRMAR&quot;</span>, <span class="fl">48.119174</span>, <span class="op">-</span><span class="fl">1.641708</span>,
+          <span class="st">&quot;Agrocampus Ouest&quot;</span>, <span class="fl">48.113799</span>, <span class="op">-</span><span class="fl">1.706054</span>,
+          <span class="st">&quot;AgroParisTech&quot;</span>, <span class="fl">48.839827</span>, <span class="fl">2.348523</span>,
+          <span class="st">&quot;Université de Rennes&quot;</span>, <span class="fl">48.115951</span>, <span class="op">-</span><span class="fl">1.673121</span>) 
+df_labos</code></pre></div>
+<pre><code>## # A tibble: 10 x 3
+##    Labo                      Lat  Long
+##    &lt;chr&gt;                   &lt;dbl&gt; &lt;dbl&gt;
+##  1 CNAM                     48.9  2.36
+##  2 LaMME                    48.6  2.44
+##  3 INRA Jouy-en-Josas       48.8  2.18
+##  4 Enterome                 48.9  2.38
+##  5 EDF Lab Les Renardières  48.4  2.84
+##  6 Institut Pasteur         48.8  2.31
+##  7 IRMAR                    48.1 -1.64
+##  8 Agrocampus Ouest         48.1 -1.71
+##  9 AgroParisTech            48.8  2.35
+## 10 Université de Rennes     48.1 -1.67</code></pre>
+</div>
+<div id="manipulate-data" class="section level1">
+<h1>Manipulate data</h1>
+<!-- ```{r dplyr, } -->
+<!-- df <- -->
+<!--   df_participants %>%  -->
+<!--   mutate(Labo = str_remove_all(Labo, "\\(|\\)"), -->
+<!--          Labo = str_split(Labo, " - "), -->
+<!--          Label = paste(Prenom, Nom)) %>%  -->
+<!--   unnest(Labo) %>%  -->
+<!--   group_by(Labo) %>%  -->
+<!--   nest() %>%  -->
+<!--   mutate(N = map_dbl(data, nrow), -->
+<!--          Label = map(data, ~ pull(., Label)), -->
+<!--          Label = map_chr(Label, ~ paste(., collapse = ", ")), -->
+<!--          Label = glue("<b>{Labo}</b><br>{Label}")) %>%  -->
+<!--   select(-data) %>%  -->
+<!--   left_join(df_labos, by = "Labo") -->
+<!-- df -->
+<!-- ``` -->
+<!-- # Maps -->
+<!-- ```{r map} -->
+<!-- map <-  -->
+<!--   df %>%  -->
+<!--   leaflet() %>%  -->
+<!--   addTiles() %>% -->
+<!--   addAwesomeMarkers(lng = ~Long, lat = ~Lat, popup = ~Label, label = ~Labo, -->
+<!--                     icon = awesomeIcons(icon = "ios-people", iconColor = "black",  -->
+<!--                                         library = "ion", markerColor = "blue")) %>%  -->
+<!--   addAwesomeMarkers(lng = -3.984898, lat = ~47.860725,  -->
+<!--                     popup = "<b>Agrocampus Ouest, site de Beg Meil</b><br>Lieu de Finist'R 2018", -->
+<!--                     label = "Agrocampus Ouest, site de Beg Meil", -->
+<!--                     icon = awesomeIcons(icon = "ios-analytics", iconColor = "black",  -->
+<!--                                         library = "ion", markerColor = "red")) %>%  -->
+<!--   addCircleMarkers(lng = -3.984898, lat = ~47.860725, color = "red") %>%  -->
+<!--   addCircleMarkers(lng = ~Long, lat = ~Lat, radius = ~ 3*N, color = "blue") -->
+<!-- map  -->
+<!-- ``` -->
+<!-- <br> -->
+<!-- ```{r mapparis} -->
+<!-- map %>% setView(lng = 2.3, lat = 48.7, zoom = 9) -->
+<!-- ``` -->
+<!-- <br> -->
+<!-- ```{r maprennes} -->
+<!-- map %>% setView(lng = -1.68, lat = 48.12, zoom = 13) -->
+<!-- ``` -->
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

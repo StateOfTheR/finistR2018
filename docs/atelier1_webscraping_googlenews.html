@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Groupe 4" />
+
+<meta name="date" content="2018-08-27" />
+
+<title>web scraping</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FinistR 2018</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Webscrapping
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier1_webscraping_simple.html">Simple Example</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_genealogie.html">Genealogie mathématique</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_googlefight.html">Google Fight</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_googlenews.html">Google News</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_youtube.html">Youtube</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Optimisation et accélération
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier2_rgpu.html">R et GPU</a>
+    </li>
+    <li>
+      <a href="atelier2_tensorflow.html">TensorFlow</a>
+    </li>
+    <li>
+      <a href="atelier2_julia.html">Julia</a>
+    </li>
+    <li>
+      <a href="atelier2_rcpp_modules.html">Rcpp</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Bonnes pratiques
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier3_git.html">Versionning</a>
+    </li>
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+        Package
+         
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="atelier3_package_creation.html">Création</a>
+        </li>
+        <li>
+          <a href="atelier3_package_dvp.html">Développement et tests</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="atelier3_advancedrmd.html">Production de documents</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">web scraping</h1>
+<h4 class="author"><em>Groupe 4</em></h4>
+<h4 class="date"><em>August 27, 2018</em></h4>
+
+</div>
+
+
+<!-- ## Construire la requete -->
+<!-- On veut lister tous les résultats dans les news référrencées par google concernant un mot clé : 'vegan' -->
+<!-- ```{r} -->
+<!-- keyword <- 'carnivore' -->
+<!-- source  <- 'nws' -->
+<!-- ``` -->
+<!-- On peut utiliser le package RCurl qui télécharge des pages web : -->
+<!-- ```{r} -->
+<!-- res_curl <- getURL(paste0("https://www.google.com/search?q=", keyword,"&tbm=",source)) -->
+<!-- class(res_curl) -->
+<!-- ``` -->
+<!-- Mais le résultat n'est pas très lisible, comme le montre la sortie suivante qui affiche les 1000 premiers caractères. -->
+<!-- ```{r} -->
+<!-- stringr::str_sub(res_curl, end = 500) -->
+<!-- ``` -->
+<!-- Dans ce cas le document n'est pas structuré, c'est du html et non xml. -->
+<!-- Utiliser le package `rvest` permet d'obtenir un fichier xml structuré plus facile à parcourir et analyser. -->
+<!-- ```{r} -->
+<!-- res_rvest <- read_html(paste0("https://www.google.com/search?q=",keyword,"&tbm=", source)) -->
+<!-- res_rvest -->
+<!-- ``` -->
+<!-- Si on veut chercher une experession plus complexe avec plusieurs mots, il faut créer une requete avec des guillemets. Par exemple 'vegan et boucher' -->
+<!-- ```{r} -->
+<!-- keyword2 <- 'veg+boucher' -->
+<!-- res2_rvest <- read_html(paste0("https://www.google.com/search?q=", keyword2)) -->
+<!-- res2_rvest -->
+<!-- ``` -->
+<!-- ## Extraire l'information  -->
+<!-- On souhaite pour chaque résultat de la page, extraire le journal et la date de la parution. -->
+<!-- Pour chaque résultat, on a une balise 'slp' qui contient l'origine et la date. On peut accéder à son contenu grâce à la fonction `html_nodes`. La fonction `html_node` ne donne accès qu'à la première occurrence de cette balise. Pour accèder à ce qui se trouve au sein de cette balise, on peut enchaîner avec la fonction `html_children` qui donne accès au contenu de cette balise. -->
+<!-- ```{r} -->
+<!-- html_nodes(res_rvest,".slp") %>% html_children -->
+<!-- ``` -->
+<!-- Seuls  10 résultats apparaissent : les 10 suivants peuvent être obtenus en indiquant à google de commencer au 11eme résultat. -->
+<!-- ```{r} -->
+<!-- debut <- 10 -->
+<!-- res_rvest <- read_html(glue('https://www.google.com/search?q={                              keyword}&tbm={source}&start={debut}')) -->
+<!-- html_nodes(res_rvest,".slp") %>% html_children -->
+<!-- ``` -->
+<!-- Pour voir la structure de la page -->
+<!-- ```{r, eval=FALSE} -->
+<!-- res_rvest %>%html_structure() -->
+<!-- ``` -->
+<!-- # Traiter les sorties pour en faire une info exploitable -->
+<!-- La requete est donnée donc par  -->
+<!-- ```{r} -->
+<!-- req <- glue('https://www.google.com/search?q={                        keyword}&tbm={source}&start={debut}') -->
+<!-- ``` -->
+<!-- ## le titre -->
+<!-- Le titre se trouve dans une blaise de class `.g`  -->
+<!-- ```{r} -->
+<!-- title <-  read_html(req) %>% -->
+<!--   html_nodes(css=".g") %>% html_text() %>% stringr::str_split(' - ')%>% -->
+<!--   sapply(function(d_){d_[1]}) %>% as.character() -->
+<!-- ``` -->
+<!-- Le titre contient encore le nom du journal qu'il faut supprimer. -->
+<!-- ## le nom du journal -->
+<!-- ```{r} -->
+<!--   res <- read_html(req) %>% -->
+<!--     html_nodes(css=".slp") %>%  -->
+<!--     html_children %>%  -->
+<!--     html_text -->
+<!-- origin <- sapply( -->
+<!--     stringr::str_split(res, ' - '), function(s_){s_[1]}) -->
+<!-- ``` -->
+<!-- On peut maintenant supprimer le nom du journal du titre. -->
+<!-- ```{r} -->
+<!-- title <- stringr::str_remove(title, origin) -->
+<!-- title -->
+<!-- ``` -->
+<!-- ## la date de la publication -->
+<!-- ```{r} -->
+<!-- date <- sapply( stringr::str_split(res, ' - '), function(s_){s_[2]}) -->
+<!-- ```   -->
+<!-- Le problème est que la date n'a pas toujours le même format. Elle est parfois donnée sous la forme "il y a 6 jours", "il y a 2h". Le cas échéant on va donc recréer une date correcte à partir de la date actuelle à laquelle on retranche la durée indiquée. -->
+<!-- ```{r} -->
+<!--   date_propre <- sapply(date, function(d_){ -->
+<!--     if(stringr::str_detect(d_, 'il y a')){ -->
+<!--       nunits <- as.numeric(stringr::str_extract(d_, "[0-9]+")) -->
+<!--       unit <- ifelse( stringr::str_detect(d_, 'jours'), 'days', 'hours' ) -->
+<!--       dt <- as.difftime(nunits, units = unit) -->
+<!--       r <- Sys.time() - dt -->
+<!--       r <- round.POSIXt(r, units = 'days') -->
+<!--     } else -->
+<!--     { -->
+<!--       r <- strptime(d_, format = "%d %b %Y") -->
+<!--     } -->
+<!--     return(as.character(r)) -->
+<!--   }) -->
+<!--   date_propre -->
+<!-- ```   -->
+<!-- La fonction `extractGoogleRes` prend en paramètre un numero de pages et renvoie le tableau contenant le titre, la date et le journal. -->
+<!-- ```{r} -->
+<!-- extractGoogleRes <- function(p_){ -->
+<!--   debut <- p_ * 10 -->
+<!--   req   <- req <- glue('https://www.google.com/search?q={                        keyword}&tbm={source}&start={debut}') -->
+<!--   title <-  read_html(req) %>% -->
+<!--     html_nodes(css=".g") %>% html_text() %>% stringr::str_split(' - ') %>% -->
+<!--     sapply(function(d_){d_[1]}) %>% as.character() -->
+<!--   res <- read_html(req) %>% -->
+<!--     html_nodes(css=".slp") %>%  -->
+<!--     html_children %>%  -->
+<!--     html_text -->
+<!--   origin <- sapply( -->
+<!--     stringr::str_split(res, ' - '), function(s_){s_[1]}) -->
+<!--   title <- stringr::str_remove(title, origin) -->
+<!--   date <- sapply( stringr::str_split(res, ' - '), function(s_){s_[2]}) -->
+<!--   date_propre <- sapply(date, function(d_){ -->
+<!--     if(stringr::str_detect(d_, 'il y a')){ -->
+<!--       nunits <- as.numeric(stringr::str_extract(d_, "[0-9]+")) -->
+<!--       unit <- ifelse( stringr::str_detect(d_, 'jours'), 'days', 'hours' ) -->
+<!--       dt <- as.difftime(nunits, units = unit) -->
+<!--       r <- Sys.time() - dt -->
+<!--       r <- round.POSIXt(r, units = 'days') -->
+<!--     } else -->
+<!--     { -->
+<!--       r <- strptime(d_, format = "%d %b %Y") -->
+<!--     } -->
+<!--     return(as.character(r)) -->
+<!--   }) -->
+<!--   return(data.frame(title=title, jour=date_propre, origin=origin))   -->
+<!-- } -->
+<!-- extractGoogleRes(2) -->
+<!-- ``` -->
+<!-- ## Obtenir les 260 résultats autorisés par Google -->
+<!-- Google limite le nombre de pages accessibles à 26.  On va doncappelr successivement chaune de ces pages. -->
+<!-- ```{r} -->
+<!-- pages <- 0:25 -->
+<!-- res   <- lapply(pages, extractGoogleRes) -->
+<!-- df <- do.call(rbind, res) -->
+<!-- summary(df) -->
+<!-- ``` -->
+<!-- ## Représentation graphique -->
+<!-- ```{r} -->
+<!-- df %>% -->
+<!--   group_by(jour) %>% -->
+<!--   summarise(cnt = n()) %>% mutate(date_pub= as.POSIXct(strptime(jour, format = "%Y-%m-%d",  tz="GMT"))) %>% -->
+<!--   ggplot(aes(x = (date_pub), y = cnt)) + -->
+<!--   geom_bar(stat = "identity")  -->
+<!-- ``` -->
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

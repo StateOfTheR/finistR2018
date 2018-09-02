@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Marie, Avner, Éric, Julien" />
+
+<meta name="date" content="2018-08-29" />
+
+<title>Personalisation de Rmarkdown</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FinistR 2018</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Webscrapping
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier1_webscraping_simple.html">Simple Example</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_genealogie.html">Genealogie mathématique</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_googlefight.html">Google Fight</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_googlenews.html">Google News</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_youtube.html">Youtube</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Optimisation et accélération
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier2_rgpu.html">R et GPU</a>
+    </li>
+    <li>
+      <a href="atelier2_tensorflow.html">TensorFlow</a>
+    </li>
+    <li>
+      <a href="atelier2_julia.html">Julia</a>
+    </li>
+    <li>
+      <a href="atelier2_rcpp_modules.html">Rcpp</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Bonnes pratiques
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier3_git.html">Versionning</a>
+    </li>
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+        Package
+         
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="atelier3_package_creation.html">Création</a>
+        </li>
+        <li>
+          <a href="atelier3_package_dvp.html">Développement et tests</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="atelier3_advancedrmd.html">Production de documents</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Personalisation de Rmarkdown</h1>
+<h3 class="subtitle"><em>R Bootcamp, Beg Meil</em></h3>
+<h4 class="author"><em>Marie, Avner, Éric, Julien</em></h4>
+<h4 class="date"><em>August 29, 2018</em></h4>
+
+</div>
+
+
+<div id="base-de-fonctionnement-de-rmarkdown" class="section level1">
+<h1>Base de fonctionnement de Rmarkdown</h1>
+<div id="resume-de-la-chaine-de-traitement" class="section level2">
+<h2>Résumé de la chaîne de traitement</h2>
+<div class="figure">
+<img src="schema_rmd.png" alt="Process de création d’un document" />
+<p class="caption">Process de création d’un document</p>
+</div>
+</div>
+<div id="les-acteurs" class="section level2">
+<h2>Les acteurs</h2>
+<ol style="list-style-type: decimal">
+<li>Chaîne de traitement
+<ul>
+<li>package/fonction <em>rmarkdown</em>: gestion de l’ensemble de la chaîne de traitement (Rstudio -&gt; document final)</li>
+<li>package <em>knitr</em>: interprétation du code utilisateur (R/Python/Julia) et conversion en sortie intégrable au document</li>
+<li>logiciel <em>Pandoc</em>: convertisseur de markdown (faiblement structuré) en langage balisé (fortement structuré)</li>
+</ul></li>
+<li>Interpréteur de langage balisé
+<ul>
+<li>navigateur web (<em>HTML</em>)</li>
+<li>commande <code>(pdf)latex</code> + lecteur (<em>PDF</em>)</li>
+<li>Word/libreoffice (<em>docx</em>)</li>
+</ul></li>
+</ol>
+</div>
+<div id="langages" class="section level2">
+<h2>Langages</h2>
+<ul>
+<li>Metadata (YAML): paramétrisation de la chaîne de traitement</li>
+<li>Langage pour code utilisateur (R, Python, Julia, bash…)</li>
+<li>Langage de balisage (Rmarkdown, markdown, HTML, <span class="math inline">\(\LaTeX2e\)</span>, XML)</li>
+</ul>
+</div>
+<div id="organisation-dun-document-structure-par-balises" class="section level2">
+<h2>Organisation d’un document structuré par balises</h2>
+<ul>
+<li>Un préambule
+<ul>
+<li><em>preamble</em> (précède <code>\begin{document}</code>) dans <span class="math inline">\(\LaTeX\)</span></li>
+<li>une <em>en-tête</em> en <code>HTML</code> (<code>&lt;header&gt; ... &lt;\header&gt;</code>)</li>
+</ul></li>
+<li>document principal
+<ul>
+<li><code>\begin{document} ... \end{document}</code> en <span class="math inline">\(\LaTeX\)</span></li>
+<li><code>&lt;body&gt; ... &lt;/body&gt;</code> en <code>HTML</code></li>
+</ul></li>
+</ul>
+</div>
+<div id="fichiers" class="section level2">
+<h2>Fichiers</h2>
+<ol style="list-style-type: decimal">
+<li>entrée
+<ul>
+<li>.Rmd (YAML+R+markdown)</li>
+</ul></li>
+<li>fichier intermédiare
+<ul>
+<li>.md (markdown), figures</li>
+</ul></li>
+<li>configuration
+<ul>
+<li>.sty, .css</li>
+</ul></li>
+<li>sortie
+<ul>
+<li>.tex/.PDF, .html, .docx</li>
+</ul></li>
+</ol>
+</div>
+</div>
+<div id="fonctionnement-du-preambule-rmd" class="section level1">
+<h1>Fonctionnement du préambule <code>Rmd</code></h1>
+<p>L’idée est de transformer le Rmd en md et qu’il soit interprété par pandoc. Les options vont donc devoir être passéees à knitr et à Pandoc. On a donc un préambule pour cela. Néanmoins on voit à ce moment de l’histoire que les options vont être traitées différemment selon les étapes. Il faut donc récupérer les options sous une forme structurée et non plus balisée. C’est le but de <em>yaml</em> qui est un parseur. Ceci explique aussi pourquoi l’indentation et la présentation sont importantes. Les éléments parsés vont être transmis aux interpréteurs.</p>
+<p>Notez que le type de sortie (<code>html_document</code>, <code>pdf_document</code>) correspond à une fonction du package <code>rmarkdown</code> (<code>html_document()</code> ou <code>pdf_document()</code>) dont la tâche est d’effectuer toute la chaîne de traitement. Les entrées YAML associé par l’indentitation à cette fonction correspondent en faite à des variables passés en arguments de cette fonction paramétrant le processus.</p>
+<p>On peut distinguer les options globales des options qui sont spécifiques d’un format.</p>
+<div id="options-globales" class="section level2">
+<h2>Options globales</h2>
+<p>Elles sont communes à tout type de sortie</p>
+<pre class="yaml"><code>---
+title: titre du document
+subtitle: &quot;sous titre&quot;
+author: auteur du document
+date: &quot;`r Sys.Date()`&quot;
+---</code></pre>
+</div>
+<div id="options-specifiques" class="section level2">
+<h2>Options spécifiques</h2>
+<p>On peut distinguer pour HTML ou les fichiers de définition inclus (css ou .sty) ou ou l’utilisation de certaines commandes (on donne une valeur à une variable).</p>
+<div id="exemple-pour-html_document" class="section level3">
+<h3>Exemple pour html_document()</h3>
+<pre class="yaml"><code>---
+title: titre du document
+author: auteur du document
+output:
+  html_document:
+    number_sections: yes
+    toc: true
+    mathjax: &quot;http://example.com/MathJax.js&quot;
+    css: monstyle.css
+---</code></pre>
+</div>
+<div id="exemple-pour-pdf_document" class="section level3">
+<h3>Exemple pour pdf_document()</h3>
+<pre class="yaml"><code>---
+title: titre du document
+author: auteur du document
+output:
+  pdf_document:
+    number_sections: yes
+    toc: true
+    include:
+      in_header: preamble.sty
+---</code></pre>
+</div>
+</div>
+<div id="example-avance-pour-la-sortie-beamer_presentation" class="section level2">
+<h2>Example avancé pour la sortie <code>beamer_presentation</code></h2>
+<p><a href="https://github.com/jchiquet/CourseAdvancedR" class="uri">https://github.com/jchiquet/CourseAdvancedR</a></p>
+</div>
+</div>
+<div id="creer-son-propre-template-rmd" class="section level1">
+<h1>Créer son propre template <code>Rmd</code></h1>
+<p>Si la customisation du document est importante il devient vite illisible de les inclure en paramètres dans le préambule et il faut mieux créer son propre template. Ceci revient à créer une libraire R un peu spéciale et l’inclure.</p>
+<div id="exemple-un-package-pour-une-publication-scientifique" class="section level2">
+<h2>Exemple: un package pour une publication scientifique</h2>
+<p>Un exemple simple est le template d’un journal. Il faut créer package qui s’organisera comme dans la figure suivante :</p>
+<div class="figure">
+<img src="TreePackageRmarkdown.png" alt="arborescence" />
+<p class="caption">arborescence</p>
+</div>
+<div class="figure">
+<img src="arborescence_pkg_template.png" alt="arborescence type" />
+<p class="caption">arborescence type</p>
+</div>
+<div id="definition-dun-processiong-de-sortie-en-html" class="section level3">
+<h3>Définition d’un processiong de sortie en HTML</h3>
+<p>Le fichier <code>html.R</code> contient la fonction <code>html_article()</code> assurant la chaîne de traîtement. Ici, un exemple simple se basant sur la fonction existante <code>html_document()</code></p>
+<pre class="r"><code>html_article &lt;- function(...) {
+
+  ## call the base html_document format with the appropriate options
+  rmarkdown::html_document(theme = &quot;united&quot;,
+                            highlight = &quot;tango&quot;,
+                            toc = TRUE,
+                            df_print = &quot;paged&quot;,
+                            code_folding = &quot;show&quot;,
+                            code_download = TRUE,
+                            toc_float = TRUE,
+                            number_sections = TRUE,
+                           )
+}</code></pre>
+</div>
+<div id="definition-dun-processiong-de-sortie-en-pdf" class="section level3">
+<h3>Définition d’un processiong de sortie en PDF</h3>
+<p>Le fichier <code>pdf.R</code> contient la fonction <code>pdf_article()</code> assurant la chaîne de traîtement. Ici, un exemple simple se basant sur la fonction existante <code>pdf_document()</code> et complétant légèrement le processus</p>
+<pre class="r"><code>pdf_article &lt;- function(...) {
+
+    ## call the base pdf_document format with the appropriate options
+    format &lt;- rmarkdown::pdf_document(fig_width = 8, fig_height = 5, fig_crop = TRUE,
+                                      dev = &#39;pdf&#39;, highlight = &quot;pygments&quot;,
+                                      citation_package = &quot;natbib&quot;,
+                                      template = template_resources(&quot;pdf_article&quot;, &quot;template.tex&quot;), ...)
+
+    ## create knitr options (ensure opts and hooks are non-null)
+    knitr_options &lt;- rmarkdown::knitr_options_pdf(8, 5, TRUE, &#39;pdf&#39;)
+    if (is.null(knitr_options$opts_knit))  knitr_options$opts_knit = list()
+    if (is.null(knitr_options$knit_hooks)) knitr_options$knit_hooks = list()
+
+    ## set options
+    knitr_options$opts_chunk$tidy = TRUE
+    knitr_options$opts_knit$width = 45
+
+    ## set hooks for special plot output
+    knitr_options$knit_hooks$plot &lt;- function(x, options) {
+        knitr::hook_plot_tex(x, options)
+    }
+
+    ## override the knitr settings of the base format and return the format
+    format$knitr &lt;- knitr_options
+    format$inherits &lt;- &#39;pdf_document&#39;
+    format
+}</code></pre>
+</div>
+<div id="template-pandoc" class="section level3">
+<h3>template PANDOC</h3>
+<p>Le fichier <code>template.tex</code> (resp. l’équivalent <code>style.css</code>) contient le template pandoc pour la sortie tex (respectivement, HTML)</p>
+<pre class="latex"><code>\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$lang$,$endif$$if(papersize)$$papersize$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+
+% ams
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e}
+\usepackage[OT1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{eurosym}
+
+% graphix
+\usepackage{graphicx}
+
+% url
+\usepackage{url}
+
+% hyperref
+\usepackage{hyperref}
+
+% units.
+\usepackage{units}
+
+$if(lang)$
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[shorthands=off,$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=$babel-lang$]{babel}
+$if(babel-newcommands)$
+  $babel-newcommands$
+$endif$
+\else
+  \usepackage{polyglossia}
+  \setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
+$for(polyglossia-otherlangs)$
+  \setotherlanguage[$polyglossia-otherlangs.options$]{$polyglossia-otherlangs.name$}
+$endfor$
+\fi
+$endif$
+
+$if(numbersections)$
+\setcounter{secnumdepth}{2}
+$else$
+\setcounter{secnumdepth}{-1}
+$endif$
+
+% citations
+$if(natbib)$
+\usepackage{natbib}
+\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
+$endif$
+$if(biblatex)$
+\usepackage{biblatex}
+$for(bibliography)$
+\addbibresource{$bibliography$}
+$endfor$
+$endif$
+
+% pandoc syntax highlighting
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+
+% multiplecol
+\usepackage{multicol}
+
+% strikeout
+\usepackage[normalem]{ulem}
+
+% tightlist macro required by pandoc &gt;= 1.14
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% title / author / date
+$if(title)$
+\title{$title$}
+$endif$
+$if(author)$
+\author{$for(author)$$author$$sep$ \and $endfor$}
+$endif$
+$if(date)$
+\date{$date$}
+$else$
+\date{}
+$endif$
+
+%% colored links, setting &#39;borrowed&#39; from RJournal.sty with &#39;Thanks, Achim!&#39;
+\RequirePackage{color}
+\definecolor{link}{rgb}{0.1,0.1,0.8} %% blue with some grey
+\hypersetup{
+  colorlinks,%
+  citecolor=link,%
+  filecolor=link,%
+  linkcolor=link,%
+  urlcolor=link
+}
+
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+\begin{document}
+
+$if(title)$
+\maketitle
+$endif$
+
+$if(abstract)$
+\begin{abstract}
+\noindent $abstract$
+\end{abstract}
+$endif$
+
+$for(include-before)$
+$include-before$
+$endfor$
+
+$if(toc)$
+{
+$if(colorlinks)$
+\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
+$endif$
+\setcounter{tocdepth}{$toc-depth$}
+\tableofcontents
+}
+$endif$
+$if(lot)$
+\listoftables
+$endif$
+$if(lof)$
+\listoffigures
+$endif$
+
+$body$
+
+$if(natbib)$
+$if(bibliography)$
+$if(biblio-title)$
+$if(book-class)$
+\renewcommand\bibname{$biblio-title$}
+$else$
+\renewcommand\refname{$biblio-title$}
+$endif$
+$endif$
+\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+
+$endif$
+$endif$
+$if(biblatex)$
+\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+
+$endif$
+
+$for(include-after)$
+$include-after$
+$endfor$
+
+\end{document}</code></pre>
+</div>
+<div id="definition-dun-squelette-pour-lutilisateur" class="section level3">
+<h3>Définition d’un squelette pour l’utilisateur</h3>
+<p>Le fichier <code>skeleton.Rmd</code> contient le squelette du fichier Rmd auquel on accède via l’interface Rstudio lors de la création d’un nouveau document, dont les spécification sont définies dans <code>teamplate.yml</code></p>
+<div class="figure">
+<img src="new_Rmarkdown.png" alt="création Rmd via Rstudio" />
+<p class="caption">création Rmd via Rstudio</p>
+</div>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Avner Bar-Hen, Gabriel Lang, Raphaëlle Momal,Bewentaoré Sawadogo" />
+
+<meta name="date" content="2018-08-27" />
+
+<title>Scraping Youtube</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FinistR 2018</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Webscrapping
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier1_webscraping_simple.html">Simple Example</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_genealogie.html">Genealogie mathématique</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_googlefight.html">Google Fight</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_googlenews.html">Google News</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_youtube.html">Youtube</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Optimisation et accélération
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier2_rgpu.html">R et GPU</a>
+    </li>
+    <li>
+      <a href="atelier2_tensorflow.html">TensorFlow</a>
+    </li>
+    <li>
+      <a href="atelier2_julia.html">Julia</a>
+    </li>
+    <li>
+      <a href="atelier2_rcpp_modules.html">Rcpp</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Bonnes pratiques
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier3_git.html">Versionning</a>
+    </li>
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+        Package
+         
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="atelier3_package_creation.html">Création</a>
+        </li>
+        <li>
+          <a href="atelier3_package_dvp.html">Développement et tests</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="atelier3_advancedrmd.html">Production de documents</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Scraping Youtube</h1>
+<h4 class="author"><em>Avner Bar-Hen, Gabriel Lang, Raphaëlle Momal,Bewentaoré Sawadogo</em></h4>
+<h4 class="date"><em>August 27, 2018</em></h4>
+
+</div>
+
+
+<div id="recolter-des-donnees-sur-youtube" class="section level2">
+<h2>Récolter des données sur Youtube</h2>
+<p>L’objectif est de récupérer la liste des tendances de Youtube qui se trouvent dans la page. Pour cela on se sert du package rvest et de la sélection par balises. On commence par charger le package rvest et lire le fichier html en le désignant par son url.</p>
+<!-- ```{r youtube} -->
+<!-- library(rvest) -->
+<!-- # Lecture de la page -->
+<!-- youtube <-read_html("https://www.youtube.com/feed/trending") -->
+<!-- ``` -->
+<!-- Pour récupérer un élément, il faut connaître la balise; certaines sont connues à l'avance, d'autres doivent être repérées dans la page. -->
+<!-- #Récolte d'une information par une balise connue -->
+<!-- Le titre de la page correspond à la balise "title"; pour récupérer cette balise on utilise la fonction html_node. -->
+<!-- ```{r } -->
+<!-- Balise_titre= html_node(youtube,"title")  -->
+<!-- titre<-html_text(Balise_titre) -->
+<!-- print(titre) -->
+<!-- ``` -->
+<!-- Il faut ensuite filtrer le caractère spécial par les outils de traitement de chaîne. -->
+<!-- #Récolte d'une information lorsque la balise n'est pas connue -->
+<!-- On veut récupérer la liste des titre des vidéos. Il faut d'abord repérer la balise correspondante dans le navigateur Internet;  -->
+<!-- ##Utilisation du code source de la page -->
+<!-- On peut afficher la source de la page (clic droit, code source), mais le résultat n'est praticable que si la page est simple. -->
+<!-- ##Utilisation de l'inspecteur -->
+<!-- On se place avec la souris sur le titre d'une vidéo. On lance l'inspecteur sur cet élément (clic droit, Examiner l'élément), l'inspecteur s'ouvre dans une fenêtre en surlignant la balise correspondante "a". -->
+<!-- ```{r, echo=TRUE, eval=FALSE} -->
+<!-- Liste_Balise_a= html_nodes(youtube,"a")  -->
+<!-- Liste_a<-html_text(Liste_Balise_a) -->
+<!-- print(Liste_a) -->
+<!-- ``` -->
+<!-- La sélection par la balise "a" est trop large. on remarque que les titres sont toujours sous une balise "h3". On utilise le sélecteur "h3 a" -->
+<!-- ##Utilisation de selectorgadget -->
+<!-- Il s'agit d'une application java (https://selectorgadget.com/). Une fois lancée, elle examine l'élément sous la souris, le met en surbrillance avec un cadre sur lequel apparaissent les deux balises directement supérieures. Pour le titre de vidéo on obtient bien "h3 a".   -->
+<!-- ```{r eval=FALSE} -->
+<!-- Liste_Balise_Titre= html_nodes(youtube,"h3 a")  -->
+<!-- Liste_Titre<-html_text(Liste_Balise_Titre) -->
+<!-- print(Liste_Titre) -->
+<!-- ``` -->
+<!-- La liste contient encore des éléments ne correspondant pas au titre. Pour éviter ce problème il faut ajouter des conditions à la sélection. -->
+<!-- #Sélecteurs avancés -->
+<!-- Les sélecteurs avancés permettent de spécifier un type de balise en ajoutant une condition sur ses attributs. Il y a deux syntaxes pour ces sélecteurs selon qu'ils portent sur des éléments CSS ou XML. -->
+<!-- ##Code CSS -->
+<!-- L'outil sélectorgadget propose un code CSS complet dans un pop-up gris de manière directement utilisable. Il suffit de coller cette expression entre double apostrophes. -->
+<!-- ```{r} -->
+<!-- Liste_Balise_Titre= html_node(youtube,"#grid-container :nth-child(1) #dismissable #meta .style-scope")  -->
+<!-- print(Liste_Balise_Titre) -->
+<!-- ``` -->
+<!-- Malheureusement en raison de la perte de format xml lors des conversions des pages dynamiques ce sélecteur ne fonctionne pas.  -->
+<!-- ##Code XPath -->
+<!-- L'outil sélectorgadget propose de traduire le code CSS en code Xpath plus adapté à la structure xml (Bouton Xpath).La syntaxe d'appel est différente xpath='chemin xpath'. Pour en savoir plus sur la syntaxe Xpath : https://www.w3schools.com/xml/xpath_syntax.asp -->
+<!-- ```{r} -->
+<!-- Liste_Balise_Titre= html_node(youtube,xpath='//*[contains(concat( " ", @class, " " ), concat( " ", "yt-formatted-string", " " ))]')  -->
+<!-- print(Liste_Balise_Titre) -->
+<!-- ``` -->
+<!-- Malheureusement, ce sélecteur ne fonctionne pas la page Youtube. En conclusion, la récolte sur Youtube nécessite sans doute d'utiliser une API dédiée proposée par Youtube. L'avantage pour Youtube est de pouvoir connaître le type d'information récoltée dans ses pages. -->
+<!-- #Récolte des températures sur météo MSN -->
+<!--  Pour  faire une démonstration de l'usage de la syntaxe des sélecteurs, nous recherchons la température courante sur le serveur météo MSN. -->
+<!-- ```{r} -->
+<!-- meteo <-read_html("https://www.msn.com/fr-fr/meteo") -->
+<!-- ``` -->
+<!-- Pour la température courante, Selectorgadget donne la suite de balises "div span" dans la cadre en surbrillance et le sélecteur ".current" dans la boite pop up. On concatène ces deux informations. -->
+<!-- ```{r} -->
+<!-- Balise_Temp= html_node(meteo, "div span.current")  -->
+<!-- Text_Temp<-html_text(Balise_Temp) -->
+<!-- print(Text_Temp) -->
+<!-- ``` -->
+<!-- En tapant "div span.current" dans la boîte Selectorgadget on obtient sa traduction Xpath: -->
+<!-- ```{r} -->
+<!-- meteo <-read_html("https://www.msn.com/fr-fr/meteo") -->
+<!-- Balise_Temp= html_node(meteo, xpath='//div//span[contains(concat( " ", @class, " " ), concat( " ", "current", " " ))]')  -->
+<!-- Text_Temp<-html_text(Balise_Temp) -->
+<!-- print(Text_Temp) -->
+<!-- ``` -->
+<!-- Pour récupérer la liste des températures, Selectorgadget propose"#main :nth-child(1)". Ce sélecteur n'est pas assez sélectif ; il faut se limiter aux balises "li p" -->
+<!-- ```{r} -->
+<!-- meteo <-read_html("https://www.msn.com/fr-fr/meteo") -->
+<!-- Liste_Balise_Temp= html_nodes(meteo,"li p " ) -->
+<!-- Text_Temp<-html_text(Liste_Balise_Temp) -->
+<!-- print(Text_Temp) -->
+<!-- ``` -->
+<!-- Pour extraire la quatrième valeur, on emploie la fonction magritt2 -->
+<!-- ```{r} -->
+<!-- Balise_4=magrittr::extract2(Liste_Balise_Temp,4) -->
+<!-- Text_Temp<-html_text(Balise_4) -->
+<!-- print(Text_Temp) -->
+<!-- ``` -->
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
