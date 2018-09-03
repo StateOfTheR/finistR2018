@@ -1,8 +1,5 @@
 ---
 title: "Personalisation de Rmarkdown"
-subtitle: "R Bootcamp, Beg Meil"
-author: "Marie, Avner, Éric, Julien"
-date: "August 29, 2018"
 output: 
   html_document:
    toc: true
@@ -17,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE,  cache = TRUE)
 
 ## Résumé de la chaîne de traitement
 
-![Process de création d'un document](schema_rmd.png)
+![Process de création d'un document](img/schema_rmd.png)
 
 ## Les acteurs
 
@@ -124,9 +121,9 @@ Si la customisation du document est importante il devient vite illisible de les 
 
 Un exemple simple est le template d'un journal. Il faut créer package  qui s'organisera comme dans la figure suivante :
 
-![arborescence](TreePackageRmarkdown.png)
+![arborescence](img/TreePackageRmarkdown.png)
 
-![arborescence type](arborescence_pkg_template.png)
+![arborescence type](img/arborescence_pkg_template.png)
 
 ### Définition d'un processiong de sortie en HTML
 
@@ -348,4 +345,5 @@ $endfor$
 
 Le fichier `skeleton.Rmd` contient le squelette du fichier Rmd auquel on accède via l'interface Rstudio lors de la création d'un nouveau document, dont les spécification sont définies dans `teamplate.yml`
 
-![création Rmd via Rstudio](new_Rmarkdown.png)
+![création Rmd via Rstudio](img/new_Rmarkdown.png)
+

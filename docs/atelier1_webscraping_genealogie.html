@@ -9,7 +9,6 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Antoine Bichat" />
 
 
 <title>Mathematical genealogy scraping</title>
@@ -24,6 +23,9 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -306,12 +308,25 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Home</a>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    accueil
+  </a>
+</li>
+<li>
+  <a href="https://github.com/StateOfTheR/finistR2018">
+    <span class="fa fa-github"></span>
+     
+    dépôt github
+  </a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-refresh"></span>
+     
     Webscrapping
      
     <span class="caret"></span>
@@ -332,18 +347,14 @@ div.tocify {
       <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
     </li>
     <li>
-      <a href="atelier1_webscraping_googlefight.html">Google Fight</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_googlenews.html">Google News</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_youtube.html">Youtube</a>
+      <a href="atelier1_webscraping_googlefight.html">Occurrences Google</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-wheelchair-alt"></span>
+     
     Optimisation et accélération
      
     <span class="caret"></span>
@@ -364,6 +375,9 @@ div.tocify {
       <a href="atelier2_tensorflow.html">TensorFlow</a>
     </li>
     <li>
+      <a href="atelier2_greta.html">Greta</a>
+    </li>
+    <li>
       <a href="atelier2_rcpp_modules.html">Modules Rcpp</a>
     </li>
     <li>
@@ -373,6 +387,8 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-thumbs-o-up"></span>
+     
     Bonnes pratiques
      
     <span class="caret"></span>
@@ -401,8 +417,6 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Mathematical genealogy scraping</h1>
-<h4 class="author"><em>Antoine Bichat</em></h4>
-<h4 class="date"><em>27/08/2018</em></h4>
 
 </div>
 
@@ -413,7 +427,7 @@ div.tocify {
 <span class="kw">library</span>(tidygraph)
 <span class="kw">library</span>(ggraph)</code></pre></div>
 <div id="a-la-main" class="section level1">
-<h1>A la main</h1>
+<h1>À la main</h1>
 <div id="remi-peyre" class="section level2">
 <h2>Rémi Peyre</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remi_peyre &lt;-<span class="st"> &quot;https://www.genealogy.math.ndsu.nodak.edu/id.php?id=150077&quot;</span>

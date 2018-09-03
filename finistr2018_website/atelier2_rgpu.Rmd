@@ -1,13 +1,9 @@
 ---
 title: "Utiliser le GPU avec R"
-author: "Avner, Félix, Marie, Vincent"
-date: "August 28, 2018"
 output: 
   html_document:
-   toc: true
-   toc_float: true
-   number_sections: false
-   highlight: tango
+    toc: true
+    toc_float: true
 ---
 
 ```{r setup, include=FALSE}

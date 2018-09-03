@@ -1,13 +1,9 @@
 ---
 title: "Introduction à Rcpp Modules"
-subtitle: "BootCamp BegMeil"
-author: "Mathieu Carmassi & Timothée Tabouy"
-date: "30 août 2018"
 output: 
   html_document:
     toc: TRUE
     toc_float: TRUE
-    highlights: tango
 ---
 
 # Introduction

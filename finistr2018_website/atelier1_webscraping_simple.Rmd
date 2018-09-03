@@ -1,6 +1,5 @@
 ---
 title: "Répartition des premiers chiffres pour une croissance exponentielle"
-author: "Antoine Bichat"
 date: "27/08/2018"
 output: 
   html_document:

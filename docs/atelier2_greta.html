@@ -23,8 +23,54 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
 
 
 <style type="text/css">
@@ -262,12 +308,25 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Home</a>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    accueil
+  </a>
+</li>
+<li>
+  <a href="https://github.com/StateOfTheR/finistR2018">
+    <span class="fa fa-github"></span>
+     
+    dépôt github
+  </a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-refresh"></span>
+     
     Webscrapping
      
     <span class="caret"></span>
@@ -288,18 +347,14 @@ div.tocify {
       <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
     </li>
     <li>
-      <a href="atelier1_webscraping_googlefight.html">Google Fight</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_googlenews.html">Google News</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_youtube.html">Youtube</a>
+      <a href="atelier1_webscraping_googlefight.html">Occurrences Google</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-wheelchair-alt"></span>
+     
     Optimisation et accélération
      
     <span class="caret"></span>
@@ -320,6 +375,9 @@ div.tocify {
       <a href="atelier2_tensorflow.html">TensorFlow</a>
     </li>
     <li>
+      <a href="atelier2_greta.html">Greta</a>
+    </li>
+    <li>
       <a href="atelier2_rcpp_modules.html">Modules Rcpp</a>
     </li>
     <li>
@@ -329,6 +387,8 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-thumbs-o-up"></span>
+     
     Bonnes pratiques
      
     <span class="caret"></span>
@@ -377,201 +437,677 @@ div.tocify {
 <div id="installation" class="section level2">
 <h2>installation</h2>
 <p>greta use TensorFlow and it needs to be installed before installing greta.</p>
-<!-- ```{r installation_TS, eval=FALSE, echo = TRUE, cache = FALSE, message = FALSE} -->
-<!-- install.packages('tensorflow') -->
-<!-- install_tensorflow() -->
-<!-- ``` -->
-<!-- greta also uses the DiagrammeR R package for plotting Directed Acyclic Graph of greta models. -->
-<!-- ```{r installation_greta, echo = TRUE, cache = FALSE, message = FALSE} -->
-<!-- # install.packages('greta') -->
-<!-- # install.packages('DiagrammeR') -->
-<!-- ``` -->
-<!-- ## How it works -->
-<!-- On greta's website a getting started [page](https://greta-dev.github.io/greta/get_started.html) as well as [examples](https://greta-dev.github.io/greta/example_models.html) are available. In the following section, we use greta with a simple dynamic model, for which there is no example on greta's website. -->
-<!-- # Gaussian State Space model with greta -->
-<!-- The latent process $X$ is assumed to be an independent random walk, which is a cumulative sum of a sequence of independent process errors $\epsilon_x$.  -->
-<!-- $$X_{t} = \rho_x X_{t-1} + \epsilon_x \quad \text{with} \quad \epsilon_x \sim Normal(0, \sigma_x) $$ -->
-<!-- The observation process $Y$ is defined as: -->
-<!-- $$Y_{t} = \rho_y X_{t} + \epsilon_y \quad \text{with} \quad \epsilon_y \sim Normal(0, \sigma_y) $$ -->
-<!-- ## greta in practice -->
-<!-- ### packages loading -->
-<!-- ```{r packages_greta, cache = FALSE, message = FALSE} -->
-<!-- library('greta') -->
-<!-- library('MASS') -->
-<!-- library('tidyverse') -->
-<!-- library('DiagrammeR') -->
-<!-- ``` -->
-<!-- ### Data simulation -->
-<!-- ```{r simulation_greta} -->
-<!-- set.seed(123) -->
-<!-- N <- 20 # number of time step -->
-<!-- x_true <- rep(NA, N) # latent process -->
-<!-- y <- rep(NA, N) # observations -->
-<!-- # parameters -->
-<!-- sd_x_true <- 1 -->
-<!-- prec_x_init_true <- sd_x_true^(-2) -->
-<!-- sd_y_true <- 1 -->
-<!-- prec_y_true <- sd_y_true^(-2) -->
-<!-- mean_x_init_true <- 0 -->
-<!-- r_x_true <- 0.85 -->
-<!-- r_y_true <- 1 -->
-<!-- ### Process and data generation -->
-<!-- x_true[1] <- rnorm(1, mean_x_init_true, sd_x_true) -->
-<!-- y[1] <- rnorm(1, r_y_true*x_true[1], sd_y_true) -->
-<!-- for (t in 2:N){ -->
-<!--   x_true[t] <- rnorm(1, r_x_true*x_true[t-1], sd_x_true) -->
-<!--   y[t] <- rnorm(1, r_y_true*x_true[t], sd_y_true) -->
-<!-- } -->
-<!-- ``` -->
-<!-- ### greta data and priors -->
-<!-- The first step is to declare data for greta, assign priors to unknown parameters and provide distribution to random variables: -->
-<!-- ```{r greta1} -->
-<!-- # greta's data  -->
-<!-- obs <- as_data(y) -->
-<!-- # priors -->
-<!-- r_y <- gamma(1, 1) # gamma prior set to r_y -->
-<!-- sd_x <- inverse_gamma(1, 1) # inv-gamma prior set to sd_x -->
-<!-- # fixed parameters -->
-<!-- sd_y <- sd_y_true # parameter fixed to the true value -->
-<!-- r_x <- r_x_true # parameter fixed to the true value -->
-<!-- # creation of an empty greta array -->
-<!-- epsilon_x <- normal(0, sd_x, dim = N) -->
-<!-- ``` -->
-<!-- A prior gamma distribution is assigned to $\rho_y$ -->
-<!-- ```{r greta1c} -->
-<!-- print(r_y) -->
-<!-- ``` -->
-<!-- *\epsilon_x* is an empty greta array -->
-<!-- ```{r greta1a} -->
-<!-- print(epsilon_x) -->
-<!-- ``` -->
-<!-- the same process is used to define the latent variable $X$ for greta -->
-<!-- ```{r greta1b} -->
-<!-- # creation of an empty greta array for the X -->
-<!-- X <- greta_array(data = 0, dim = c(N, 1)) -->
-<!-- # definition of the latent process interpreted by greta -->
-<!-- for(t in 1:N){ -->
-<!--   X[t, 1] <- sum(r_x^((t - 1) - (0:(t-1))) * epsilon_x[1:t, 1]) -->
-<!-- } -->
-<!-- ``` -->
-<!-- ### greta model definition -->
-<!-- ```{r greta2} -->
-<!-- # definition of the distribution of the observation -->
-<!-- distribution(obs) <- normal(X * r_y, rep(sd_y, N), dim = N) -->
-<!-- # greta's model building -->
-<!-- model_greta <- model(X, r_y, sd_x, precision = 'double') -->
-<!-- ``` -->
-<!-- In this case study, greta faces numerical instability. The option *precision = 'double* of the model greta function redefines the model to have double precision and increase numerical stability, though this will slow down sampling. Once, the greta's model is built, greta in combination with the DiagrammeR package can generate a DAG representing the greta's model -->
-<!-- ```{r greta3, eval = FALSE} -->
-<!-- plot(model_greta) -->
-<!-- ``` -->
-<!-- ![DAG generated by greta](DAG.png) -->
-<!-- ## greta model inference -->
-<!-- ```{r greta4, echo = FALSE, eval = TRUE, include = FALSE} -->
-<!-- if(file.exists('greta_draws.RData')){ -->
-<!-- } else { -->
-<!--   draws <- mcmc(model_greta, n_samples = 1000) -->
-<!--   save(draws, file = 'greta_draws.RData') -->
-<!-- } -->
-<!-- ``` -->
-<!-- ```{r greta4b, echo = TRUE, eval = FALSE} -->
-<!-- # run sampler for 1000 iterations -->
-<!-- draws <- greta::mcmc(model_greta, n_samples = 1000) -->
-<!-- ``` -->
-<!-- ## greta model results -->
-<!-- ```{r greta5, echo = TRUE, include = FALSE, eval = TRUE} -->
-<!-- load('greta_draws.RData') -->
-<!-- ``` -->
-<!-- Results of draws are returned as an mcmc.list object and can be summarized with: -->
-<!-- ```{r greta6} -->
-<!-- # print summary of mcmc.list -->
-<!-- summary(draws) -->
-<!-- ``` -->
-<!-- Using the tidyverse, a plot reprsenting simulated data, and posterior distributions is generated   -->
-<!-- ```{r greta7, eval = TRUE, message = FALSE} -->
-<!-- ### extract data from mcmc.list object to tibble for easy plotting with ggplot2 -->
-<!-- bounds <- as_tibble(t(apply(draws[[1]][, -c(21, 22)],2,function(x) quantile(x,c(0.025,0.5,0.975))))) -->
-<!-- bounds$param <- 1:N -->
-<!-- colnames(bounds)[1:3] <- c("min","med","max") -->
-<!-- ggdraws <- as_tibble(draws[[1]][, -c(21, 22)]) %>% -->
-<!--   gather(param, value) %>% -->
-<!--   mutate(param = as.numeric(str_extract(param, "[0-9]+"))) -->
-<!-- true <- as_tibble(data.frame(X=x_true,param=1:20)) -->
-<!-- obs <- as_tibble(data.frame(Y=y,param=1:20)) -->
-<!-- data <- left_join(ggdraws,bounds,by="param") -->
-<!-- data <- left_join(data,true,by="param") -->
-<!-- data <- left_join(data,obs,by="param") -->
-<!-- ### generating plot  -->
-<!-- ggplot(data, aes(param, value)) + -->
-<!--   geom_point(size = 0.2) + -->
-<!--   geom_ribbon(aes(ymin = min, ymax = max), fill = "gold", alpha = 0.2) + -->
-<!--   geom_line(aes(param, X, colour = "col1"), size = 1) + -->
-<!--   geom_line(aes(param, Y, colour = "col2"), size = 0.6, linetype = "dashed") + -->
-<!--   geom_line(aes(param, med, colour= "col3"), size = 1.1) + -->
-<!--   scale_colour_manual(name = "", -->
-<!--                       values = c(col1 = "blue", col2 = "black", col3 = "violetred3"), -->
-<!--                       labels = c("True", "Observed", "Median estimate")) + -->
-<!--   labs (x = "Time", y = "Simulated values") + -->
-<!--   theme_bw() + ggtitle("Simulated data and their posterior distributions (black points).", subtitle = 'Yellow shade represents the CI at 95%') -->
-<!-- ``` -->
-<!-- ## Comparison with Jags, Nimble and Stan -->
-<!-- ### Jags -->
-<!-- Written in C++, Jags (Just another Gibbs sampler  -->
-<!-- [Just another Gibbs sampler](https://web.sgh.waw.pl/~atoroj/ekonometria_bayesowska/jags_user_manual.pdf) ) is becomming the common tool for Bayesian newbies. Conversely to WinBUGS/OpenBUGS platform ([BUGS](https://www.mrc-bsu.cam.ac.uk/software/bugs/)) written in Pascal component and quasi-impossible to install on anything but Windows systems, Jags can be launched as a stand-alone routine from R whatever the operating system. It does not rely as greta on the recent Hamiltonian Monte algorithm to visit the space of the model's unknowns ( and subsequently does not call Tensorflow as a quick routine to perform Hamiltonian dynamics). But Jags is known to work quite fast (since it is developped by Martyn Plummer, founding member of the Rcore team) and we'd wished to compare its performance to greta's previous ones on this very simple linear Kalman filter example.  A jag's code treating the simple Kalman model would look like the following lines of code : -->
-<!-- ```{r jagsexample, message = FALSE} -->
-<!-- burnSize <- 100 -->
-<!-- numberIter <- 1000 -->
-<!-- thin <- 1 -->
-<!-- params <- c('x', 'pres_x', 'r_y') -->
-<!-- require(rjags) -->
-<!-- jags.data <- list(y=y,N=N,prec_x_init=prec_x_init_true,prec_y=prec_y_true,  -->
-<!--                  mean_x_init=mean_x_init_true,r_x = r_x_true) -->
-<!-- init<- function(){ -->
-<!--   list(x=rnorm(N,y,0.2),r_y=rgamma(1,1,1),prec_x=rgamma(1,1,1)) -->
-<!-- } -->
-<!-- modelstring=" -->
-<!-- model{ -->
-<!-- # Constants fixed (known) in the data -->
-<!-- # N <- 20 -->
-<!-- # prec_x_init <- 1 -->
-<!-- # prec_y <- 1 -->
-<!-- # mean_x_init <- 0 -->
-<!-- # r_x <- 1 -->
-<!-- prec_x ~ dgamma(1,1) -->
-<!-- r_y ~ dgamma(1,1) -->
-<!-- # r_y ~ dnorm(0,1)I(0,)     -->
-<!-- x[1] ~ dnorm(mean_x_init, prec_x_init) -->
-<!-- y[1] ~ dnorm(r_y*x[1], prec_y) -->
-<!-- for (t in 2:N) -->
-<!-- { -->
-<!--   x[t] ~ dnorm(r_x*x[t-1], prec_x) -->
-<!--   y[t] ~ dnorm(r_y*x[t], prec_y) -->
-<!-- } -->
-<!-- } -->
-<!-- " -->
-<!-- model=jags.model(textConnection(modelstring), data=jags.data, inits=init) -->
-<!-- t1 <- Sys.time() -->
-<!-- update(model,n.iter=burnSize) -->
-<!-- out=coda.samples(model=model,variable.names=params, n.iter=numberIter, thin=thin) -->
-<!-- tJags <- Sys.time() - t1 -->
-<!-- print(summary(out)) -->
-<!-- ``` -->
-<!-- ### Nimble -->
-<!-- [NIMBLE](https://r-nimble.org) (Numerical Inference for Statistical Models using Bayesian and Likelihood Estimation) is an competing  R package developed by Perry De Valpine, Christopher Paciorek, Duncan Temple, and Daniel Turek . The package is designed to deal with hierarchical models and the many problems they raise. The NMBLE creators allow scientist to write their own blocks of the inference routine. The idea underpinning NIMBLE is to allow both a flexible model specification and a programming system that adapts to the model structure and gets compiled in C++. It recently incorporates Hamilton Monte Carlo algorithm within the many samplers that can be customized. -->
-<!-- ### Stan -->
-<!-- The authors of the R package [Rstan](http://mc-stan.org) have developed the No-U-Turn sampler, an adaptive form of Hamiltonian Monte Carlo sampling.  Stan, now on a stabilized version, provides useful modern tools for Bayesian inference for continuous-variable models that are diffusing in a wide range of application domains.  -->
-<!-- The Stan package is rather tricky to implement and we do not compare its performances here. -->
-<!-- ### Results  -->
-<!-- The two unknown parameters of our exemple, $\sigma_x$ and $r_y$, are learnt from the data. Bayesian inference is simply getting the posterior of this couple $\sigma_x,r_y$  and the latent variables $X$ (i.e. saying what you know given the data). The same data having been passed to all toolboxes, with the same priors defined for $(\sigma_x,r_y)$, the obtained posteriors should not differ in theory. As they are given as samples, one can plot the marginal distributions of each quantities with the true instances that were used to generate the data and see that their posteriors look quite the same, as expected. -->
-<!-- ![](postSDX.png) -->
-<!-- ![](postRY.png) -->
-<!-- However, MCMC algorithms yield different correlations in the sample of posterior values generated by the competing methods, which matters for the numerical precision of the estimates that can be derived from the various Monte Carlo Markov chains.  The effective sample size (which can be computed using the coda package) is the size of an independent sample that would achieve the same precision. The following figure shows that greta provides the best effective sample size for all components of $X$ and the two parameters $\sigma_x$ and $r_y$. -->
-<!-- ![](effectiveSize.png) -->
-<!-- ## Conclusion -->
-<!-- greta allows to perform inference with Hamiltonian Monte Carlo algorithm like Stan or nimble. Currently, the only implemented MCMC procedure in greta is static Hamiltonian Monte Carlo. In regards of our case study, greta give similar results than JAGS and nimble. However, its early version and the small amount of documentation do not allow (yet) the implementation of complex model. greta seems promising and its development is interesting to follow for users of MCMC software. -->
-<!-- ## Reference  -->
-<!-- [greta on GitHub](https://greta-dev.github.io/greta/index.html) -->
-<!-- [A more sophisticated example with latent factors](https://mdscheuerell.github.io/gretaDFA/#background) -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&#39;tensorflow&#39;</span>)
+<span class="kw">install_tensorflow</span>()</code></pre></div>
+<p>greta also uses the DiagrammeR R package for plotting Directed Acyclic Graph of greta models.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&#39;greta&#39;</span>)
+<span class="kw">install.packages</span>(<span class="st">&#39;DiagrammeR&#39;</span>)</code></pre></div>
+</div>
+<div id="how-it-works" class="section level2">
+<h2>How it works</h2>
+<p>On greta’s website a getting started <a href="https://greta-dev.github.io/greta/get_started.html">page</a> as well as <a href="https://greta-dev.github.io/greta/example_models.html">examples</a> are available. In the following section, we use greta with a simple dynamic model, for which there is no example on greta’s website.</p>
+</div>
+</div>
+<div id="gaussian-state-space-model-with-greta" class="section level1">
+<h1>Gaussian State Space model with greta</h1>
+<p>The latent process <span class="math inline">\(X\)</span> is assumed to be an independent random walk, which is a cumulative sum of a sequence of independent process errors <span class="math inline">\(\epsilon_x\)</span>.</p>
+<p><span class="math display">\[X_{t} = \rho_x X_{t-1} + \epsilon_x \quad \text{with} \quad \epsilon_x \sim Normal(0, \sigma_x) \]</span> The observation process <span class="math inline">\(Y\)</span> is defined as: <span class="math display">\[Y_{t} = \rho_y X_{t} + \epsilon_y \quad \text{with} \quad \epsilon_y \sim Normal(0, \sigma_y) \]</span></p>
+<div id="greta-in-practice" class="section level2">
+<h2>greta in practice</h2>
+<div id="packages-loading" class="section level3">
+<h3>packages loading</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&#39;greta&#39;</span>)
+<span class="kw">library</span>(<span class="st">&#39;MASS&#39;</span>)
+<span class="kw">library</span>(<span class="st">&#39;tidyverse&#39;</span>)
+<span class="kw">library</span>(<span class="st">&#39;DiagrammeR&#39;</span>)</code></pre></div>
+</div>
+<div id="data-simulation" class="section level3">
+<h3>Data simulation</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">123</span>)
+
+N &lt;-<span class="st"> </span><span class="dv">20</span> <span class="co"># number of time step</span>
+x_true &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>, N) <span class="co"># latent process</span>
+y &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>, N) <span class="co"># observations</span>
+
+<span class="co"># parameters</span>
+sd_x_true &lt;-<span class="st"> </span><span class="dv">1</span>
+prec_x_init_true &lt;-<span class="st"> </span>sd_x_true<span class="op">^</span>(<span class="op">-</span><span class="dv">2</span>)
+sd_y_true &lt;-<span class="st"> </span><span class="dv">1</span>
+prec_y_true &lt;-<span class="st"> </span>sd_y_true<span class="op">^</span>(<span class="op">-</span><span class="dv">2</span>)
+mean_x_init_true &lt;-<span class="st"> </span><span class="dv">0</span>
+r_x_true &lt;-<span class="st"> </span><span class="fl">0.85</span>
+r_y_true &lt;-<span class="st"> </span><span class="dv">1</span>
+
+### Process and data generation
+x_true[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>, mean_x_init_true, sd_x_true)
+
+y[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>, r_y_true<span class="op">*</span>x_true[<span class="dv">1</span>], sd_y_true)
+
+<span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span>N){
+  x_true[t] &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>, r_x_true<span class="op">*</span>x_true[t<span class="dv">-1</span>], sd_x_true)
+  y[t] &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>, r_y_true<span class="op">*</span>x_true[t], sd_y_true)
+}</code></pre></div>
+</div>
+<div id="greta-data-and-priors" class="section level3">
+<h3>greta data and priors</h3>
+<p>The first step is to declare data for greta, assign priors to unknown parameters and provide distribution to random variables:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># greta&#39;s data</span>
+obs &lt;-<span class="st"> </span><span class="kw">as_data</span>(y)
+
+<span class="co"># priors</span>
+r_y &lt;-<span class="st"> </span><span class="kw">gamma</span>(<span class="dv">1</span>, <span class="dv">1</span>) <span class="co"># gamma prior set to r_y</span>
+sd_x &lt;-<span class="st"> </span><span class="kw">inverse_gamma</span>(<span class="dv">1</span>, <span class="dv">1</span>) <span class="co"># inv-gamma prior set to sd_x</span>
+
+<span class="co"># fixed parameters</span>
+sd_y &lt;-<span class="st"> </span>sd_y_true <span class="co"># parameter fixed to the true value</span>
+r_x &lt;-<span class="st"> </span>r_x_true <span class="co"># parameter fixed to the true value</span>
+
+<span class="co"># creation of an empty greta array</span>
+epsilon_x &lt;-<span class="st"> </span><span class="kw">normal</span>(<span class="dv">0</span>, sd_x, <span class="dt">dim =</span> N)</code></pre></div>
+<p>A prior gamma distribution is assigned to <span class="math inline">\(\rho_y\)</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(r_y)</code></pre></div>
+<pre><code>## greta array (variable following a gamma distribution)
+## 
+##      [,1]
+## [1,]  ?</code></pre>
+<p>*_x* is an empty greta array</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(epsilon_x)</code></pre></div>
+<pre><code>## greta array (variable following a normal distribution)
+## 
+##       [,1]
+##  [1,]  ?  
+##  [2,]  ?  
+##  [3,]  ?  
+##  [4,]  ?  
+##  [5,]  ?  
+##  [6,]  ?  
+##  [7,]  ?  
+##  [8,]  ?  
+##  [9,]  ?  
+## [10,]  ?  
+## [11,]  ?  
+## [12,]  ?  
+## [13,]  ?  
+## [14,]  ?  
+## [15,]  ?  
+## [16,]  ?  
+## [17,]  ?  
+## [18,]  ?  
+## [19,]  ?  
+## [20,]  ?</code></pre>
+<p>the same process is used to define the latent variable <span class="math inline">\(X\)</span> for greta</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># creation of an empty greta array for the X</span>
+X &lt;-<span class="st"> </span><span class="kw">greta_array</span>(<span class="dt">data =</span> <span class="dv">0</span>, <span class="dt">dim =</span> <span class="kw">c</span>(N, <span class="dv">1</span>))
+<span class="co"># definition of the latent process interpreted by greta</span>
+<span class="cf">for</span>(t <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>N){
+  X[t, <span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">sum</span>(r_x<span class="op">^</span>((t <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">-</span><span class="st"> </span>(<span class="dv">0</span><span class="op">:</span>(t<span class="dv">-1</span>))) <span class="op">*</span><span class="st"> </span>epsilon_x[<span class="dv">1</span><span class="op">:</span>t, <span class="dv">1</span>])
+}</code></pre></div>
+</div>
+<div id="greta-model-definition" class="section level3">
+<h3>greta model definition</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># definition of the distribution of the observation</span>
+<span class="kw">distribution</span>(obs) &lt;-<span class="st"> </span><span class="kw">normal</span>(X <span class="op">*</span><span class="st"> </span>r_y, <span class="kw">rep</span>(sd_y, N), <span class="dt">dim =</span> N)
+<span class="co"># greta&#39;s model building</span>
+model_greta &lt;-<span class="st"> </span><span class="kw">model</span>(X, r_y, sd_x, <span class="dt">precision =</span> <span class="st">&#39;double&#39;</span>)</code></pre></div>
+<p>In this case study, greta faces numerical instability. The option <em>precision = ’double</em> of the model greta function redefines the model to have double precision and increase numerical stability, though this will slow down sampling. Once, the greta’s model is built, greta in combination with the DiagrammeR package can generate a DAG representing the greta’s model</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(model_greta)</code></pre></div>
+<div class="figure">
+<img src="img/DAG.png" alt="DAG generated by greta" />
+<p class="caption">DAG generated by greta</p>
+</div>
+</div>
+</div>
+<div id="greta-model-inference" class="section level2">
+<h2>greta model inference</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># run sampler for 1000 iterations</span>
+draws &lt;-<span class="st"> </span>greta<span class="op">::</span><span class="kw">mcmc</span>(model_greta, <span class="dt">n_samples =</span> <span class="dv">1000</span>)</code></pre></div>
+</div>
+<div id="greta-model-results" class="section level2">
+<h2>greta model results</h2>
+<p>Results of draws are returned as an mcmc.list object and can be summarized with:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># print summary of mcmc.list</span>
+<span class="kw">summary</span>(draws)</code></pre></div>
+<pre><code>## 
+## Iterations = 1:1000
+## Thinning interval = 1 
+## Number of chains = 1 
+## Sample size per chain = 1000 
+## 
+## 1. Empirical mean and standard deviation for each variable,
+##    plus standard error of the mean:
+## 
+##         Mean     SD Naive SE Time-series SE
+## X1    0.3733 2.1462  0.06787        0.15772
+## X2    3.0768 3.6037  0.11396        1.25844
+## X3    4.4626 4.1282  0.13055        1.07753
+## X4    2.4568 3.1616  0.09998        0.35033
+## X5    2.2760 3.1442  0.09943        0.33303
+## X6    5.1728 5.0974  0.16119        1.45225
+## X7    5.1343 4.4484  0.14067        0.93521
+## X8    5.5734 5.0864  0.16085        1.63427
+## X9    2.1392 3.1725  0.10032        0.30437
+## X10   1.8550 2.7917  0.08828        0.21037
+## X11   0.2762 2.6706  0.08445        0.19031
+## X12  -2.8937 3.6834  0.11648        0.72436
+## X13  -3.9724 4.0258  0.12731        0.70530
+## X14  -1.7496 2.9809  0.09426        0.45316
+## X15  -0.9563 3.2676  0.10333        0.25173
+## X16  -0.6495 2.9168  0.09224        0.37437
+## X17   2.4116 3.1900  0.10088        0.46407
+## X18   3.6987 3.8315  0.12116        0.50926
+## X19   3.8339 3.7879  0.11979        0.71358
+## X20   2.7806 4.0137  0.12692        0.78119
+## r_y   0.4706 0.3661  0.01158        0.05673
+## sd_x  2.7788 2.1287  0.06731        0.80756
+## 
+## 2. Quantiles for each variable:
+## 
+##           2.5%     25%     50%      75%   97.5%
+## X1    -4.50040 -0.6228  0.2112  1.31390  5.4583
+## X2    -0.81292  0.7749  1.7493  4.29892 13.3899
+## X3     0.15744  1.5189  3.1242  6.22269 15.6027
+## X4    -1.86488  0.5150  1.6604  3.62041 10.9946
+## X5    -3.10004  0.6474  1.5933  3.46203 10.3607
+## X6     0.27236  1.7645  3.3061  7.13861 19.4925
+## X7     0.22941  1.9474  3.7629  7.09277 16.6199
+## X8     0.39509  1.9411  3.7288  7.31639 18.0841
+## X9    -2.22085  0.2212  1.1963  3.39244 10.6713
+## X10   -2.39083  0.2736  1.1509  3.05590  8.6918
+## X11   -4.90656 -0.9998  0.0721  1.37473  6.5716
+## X12  -12.66844 -4.3593 -1.8073 -0.61175  1.8752
+## X13  -13.88930 -5.7624 -2.5929 -1.25314  0.8173
+## X14   -9.63065 -2.9333 -0.9797  0.01484  2.6153
+## X15   -9.77126 -1.7322 -0.4656  0.44309  4.2267
+## X16   -8.57777 -1.3820 -0.2762  0.73185  3.7284
+## X17   -2.04558  0.5351  1.5252  3.39879 11.5449
+## X18   -0.66031  1.1807  2.4650  5.08484 14.0150
+## X19   -0.46447  1.2499  2.6144  5.57447 13.1233
+## X20   -2.62928  0.6870  1.8021  3.80186 14.3480
+## r_y    0.09029  0.1914  0.3643  0.62026  1.4288
+## sd_x   0.59143  1.1603  1.9813  3.97007  7.7680</code></pre>
+<p>Using the tidyverse, a plot reprsenting simulated data, and posterior distributions is generated</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### extract data from mcmc.list object to tibble for easy plotting with ggplot2
+bounds &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(<span class="kw">t</span>(<span class="kw">apply</span>(draws[[<span class="dv">1</span>]][, <span class="op">-</span><span class="kw">c</span>(<span class="dv">21</span>, <span class="dv">22</span>)],<span class="dv">2</span>,<span class="cf">function</span>(x) <span class="kw">quantile</span>(x,<span class="kw">c</span>(<span class="fl">0.025</span>,<span class="fl">0.5</span>,<span class="fl">0.975</span>)))))
+bounds<span class="op">$</span>param &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span>N
+<span class="kw">colnames</span>(bounds)[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;min&quot;</span>,<span class="st">&quot;med&quot;</span>,<span class="st">&quot;max&quot;</span>)
+
+ggdraws &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(draws[[<span class="dv">1</span>]][, <span class="op">-</span><span class="kw">c</span>(<span class="dv">21</span>, <span class="dv">22</span>)]) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(param, value) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">param =</span> <span class="kw">as.numeric</span>(<span class="kw">str_extract</span>(param, <span class="st">&quot;[0-9]+&quot;</span>)))
+
+true &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(<span class="kw">data.frame</span>(<span class="dt">X=</span>x_true,<span class="dt">param=</span><span class="dv">1</span><span class="op">:</span><span class="dv">20</span>))
+obs &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(<span class="kw">data.frame</span>(<span class="dt">Y=</span>y,<span class="dt">param=</span><span class="dv">1</span><span class="op">:</span><span class="dv">20</span>))
+data &lt;-<span class="st"> </span><span class="kw">left_join</span>(ggdraws,bounds,<span class="dt">by=</span><span class="st">&quot;param&quot;</span>)
+data &lt;-<span class="st"> </span><span class="kw">left_join</span>(data,true,<span class="dt">by=</span><span class="st">&quot;param&quot;</span>)
+data &lt;-<span class="st"> </span><span class="kw">left_join</span>(data,obs,<span class="dt">by=</span><span class="st">&quot;param&quot;</span>)
+
+### generating plot
+<span class="kw">ggplot</span>(data, <span class="kw">aes</span>(param, value)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> min, <span class="dt">ymax =</span> max), <span class="dt">fill =</span> <span class="st">&quot;gold&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(param, X, <span class="dt">colour =</span> <span class="st">&quot;col1&quot;</span>), <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(param, Y, <span class="dt">colour =</span> <span class="st">&quot;col2&quot;</span>), <span class="dt">size =</span> <span class="fl">0.6</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(param, med, <span class="dt">colour=</span> <span class="st">&quot;col3&quot;</span>), <span class="dt">size =</span> <span class="fl">1.1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">name =</span> <span class="st">&quot;&quot;</span>,
+                      <span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">col1 =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">col2 =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">col3 =</span> <span class="st">&quot;violetred3&quot;</span>),
+                      <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;True&quot;</span>, <span class="st">&quot;Observed&quot;</span>, <span class="st">&quot;Median estimate&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span> (<span class="dt">x =</span> <span class="st">&quot;Time&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Simulated values&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Simulated data and their posterior distributions (black points).&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&#39;Yellow shade represents the CI at 95%&#39;</span>)</code></pre></div>
+<p><img src="atelier2_greta_files/figure-html/greta7-1.png" width="672" /></p>
+</div>
+<div id="comparison-with-jags-nimble-and-stan" class="section level2">
+<h2>Comparison with Jags, Nimble and Stan</h2>
+<div id="jags" class="section level3">
+<h3>Jags</h3>
+<p>Written in C++, Jags (Just another Gibbs sampler <a href="https://web.sgh.waw.pl/~atoroj/ekonometria_bayesowska/jags_user_manual.pdf">Just another Gibbs sampler</a> ) is becomming the common tool for Bayesian newbies. Conversely to WinBUGS/OpenBUGS platform (<a href="https://www.mrc-bsu.cam.ac.uk/software/bugs/">BUGS</a>) written in Pascal component and quasi-impossible to install on anything but Windows systems, Jags can be launched as a stand-alone routine from R whatever the operating system. It does not rely as greta on the recent Hamiltonian Monte algorithm to visit the space of the model’s unknowns ( and subsequently does not call Tensorflow as a quick routine to perform Hamiltonian dynamics). But Jags is known to work quite fast (since it is developped by Martyn Plummer, founding member of the Rcore team) and we’d wished to compare its performance to greta’s previous ones on this very simple linear Kalman filter example. A jag’s code treating the simple Kalman model would look like the following lines of code :</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rjags)
+burnSize &lt;-<span class="st"> </span><span class="dv">100</span>
+numberIter &lt;-<span class="st"> </span><span class="dv">1000</span>
+thin &lt;-<span class="st"> </span><span class="dv">1</span>
+params &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;x&#39;</span>, <span class="st">&#39;pres_x&#39;</span>, <span class="st">&#39;r_y&#39;</span>)
+
+<span class="kw">require</span>(rjags)
+jags.data &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">y=</span>y,<span class="dt">N=</span>N,<span class="dt">prec_x_init=</span>prec_x_init_true,<span class="dt">prec_y=</span>prec_y_true,
+                 <span class="dt">mean_x_init=</span>mean_x_init_true,<span class="dt">r_x =</span> r_x_true)
+init&lt;-<span class="st"> </span><span class="cf">function</span>(){
+  <span class="kw">list</span>(<span class="dt">x=</span><span class="kw">rnorm</span>(N,y,<span class="fl">0.2</span>),<span class="dt">r_y=</span><span class="kw">rgamma</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>),<span class="dt">prec_x=</span><span class="kw">rgamma</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))
+}
+modelstring=<span class="st">&quot;</span>
+<span class="st">model{</span>
+
+<span class="st"># Constants fixed (known) in the data</span>
+<span class="st"># N &lt;- 20</span>
+<span class="st"># prec_x_init &lt;- 1</span>
+<span class="st"># prec_y &lt;- 1</span>
+<span class="st"># mean_x_init &lt;- 0</span>
+<span class="st"># r_x &lt;- 1</span>
+
+<span class="st">prec_x ~ dgamma(1,1)</span>
+<span class="st">r_y ~ dgamma(1,1)</span>
+<span class="st"># r_y ~ dnorm(0,1)I(0,)</span>
+
+<span class="st">x[1] ~ dnorm(mean_x_init, prec_x_init)</span>
+<span class="st">y[1] ~ dnorm(r_y*x[1], prec_y)</span>
+
+<span class="st">for (t in 2:N)</span>
+<span class="st">{</span>
+<span class="st">  x[t] ~ dnorm(r_x*x[t-1], prec_x)</span>
+<span class="st">  y[t] ~ dnorm(r_y*x[t], prec_y)</span>
+<span class="st">}</span>
+
+<span class="st">}</span>
+<span class="st">&quot;</span>
+model=<span class="kw">jags.model</span>(<span class="kw">textConnection</span>(modelstring), <span class="dt">data=</span>jags.data, <span class="dt">inits=</span>init)</code></pre></div>
+<pre><code>## Compiling model graph
+##    Resolving undeclared variables
+##    Allocating nodes
+## Graph information:
+##    Observed stochastic nodes: 20
+##    Unobserved stochastic nodes: 22
+##    Total graph size: 87
+## 
+## Initializing model
+## 
+## 
+  |                                                        
+  |                                                  |   0%
+  |                                                        
+  |+                                                 |   2%
+  |                                                        
+  |++                                                |   4%
+  |                                                        
+  |+++                                               |   6%
+  |                                                        
+  |++++                                              |   8%
+  |                                                        
+  |+++++                                             |  10%
+  |                                                        
+  |++++++                                            |  12%
+  |                                                        
+  |+++++++                                           |  14%
+  |                                                        
+  |++++++++                                          |  16%
+  |                                                        
+  |+++++++++                                         |  18%
+  |                                                        
+  |++++++++++                                        |  20%
+  |                                                        
+  |+++++++++++                                       |  22%
+  |                                                        
+  |++++++++++++                                      |  24%
+  |                                                        
+  |+++++++++++++                                     |  26%
+  |                                                        
+  |++++++++++++++                                    |  28%
+  |                                                        
+  |+++++++++++++++                                   |  30%
+  |                                                        
+  |++++++++++++++++                                  |  32%
+  |                                                        
+  |+++++++++++++++++                                 |  34%
+  |                                                        
+  |++++++++++++++++++                                |  36%
+  |                                                        
+  |+++++++++++++++++++                               |  38%
+  |                                                        
+  |++++++++++++++++++++                              |  40%
+  |                                                        
+  |+++++++++++++++++++++                             |  42%
+  |                                                        
+  |++++++++++++++++++++++                            |  44%
+  |                                                        
+  |+++++++++++++++++++++++                           |  46%
+  |                                                        
+  |++++++++++++++++++++++++                          |  48%
+  |                                                        
+  |+++++++++++++++++++++++++                         |  50%
+  |                                                        
+  |++++++++++++++++++++++++++                        |  52%
+  |                                                        
+  |+++++++++++++++++++++++++++                       |  54%
+  |                                                        
+  |++++++++++++++++++++++++++++                      |  56%
+  |                                                        
+  |+++++++++++++++++++++++++++++                     |  58%
+  |                                                        
+  |++++++++++++++++++++++++++++++                    |  60%
+  |                                                        
+  |+++++++++++++++++++++++++++++++                   |  62%
+  |                                                        
+  |++++++++++++++++++++++++++++++++                  |  64%
+  |                                                        
+  |+++++++++++++++++++++++++++++++++                 |  66%
+  |                                                        
+  |++++++++++++++++++++++++++++++++++                |  68%
+  |                                                        
+  |+++++++++++++++++++++++++++++++++++               |  70%
+  |                                                        
+  |++++++++++++++++++++++++++++++++++++              |  72%
+  |                                                        
+  |+++++++++++++++++++++++++++++++++++++             |  74%
+  |                                                        
+  |++++++++++++++++++++++++++++++++++++++            |  76%
+  |                                                        
+  |+++++++++++++++++++++++++++++++++++++++           |  78%
+  |                                                        
+  |++++++++++++++++++++++++++++++++++++++++          |  80%
+  |                                                        
+  |+++++++++++++++++++++++++++++++++++++++++         |  82%
+  |                                                        
+  |++++++++++++++++++++++++++++++++++++++++++        |  84%
+  |                                                        
+  |+++++++++++++++++++++++++++++++++++++++++++       |  86%
+  |                                                        
+  |++++++++++++++++++++++++++++++++++++++++++++      |  88%
+  |                                                        
+  |+++++++++++++++++++++++++++++++++++++++++++++     |  90%
+  |                                                        
+  |++++++++++++++++++++++++++++++++++++++++++++++    |  92%
+  |                                                        
+  |+++++++++++++++++++++++++++++++++++++++++++++++   |  94%
+  |                                                        
+  |++++++++++++++++++++++++++++++++++++++++++++++++  |  96%
+  |                                                        
+  |+++++++++++++++++++++++++++++++++++++++++++++++++ |  98%
+  |                                                        
+  |++++++++++++++++++++++++++++++++++++++++++++++++++| 100%</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">t1 &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()
+<span class="kw">update</span>(model,<span class="dt">n.iter=</span>burnSize)</code></pre></div>
+<pre><code>## 
+  |                                                        
+  |                                                  |   0%
+  |                                                        
+  |*                                                 |   2%
+  |                                                        
+  |**                                                |   4%
+  |                                                        
+  |***                                               |   6%
+  |                                                        
+  |****                                              |   8%
+  |                                                        
+  |*****                                             |  10%
+  |                                                        
+  |******                                            |  12%
+  |                                                        
+  |*******                                           |  14%
+  |                                                        
+  |********                                          |  16%
+  |                                                        
+  |*********                                         |  18%
+  |                                                        
+  |**********                                        |  20%
+  |                                                        
+  |***********                                       |  22%
+  |                                                        
+  |************                                      |  24%
+  |                                                        
+  |*************                                     |  26%
+  |                                                        
+  |**************                                    |  28%
+  |                                                        
+  |***************                                   |  30%
+  |                                                        
+  |****************                                  |  32%
+  |                                                        
+  |*****************                                 |  34%
+  |                                                        
+  |******************                                |  36%
+  |                                                        
+  |*******************                               |  38%
+  |                                                        
+  |********************                              |  40%
+  |                                                        
+  |*********************                             |  42%
+  |                                                        
+  |**********************                            |  44%
+  |                                                        
+  |***********************                           |  46%
+  |                                                        
+  |************************                          |  48%
+  |                                                        
+  |*************************                         |  50%
+  |                                                        
+  |**************************                        |  52%
+  |                                                        
+  |***************************                       |  54%
+  |                                                        
+  |****************************                      |  56%
+  |                                                        
+  |*****************************                     |  58%
+  |                                                        
+  |******************************                    |  60%
+  |                                                        
+  |*******************************                   |  62%
+  |                                                        
+  |********************************                  |  64%
+  |                                                        
+  |*********************************                 |  66%
+  |                                                        
+  |**********************************                |  68%
+  |                                                        
+  |***********************************               |  70%
+  |                                                        
+  |************************************              |  72%
+  |                                                        
+  |*************************************             |  74%
+  |                                                        
+  |**************************************            |  76%
+  |                                                        
+  |***************************************           |  78%
+  |                                                        
+  |****************************************          |  80%
+  |                                                        
+  |*****************************************         |  82%
+  |                                                        
+  |******************************************        |  84%
+  |                                                        
+  |*******************************************       |  86%
+  |                                                        
+  |********************************************      |  88%
+  |                                                        
+  |*********************************************     |  90%
+  |                                                        
+  |**********************************************    |  92%
+  |                                                        
+  |***********************************************   |  94%
+  |                                                        
+  |************************************************  |  96%
+  |                                                        
+  |************************************************* |  98%
+  |                                                        
+  |**************************************************| 100%</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">out=<span class="kw">coda.samples</span>(<span class="dt">model=</span>model,<span class="dt">variable.names=</span>params, <span class="dt">n.iter=</span>numberIter, <span class="dt">thin=</span>thin)</code></pre></div>
+<pre><code>## Warning in jags.samples(model, variable.names, n.iter, thin, type = &quot;trace&quot;, : Failed to set trace monitor for pres_x
+## Variable pres_x not found</code></pre>
+<pre><code>## 
+  |                                                        
+  |                                                  |   0%
+  |                                                        
+  |*                                                 |   2%
+  |                                                        
+  |**                                                |   4%
+  |                                                        
+  |***                                               |   6%
+  |                                                        
+  |****                                              |   8%
+  |                                                        
+  |*****                                             |  10%
+  |                                                        
+  |******                                            |  12%
+  |                                                        
+  |*******                                           |  14%
+  |                                                        
+  |********                                          |  16%
+  |                                                        
+  |*********                                         |  18%
+  |                                                        
+  |**********                                        |  20%
+  |                                                        
+  |***********                                       |  22%
+  |                                                        
+  |************                                      |  24%
+  |                                                        
+  |*************                                     |  26%
+  |                                                        
+  |**************                                    |  28%
+  |                                                        
+  |***************                                   |  30%
+  |                                                        
+  |****************                                  |  32%
+  |                                                        
+  |*****************                                 |  34%
+  |                                                        
+  |******************                                |  36%
+  |                                                        
+  |*******************                               |  38%
+  |                                                        
+  |********************                              |  40%
+  |                                                        
+  |*********************                             |  42%
+  |                                                        
+  |**********************                            |  44%
+  |                                                        
+  |***********************                           |  46%
+  |                                                        
+  |************************                          |  48%
+  |                                                        
+  |*************************                         |  50%
+  |                                                        
+  |**************************                        |  52%
+  |                                                        
+  |***************************                       |  54%
+  |                                                        
+  |****************************                      |  56%
+  |                                                        
+  |*****************************                     |  58%
+  |                                                        
+  |******************************                    |  60%
+  |                                                        
+  |*******************************                   |  62%
+  |                                                        
+  |********************************                  |  64%
+  |                                                        
+  |*********************************                 |  66%
+  |                                                        
+  |**********************************                |  68%
+  |                                                        
+  |***********************************               |  70%
+  |                                                        
+  |************************************              |  72%
+  |                                                        
+  |*************************************             |  74%
+  |                                                        
+  |**************************************            |  76%
+  |                                                        
+  |***************************************           |  78%
+  |                                                        
+  |****************************************          |  80%
+  |                                                        
+  |*****************************************         |  82%
+  |                                                        
+  |******************************************        |  84%
+  |                                                        
+  |*******************************************       |  86%
+  |                                                        
+  |********************************************      |  88%
+  |                                                        
+  |*********************************************     |  90%
+  |                                                        
+  |**********************************************    |  92%
+  |                                                        
+  |***********************************************   |  94%
+  |                                                        
+  |************************************************  |  96%
+  |                                                        
+  |************************************************* |  98%
+  |                                                        
+  |**************************************************| 100%</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tJags &lt;-<span class="st"> </span><span class="kw">Sys.time</span>() <span class="op">-</span><span class="st"> </span>t1
+<span class="kw">print</span>(<span class="kw">summary</span>(out))</code></pre></div>
+<pre><code>## 
+## Iterations = 1101:2100
+## Thinning interval = 1 
+## Number of chains = 1 
+## Sample size per chain = 1000 
+## 
+## 1. Empirical mean and standard deviation for each variable,
+##    plus standard error of the mean:
+## 
+##           Mean     SD Naive SE Time-series SE
+## r_y    0.66284 0.4180  0.01322        0.08191
+## x[1]   0.09809 0.7979  0.02523        0.03057
+## x[2]   1.80861 2.6644  0.08426        0.47521
+## x[3]   3.20034 4.3335  0.13704        0.94190
+## x[4]   1.89119 3.2240  0.10195        0.49103
+## x[5]   1.98977 3.0862  0.09759        0.55880
+## x[6]   3.50536 4.7290  0.14954        1.00489
+## x[7]   3.86864 5.2493  0.16600        1.20114
+## x[8]   3.69078 4.9378  0.15615        1.08113
+## x[9]   1.26759 2.8248  0.08933        0.34168
+## x[10]  1.31137 2.7087  0.08566        0.28299
+## x[11] -0.02144 2.1114  0.06677        0.06496
+## x[12] -1.80731 3.1367  0.09919        0.45403
+## x[13] -2.97758 4.3133  0.13640        0.86211
+## x[14] -1.27575 2.7984  0.08849        0.43573
+## x[15] -0.56893 2.3435  0.07411        0.19994
+## x[16] -0.22944 2.3157  0.07323        0.07220
+## x[17]  1.81354 3.1059  0.09822        0.53098
+## x[18]  2.92498 4.1543  0.13137        0.93702
+## x[19]  2.68421 4.1235  0.13040        0.94619
+## x[20]  1.94518 3.7357  0.11813        0.72829
+## 
+## 2. Quantiles for each variable:
+## 
+##            2.5%     25%      50%      75%   97.5%
+## r_y     0.08264  0.3617  0.58663  0.88338  1.6599
+## x[1]   -1.45170 -0.4170  0.10614  0.62052  1.7408
+## x[2]   -0.68154  0.5587  1.16609  2.20517  8.7052
+## x[3]    0.08942  1.1954  2.00343  3.48438 16.4408
+## x[4]   -1.00411  0.4503  1.15034  2.20429  8.7244
+## x[5]   -0.77108  0.4228  1.21215  2.43950  9.2395
+## x[6]    0.11499  1.2221  2.13368  3.78384 16.4072
+## x[7]    0.28785  1.4481  2.39846  4.11814 19.6687
+## x[8]    0.38178  1.3621  2.19159  3.91381 18.6424
+## x[9]   -2.08087  0.1560  0.82493  1.71881  7.8273
+## x[10]  -1.53121  0.1646  0.80056  1.68629  7.8094
+## x[11]  -4.54221 -0.7197 -0.01063  0.66900  4.1321
+## x[12]  -9.97887 -2.1384 -1.04968 -0.45730  1.1959
+## x[13] -16.89685 -3.1334 -1.74420 -0.98756  0.1797
+## x[14]  -9.40365 -1.6201 -0.70427 -0.08857  1.6103
+## x[15]  -5.01287 -1.1085 -0.36656  0.31838  2.5926
+## x[16]  -4.92661 -0.8766 -0.12810  0.52322  3.2508
+## x[17]  -0.87072  0.3871  1.01870  2.08630  9.7921
+## x[18]  -0.10354  0.9539  1.70767  3.00744 16.3740
+## x[19]  -0.11483  0.8376  1.59104  2.78175 13.8841
+## x[20]  -1.29191  0.3797  1.13807  2.21546 13.0636</code></pre>
+</div>
+<div id="nimble" class="section level3">
+<h3>Nimble</h3>
+<p><a href="https://r-nimble.org">NIMBLE</a> (Numerical Inference for Statistical Models using Bayesian and Likelihood Estimation) is an competing R package developed by Perry De Valpine, Christopher Paciorek, Duncan Temple, and Daniel Turek . The package is designed to deal with hierarchical models and the many problems they raise. The NMBLE creators allow scientist to write their own blocks of the inference routine. The idea underpinning NIMBLE is to allow both a flexible model specification and a programming system that adapts to the model structure and gets compiled in C++. It recently incorporates Hamilton Monte Carlo algorithm within the many samplers that can be customized.</p>
+</div>
+<div id="stan" class="section level3">
+<h3>Stan</h3>
+<p>The authors of the R package <a href="http://mc-stan.org">Rstan</a> have developed the No-U-Turn sampler, an adaptive form of Hamiltonian Monte Carlo sampling. Stan, now on a stabilized version, provides useful modern tools for Bayesian inference for continuous-variable models that are diffusing in a wide range of application domains.</p>
+<p>The Stan package is rather tricky to implement and we do not compare its performances here.</p>
+</div>
+<div id="results" class="section level3">
+<h3>Results</h3>
+<p>The two unknown parameters of our exemple, <span class="math inline">\(\sigma_x\)</span> and <span class="math inline">\(r_y\)</span>, are learnt from the data. Bayesian inference is simply getting the posterior of this couple <span class="math inline">\(\sigma_x,r_y\)</span> and the latent variables <span class="math inline">\(X\)</span> (i.e. saying what you know given the data). The same data having been passed to all toolboxes, with the same priors defined for <span class="math inline">\((\sigma_x,r_y)\)</span>, the obtained posteriors should not differ in theory. As they are given as samples, one can plot the marginal distributions of each quantities with the true instances that were used to generate the data and see that their posteriors look quite the same, as expected.</p>
+<p><img src="img/postSDX.png" /> <img src="img/postRY.png" /> However, MCMC algorithms yield different correlations in the sample of posterior values generated by the competing methods, which matters for the numerical precision of the estimates that can be derived from the various Monte Carlo Markov chains. The effective sample size (which can be computed using the coda package) is the size of an independent sample that would achieve the same precision. The following figure shows that greta provides the best effective sample size for all components of <span class="math inline">\(X\)</span> and the two parameters <span class="math inline">\(\sigma_x\)</span> and <span class="math inline">\(r_y\)</span>.</p>
+<div class="figure">
+<img src="img/effectiveSize.png" />
+
+</div>
+</div>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>greta allows to perform inference with Hamiltonian Monte Carlo algorithm like Stan or nimble. Currently, the only implemented MCMC procedure in greta is static Hamiltonian Monte Carlo. In regards of our case study, greta give similar results than JAGS and nimble. However, its early version and the small amount of documentation do not allow (yet) the implementation of complex model. greta seems promising and its development is interesting to follow for users of MCMC software.</p>
+</div>
+<div id="reference" class="section level2">
+<h2>Reference</h2>
+<p><a href="https://greta-dev.github.io/greta/index.html">greta on GitHub</a></p>
+<p><a href="https://mdscheuerell.github.io/gretaDFA/#background">A more sophisticated example with latent factors</a></p>
 </div>
 </div>
 

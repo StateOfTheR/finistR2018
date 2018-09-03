@@ -1,7 +1,5 @@
 ---
 title: "Introduction au Webscraping"
-author: "Avner"
-date: "31 août 2018"
 output: html_document
 ---
 

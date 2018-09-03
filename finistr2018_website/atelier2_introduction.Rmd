@@ -5,7 +5,6 @@ output: html_document
 
 Ces ateliers visent à développer des compétences avec R permettant d'accélérer les temps de calcul, en particulier
 
-
   - à l'aide de techniques d'optimisation appropriées
   - à l'aide d'interfaçage avec des langagage plus bas niveau (C++ par exemple)
   - à l'aide d'appels à de codes de calculs extérieurs (Tensorflow)

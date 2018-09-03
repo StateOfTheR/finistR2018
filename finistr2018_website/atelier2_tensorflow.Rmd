@@ -1,13 +1,9 @@
 ---
 title: "Introduction à Tensorflow"
-author: "Sophie Donnet, Saint-Clair"
-date: "28 août 2018"
 output: 
   html_document:
    toc: true
    toc_float: true
-   number_sections: false
-   highlight: tango
 ---
 
 ```{r setup, include=FALSE}
@@ -33,7 +29,7 @@ Par exemple, on peut décomposer la densité de la gaussienne selon le schéma s
 
 
 <center>
-![Décomposition de la densité d'une gaussienne](gaussian_tensor_flow.png){width=400px}
+![Décomposition de la densité d'une gaussienne](img/gaussian_tensor_flow.png){width=400px}
 </center>
 
 
@@ -239,8 +235,11 @@ with(tf$Session() %as% sess, {
 tensorboard(log_dir = "dgauss_log_summary")
 ```
 
-![Caption](tensorboard.png)
+![Caption](img/tensorboard.png)
 
+## Un exemple en python avec Jupyter lab
+
+[Python notebook - régression linéaire appris par descente de gradient stochastique](https://github.com/StateOfTheR/finistR2018/blob/master/atelier2/TensorFlow/TF_diabetes.ipynb)
 
 <!-- ### Remarques  -->
 

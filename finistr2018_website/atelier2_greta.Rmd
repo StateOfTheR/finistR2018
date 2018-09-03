@@ -5,7 +5,6 @@ output:
    toc: true
    toc_float: true
    number_sections: false
-   highlight: tango
 ---
 
 ```{r setup, include=FALSE}
@@ -30,254 +29,255 @@ For now, greta is only using the Hamiltonian Monte Carlo algorithm, a most remar
 ## installation
 greta use TensorFlow and it needs to be installed before installing greta. 
 
-<!-- ```{r installation_TS, eval=FALSE, echo = TRUE, cache = FALSE, message = FALSE} -->
-<!-- install.packages('tensorflow') -->
-<!-- install_tensorflow() -->
-<!-- ``` -->
+```{r installation_TS, eval=FALSE, echo = TRUE, cache = FALSE, message = FALSE}
+install.packages('tensorflow')
+install_tensorflow()
+```
 
-<!-- greta also uses the DiagrammeR R package for plotting Directed Acyclic Graph of greta models. -->
+greta also uses the DiagrammeR R package for plotting Directed Acyclic Graph of greta models.
 
-<!-- ```{r installation_greta, echo = TRUE, cache = FALSE, message = FALSE} -->
-<!-- # install.packages('greta') -->
-<!-- # install.packages('DiagrammeR') -->
-<!-- ``` -->
+```{r installation_greta, echo = TRUE, cache = FALSE, message = FALSE, eval = FALSE}
+install.packages('greta')
+install.packages('DiagrammeR')
+```
 
-<!-- ## How it works -->
-<!-- On greta's website a getting started [page](https://greta-dev.github.io/greta/get_started.html) as well as [examples](https://greta-dev.github.io/greta/example_models.html) are available. In the following section, we use greta with a simple dynamic model, for which there is no example on greta's website. -->
+## How it works
+On greta's website a getting started [page](https://greta-dev.github.io/greta/get_started.html) as well as [examples](https://greta-dev.github.io/greta/example_models.html) are available. In the following section, we use greta with a simple dynamic model, for which there is no example on greta's website.
 
-<!-- # Gaussian State Space model with greta -->
-<!-- The latent process $X$ is assumed to be an independent random walk, which is a cumulative sum of a sequence of independent process errors $\epsilon_x$.  -->
+# Gaussian State Space model with greta
+The latent process $X$ is assumed to be an independent random walk, which is a cumulative sum of a sequence of independent process errors $\epsilon_x$.
 
-<!-- $$X_{t} = \rho_x X_{t-1} + \epsilon_x \quad \text{with} \quad \epsilon_x \sim Normal(0, \sigma_x) $$ -->
-<!-- The observation process $Y$ is defined as: -->
-<!-- $$Y_{t} = \rho_y X_{t} + \epsilon_y \quad \text{with} \quad \epsilon_y \sim Normal(0, \sigma_y) $$ -->
+$$X_{t} = \rho_x X_{t-1} + \epsilon_x \quad \text{with} \quad \epsilon_x \sim Normal(0, \sigma_x) $$
+The observation process $Y$ is defined as:
+$$Y_{t} = \rho_y X_{t} + \epsilon_y \quad \text{with} \quad \epsilon_y \sim Normal(0, \sigma_y) $$
 
-<!-- ## greta in practice -->
-<!-- ### packages loading -->
-<!-- ```{r packages_greta, cache = FALSE, message = FALSE} -->
-<!-- library('greta') -->
-<!-- library('MASS') -->
-<!-- library('tidyverse') -->
-<!-- library('DiagrammeR') -->
-<!-- ``` -->
+## greta in practice
+### packages loading
+```{r packages_greta, cache = FALSE, message = FALSE}
+library('greta')
+library('MASS')
+library('tidyverse')
+library('DiagrammeR')
+```
 
-<!-- ### Data simulation -->
-<!-- ```{r simulation_greta} -->
-<!-- set.seed(123) -->
+### Data simulation
+```{r simulation_greta}
+set.seed(123)
 
-<!-- N <- 20 # number of time step -->
-<!-- x_true <- rep(NA, N) # latent process -->
-<!-- y <- rep(NA, N) # observations -->
+N <- 20 # number of time step
+x_true <- rep(NA, N) # latent process
+y <- rep(NA, N) # observations
 
-<!-- # parameters -->
-<!-- sd_x_true <- 1 -->
-<!-- prec_x_init_true <- sd_x_true^(-2) -->
-<!-- sd_y_true <- 1 -->
-<!-- prec_y_true <- sd_y_true^(-2) -->
-<!-- mean_x_init_true <- 0 -->
-<!-- r_x_true <- 0.85 -->
-<!-- r_y_true <- 1 -->
+# parameters
+sd_x_true <- 1
+prec_x_init_true <- sd_x_true^(-2)
+sd_y_true <- 1
+prec_y_true <- sd_y_true^(-2)
+mean_x_init_true <- 0
+r_x_true <- 0.85
+r_y_true <- 1
 
-<!-- ### Process and data generation -->
-<!-- x_true[1] <- rnorm(1, mean_x_init_true, sd_x_true) -->
+### Process and data generation
+x_true[1] <- rnorm(1, mean_x_init_true, sd_x_true)
 
-<!-- y[1] <- rnorm(1, r_y_true*x_true[1], sd_y_true) -->
+y[1] <- rnorm(1, r_y_true*x_true[1], sd_y_true)
 
-<!-- for (t in 2:N){ -->
-<!--   x_true[t] <- rnorm(1, r_x_true*x_true[t-1], sd_x_true) -->
-<!--   y[t] <- rnorm(1, r_y_true*x_true[t], sd_y_true) -->
-<!-- } -->
-<!-- ``` -->
+for (t in 2:N){
+  x_true[t] <- rnorm(1, r_x_true*x_true[t-1], sd_x_true)
+  y[t] <- rnorm(1, r_y_true*x_true[t], sd_y_true)
+}
+```
 
-<!-- ### greta data and priors -->
-<!-- The first step is to declare data for greta, assign priors to unknown parameters and provide distribution to random variables: -->
+### greta data and priors
+The first step is to declare data for greta, assign priors to unknown parameters and provide distribution to random variables:
 
-<!-- ```{r greta1} -->
-<!-- # greta's data  -->
-<!-- obs <- as_data(y) -->
+```{r greta1}
+# greta's data
+obs <- as_data(y)
 
-<!-- # priors -->
-<!-- r_y <- gamma(1, 1) # gamma prior set to r_y -->
-<!-- sd_x <- inverse_gamma(1, 1) # inv-gamma prior set to sd_x -->
+# priors
+r_y <- gamma(1, 1) # gamma prior set to r_y
+sd_x <- inverse_gamma(1, 1) # inv-gamma prior set to sd_x
 
-<!-- # fixed parameters -->
-<!-- sd_y <- sd_y_true # parameter fixed to the true value -->
-<!-- r_x <- r_x_true # parameter fixed to the true value -->
+# fixed parameters
+sd_y <- sd_y_true # parameter fixed to the true value
+r_x <- r_x_true # parameter fixed to the true value
 
-<!-- # creation of an empty greta array -->
-<!-- epsilon_x <- normal(0, sd_x, dim = N) -->
-<!-- ``` -->
-<!-- A prior gamma distribution is assigned to $\rho_y$ -->
-<!-- ```{r greta1c} -->
-<!-- print(r_y) -->
-<!-- ``` -->
+# creation of an empty greta array
+epsilon_x <- normal(0, sd_x, dim = N)
+```
+A prior gamma distribution is assigned to $\rho_y$
+```{r greta1c}
+print(r_y)
+```
 
-<!-- *\epsilon_x* is an empty greta array -->
-<!-- ```{r greta1a} -->
-<!-- print(epsilon_x) -->
-<!-- ``` -->
-<!-- the same process is used to define the latent variable $X$ for greta -->
-<!-- ```{r greta1b} -->
-<!-- # creation of an empty greta array for the X -->
-<!-- X <- greta_array(data = 0, dim = c(N, 1)) -->
-<!-- # definition of the latent process interpreted by greta -->
-<!-- for(t in 1:N){ -->
-<!--   X[t, 1] <- sum(r_x^((t - 1) - (0:(t-1))) * epsilon_x[1:t, 1]) -->
-<!-- } -->
-<!-- ``` -->
+*\epsilon_x* is an empty greta array
+```{r greta1a}
+print(epsilon_x)
+```
+the same process is used to define the latent variable $X$ for greta
+```{r greta1b}
+# creation of an empty greta array for the X
+X <- greta_array(data = 0, dim = c(N, 1))
+# definition of the latent process interpreted by greta
+for(t in 1:N){
+  X[t, 1] <- sum(r_x^((t - 1) - (0:(t-1))) * epsilon_x[1:t, 1])
+}
+```
 
-<!-- ### greta model definition -->
-<!-- ```{r greta2} -->
-<!-- # definition of the distribution of the observation -->
-<!-- distribution(obs) <- normal(X * r_y, rep(sd_y, N), dim = N) -->
-<!-- # greta's model building -->
-<!-- model_greta <- model(X, r_y, sd_x, precision = 'double') -->
-<!-- ``` -->
-<!-- In this case study, greta faces numerical instability. The option *precision = 'double* of the model greta function redefines the model to have double precision and increase numerical stability, though this will slow down sampling. Once, the greta's model is built, greta in combination with the DiagrammeR package can generate a DAG representing the greta's model -->
-<!-- ```{r greta3, eval = FALSE} -->
-<!-- plot(model_greta) -->
-<!-- ``` -->
-<!-- ![DAG generated by greta](DAG.png) -->
-
-
-<!-- ## greta model inference -->
-<!-- ```{r greta4, echo = FALSE, eval = TRUE, include = FALSE} -->
-<!-- if(file.exists('greta_draws.RData')){ -->
-<!-- } else { -->
-<!--   draws <- mcmc(model_greta, n_samples = 1000) -->
-<!--   save(draws, file = 'greta_draws.RData') -->
-<!-- } -->
-<!-- ``` -->
-
-<!-- ```{r greta4b, echo = TRUE, eval = FALSE} -->
-<!-- # run sampler for 1000 iterations -->
-<!-- draws <- greta::mcmc(model_greta, n_samples = 1000) -->
-<!-- ``` -->
-
-<!-- ## greta model results -->
-<!-- ```{r greta5, echo = TRUE, include = FALSE, eval = TRUE} -->
-<!-- load('greta_draws.RData') -->
-<!-- ``` -->
-
-<!-- Results of draws are returned as an mcmc.list object and can be summarized with: -->
-<!-- ```{r greta6} -->
-<!-- # print summary of mcmc.list -->
-<!-- summary(draws) -->
-<!-- ``` -->
-
-<!-- Using the tidyverse, a plot reprsenting simulated data, and posterior distributions is generated   -->
-<!-- ```{r greta7, eval = TRUE, message = FALSE} -->
-<!-- ### extract data from mcmc.list object to tibble for easy plotting with ggplot2 -->
-<!-- bounds <- as_tibble(t(apply(draws[[1]][, -c(21, 22)],2,function(x) quantile(x,c(0.025,0.5,0.975))))) -->
-<!-- bounds$param <- 1:N -->
-<!-- colnames(bounds)[1:3] <- c("min","med","max") -->
-
-<!-- ggdraws <- as_tibble(draws[[1]][, -c(21, 22)]) %>% -->
-<!--   gather(param, value) %>% -->
-<!--   mutate(param = as.numeric(str_extract(param, "[0-9]+"))) -->
-
-<!-- true <- as_tibble(data.frame(X=x_true,param=1:20)) -->
-<!-- obs <- as_tibble(data.frame(Y=y,param=1:20)) -->
-<!-- data <- left_join(ggdraws,bounds,by="param") -->
-<!-- data <- left_join(data,true,by="param") -->
-<!-- data <- left_join(data,obs,by="param") -->
-
-<!-- ### generating plot  -->
-<!-- ggplot(data, aes(param, value)) + -->
-<!--   geom_point(size = 0.2) + -->
-<!--   geom_ribbon(aes(ymin = min, ymax = max), fill = "gold", alpha = 0.2) + -->
-<!--   geom_line(aes(param, X, colour = "col1"), size = 1) + -->
-<!--   geom_line(aes(param, Y, colour = "col2"), size = 0.6, linetype = "dashed") + -->
-<!--   geom_line(aes(param, med, colour= "col3"), size = 1.1) + -->
-<!--   scale_colour_manual(name = "", -->
-<!--                       values = c(col1 = "blue", col2 = "black", col3 = "violetred3"), -->
-<!--                       labels = c("True", "Observed", "Median estimate")) + -->
-<!--   labs (x = "Time", y = "Simulated values") + -->
-<!--   theme_bw() + ggtitle("Simulated data and their posterior distributions (black points).", subtitle = 'Yellow shade represents the CI at 95%') -->
-<!-- ``` -->
+### greta model definition
+```{r greta2}
+# definition of the distribution of the observation
+distribution(obs) <- normal(X * r_y, rep(sd_y, N), dim = N)
+# greta's model building
+model_greta <- model(X, r_y, sd_x, precision = 'double')
+```
+In this case study, greta faces numerical instability. The option *precision = 'double* of the model greta function redefines the model to have double precision and increase numerical stability, though this will slow down sampling. Once, the greta's model is built, greta in combination with the DiagrammeR package can generate a DAG representing the greta's model
+```{r greta3, eval = FALSE}
+plot(model_greta)
+```
+![DAG generated by greta](img/DAG.png)
 
 
+## greta model inference
+```{r greta4, echo = FALSE, eval = TRUE, include = FALSE}
+if(file.exists('greta_draws.RData')){
+} else {
+  draws <- mcmc(model_greta, n_samples = 1000)
+  save(draws, file = 'greta_draws.RData')
+}
+```
 
-<!-- ## Comparison with Jags, Nimble and Stan -->
+```{r greta4b, echo = TRUE, eval = FALSE}
+# run sampler for 1000 iterations
+draws <- greta::mcmc(model_greta, n_samples = 1000)
+```
 
-<!-- ### Jags -->
+## greta model results
+```{r greta5, echo = TRUE, include = FALSE, eval = TRUE}
+load('greta_draws.RData')
+```
 
-<!-- Written in C++, Jags (Just another Gibbs sampler  -->
-<!-- [Just another Gibbs sampler](https://web.sgh.waw.pl/~atoroj/ekonometria_bayesowska/jags_user_manual.pdf) ) is becomming the common tool for Bayesian newbies. Conversely to WinBUGS/OpenBUGS platform ([BUGS](https://www.mrc-bsu.cam.ac.uk/software/bugs/)) written in Pascal component and quasi-impossible to install on anything but Windows systems, Jags can be launched as a stand-alone routine from R whatever the operating system. It does not rely as greta on the recent Hamiltonian Monte algorithm to visit the space of the model's unknowns ( and subsequently does not call Tensorflow as a quick routine to perform Hamiltonian dynamics). But Jags is known to work quite fast (since it is developped by Martyn Plummer, founding member of the Rcore team) and we'd wished to compare its performance to greta's previous ones on this very simple linear Kalman filter example.  A jag's code treating the simple Kalman model would look like the following lines of code : -->
-<!-- ```{r jagsexample, message = FALSE} -->
-<!-- burnSize <- 100 -->
-<!-- numberIter <- 1000 -->
-<!-- thin <- 1 -->
-<!-- params <- c('x', 'pres_x', 'r_y') -->
+Results of draws are returned as an mcmc.list object and can be summarized with:
+```{r greta6}
+# print summary of mcmc.list
+summary(draws)
+```
 
-<!-- require(rjags) -->
-<!-- jags.data <- list(y=y,N=N,prec_x_init=prec_x_init_true,prec_y=prec_y_true,  -->
-<!--                  mean_x_init=mean_x_init_true,r_x = r_x_true) -->
-<!-- init<- function(){ -->
-<!--   list(x=rnorm(N,y,0.2),r_y=rgamma(1,1,1),prec_x=rgamma(1,1,1)) -->
-<!-- } -->
-<!-- modelstring=" -->
-<!-- model{ -->
+Using the tidyverse, a plot reprsenting simulated data, and posterior distributions is generated
+```{r greta7, eval = TRUE, message = FALSE}
+### extract data from mcmc.list object to tibble for easy plotting with ggplot2
+bounds <- as_tibble(t(apply(draws[[1]][, -c(21, 22)],2,function(x) quantile(x,c(0.025,0.5,0.975)))))
+bounds$param <- 1:N
+colnames(bounds)[1:3] <- c("min","med","max")
 
-<!-- # Constants fixed (known) in the data -->
-<!-- # N <- 20 -->
-<!-- # prec_x_init <- 1 -->
-<!-- # prec_y <- 1 -->
-<!-- # mean_x_init <- 0 -->
-<!-- # r_x <- 1 -->
+ggdraws <- as_tibble(draws[[1]][, -c(21, 22)]) %>%
+  gather(param, value) %>%
+  mutate(param = as.numeric(str_extract(param, "[0-9]+")))
 
-<!-- prec_x ~ dgamma(1,1) -->
-<!-- r_y ~ dgamma(1,1) -->
-<!-- # r_y ~ dnorm(0,1)I(0,)	 -->
+true <- as_tibble(data.frame(X=x_true,param=1:20))
+obs <- as_tibble(data.frame(Y=y,param=1:20))
+data <- left_join(ggdraws,bounds,by="param")
+data <- left_join(data,true,by="param")
+data <- left_join(data,obs,by="param")
 
-<!-- x[1] ~ dnorm(mean_x_init, prec_x_init) -->
-<!-- y[1] ~ dnorm(r_y*x[1], prec_y) -->
-
-<!-- for (t in 2:N) -->
-<!-- { -->
-<!--   x[t] ~ dnorm(r_x*x[t-1], prec_x) -->
-<!--   y[t] ~ dnorm(r_y*x[t], prec_y) -->
-<!-- } -->
-
-<!-- } -->
-<!-- " -->
-<!-- model=jags.model(textConnection(modelstring), data=jags.data, inits=init) -->
-<!-- t1 <- Sys.time() -->
-<!-- update(model,n.iter=burnSize) -->
-<!-- out=coda.samples(model=model,variable.names=params, n.iter=numberIter, thin=thin) -->
-<!-- tJags <- Sys.time() - t1 -->
-<!-- print(summary(out)) -->
-<!-- ``` -->
-
-<!-- ### Nimble -->
-
-<!-- [NIMBLE](https://r-nimble.org) (Numerical Inference for Statistical Models using Bayesian and Likelihood Estimation) is an competing  R package developed by Perry De Valpine, Christopher Paciorek, Duncan Temple, and Daniel Turek . The package is designed to deal with hierarchical models and the many problems they raise. The NMBLE creators allow scientist to write their own blocks of the inference routine. The idea underpinning NIMBLE is to allow both a flexible model specification and a programming system that adapts to the model structure and gets compiled in C++. It recently incorporates Hamilton Monte Carlo algorithm within the many samplers that can be customized. -->
-
-
-<!-- ### Stan -->
-<!-- The authors of the R package [Rstan](http://mc-stan.org) have developed the No-U-Turn sampler, an adaptive form of Hamiltonian Monte Carlo sampling.  Stan, now on a stabilized version, provides useful modern tools for Bayesian inference for continuous-variable models that are diffusing in a wide range of application domains.  -->
-
-<!-- The Stan package is rather tricky to implement and we do not compare its performances here. -->
-
-<!-- ### Results  -->
-
-<!-- The two unknown parameters of our exemple, $\sigma_x$ and $r_y$, are learnt from the data. Bayesian inference is simply getting the posterior of this couple $\sigma_x,r_y$  and the latent variables $X$ (i.e. saying what you know given the data). The same data having been passed to all toolboxes, with the same priors defined for $(\sigma_x,r_y)$, the obtained posteriors should not differ in theory. As they are given as samples, one can plot the marginal distributions of each quantities with the true instances that were used to generate the data and see that their posteriors look quite the same, as expected. -->
-
-<!-- ![](postSDX.png) -->
-<!-- ![](postRY.png) -->
-<!-- However, MCMC algorithms yield different correlations in the sample of posterior values generated by the competing methods, which matters for the numerical precision of the estimates that can be derived from the various Monte Carlo Markov chains.  The effective sample size (which can be computed using the coda package) is the size of an independent sample that would achieve the same precision. The following figure shows that greta provides the best effective sample size for all components of $X$ and the two parameters $\sigma_x$ and $r_y$. -->
+### generating plot
+ggplot(data, aes(param, value)) +
+  geom_point(size = 0.2) +
+  geom_ribbon(aes(ymin = min, ymax = max), fill = "gold", alpha = 0.2) +
+  geom_line(aes(param, X, colour = "col1"), size = 1) +
+  geom_line(aes(param, Y, colour = "col2"), size = 0.6, linetype = "dashed") +
+  geom_line(aes(param, med, colour= "col3"), size = 1.1) +
+  scale_colour_manual(name = "",
+                      values = c(col1 = "blue", col2 = "black", col3 = "violetred3"),
+                      labels = c("True", "Observed", "Median estimate")) +
+  labs (x = "Time", y = "Simulated values") +
+  theme_bw() + ggtitle("Simulated data and their posterior distributions (black points).", subtitle = 'Yellow shade represents the CI at 95%')
+```
 
 
-<!-- ![](effectiveSize.png) -->
 
-<!-- ## Conclusion -->
-<!-- greta allows to perform inference with Hamiltonian Monte Carlo algorithm like Stan or nimble. Currently, the only implemented MCMC procedure in greta is static Hamiltonian Monte Carlo. In regards of our case study, greta give similar results than JAGS and nimble. However, its early version and the small amount of documentation do not allow (yet) the implementation of complex model. greta seems promising and its development is interesting to follow for users of MCMC software. -->
+## Comparison with Jags, Nimble and Stan
+
+### Jags
+
+Written in C++, Jags (Just another Gibbs sampler
+[Just another Gibbs sampler](https://web.sgh.waw.pl/~atoroj/ekonometria_bayesowska/jags_user_manual.pdf) ) is becomming the common tool for Bayesian newbies. Conversely to WinBUGS/OpenBUGS platform ([BUGS](https://www.mrc-bsu.cam.ac.uk/software/bugs/)) written in Pascal component and quasi-impossible to install on anything but Windows systems, Jags can be launched as a stand-alone routine from R whatever the operating system. It does not rely as greta on the recent Hamiltonian Monte algorithm to visit the space of the model's unknowns ( and subsequently does not call Tensorflow as a quick routine to perform Hamiltonian dynamics). But Jags is known to work quite fast (since it is developped by Martyn Plummer, founding member of the Rcore team) and we'd wished to compare its performance to greta's previous ones on this very simple linear Kalman filter example.  A jag's code treating the simple Kalman model would look like the following lines of code :
+```{r jagsexample, message = FALSE}
+library(rjags)
+burnSize <- 100
+numberIter <- 1000
+thin <- 1
+params <- c('x', 'pres_x', 'r_y')
+
+require(rjags)
+jags.data <- list(y=y,N=N,prec_x_init=prec_x_init_true,prec_y=prec_y_true,
+                 mean_x_init=mean_x_init_true,r_x = r_x_true)
+init<- function(){
+  list(x=rnorm(N,y,0.2),r_y=rgamma(1,1,1),prec_x=rgamma(1,1,1))
+}
+modelstring="
+model{
+
+# Constants fixed (known) in the data
+# N <- 20
+# prec_x_init <- 1
+# prec_y <- 1
+# mean_x_init <- 0
+# r_x <- 1
+
+prec_x ~ dgamma(1,1)
+r_y ~ dgamma(1,1)
+# r_y ~ dnorm(0,1)I(0,)
+
+x[1] ~ dnorm(mean_x_init, prec_x_init)
+y[1] ~ dnorm(r_y*x[1], prec_y)
+
+for (t in 2:N)
+{
+  x[t] ~ dnorm(r_x*x[t-1], prec_x)
+  y[t] ~ dnorm(r_y*x[t], prec_y)
+}
+
+}
+"
+model=jags.model(textConnection(modelstring), data=jags.data, inits=init)
+t1 <- Sys.time()
+update(model,n.iter=burnSize)
+out=coda.samples(model=model,variable.names=params, n.iter=numberIter, thin=thin)
+tJags <- Sys.time() - t1
+print(summary(out))
+```
+
+### Nimble
+
+[NIMBLE](https://r-nimble.org) (Numerical Inference for Statistical Models using Bayesian and Likelihood Estimation) is an competing  R package developed by Perry De Valpine, Christopher Paciorek, Duncan Temple, and Daniel Turek . The package is designed to deal with hierarchical models and the many problems they raise. The NMBLE creators allow scientist to write their own blocks of the inference routine. The idea underpinning NIMBLE is to allow both a flexible model specification and a programming system that adapts to the model structure and gets compiled in C++. It recently incorporates Hamilton Monte Carlo algorithm within the many samplers that can be customized.
 
 
-<!-- ## Reference  -->
-<!-- [greta on GitHub](https://greta-dev.github.io/greta/index.html) -->
+### Stan
+The authors of the R package [Rstan](http://mc-stan.org) have developed the No-U-Turn sampler, an adaptive form of Hamiltonian Monte Carlo sampling.  Stan, now on a stabilized version, provides useful modern tools for Bayesian inference for continuous-variable models that are diffusing in a wide range of application domains.
+
+The Stan package is rather tricky to implement and we do not compare its performances here.
+
+### Results
+
+The two unknown parameters of our exemple, $\sigma_x$ and $r_y$, are learnt from the data. Bayesian inference is simply getting the posterior of this couple $\sigma_x,r_y$  and the latent variables $X$ (i.e. saying what you know given the data). The same data having been passed to all toolboxes, with the same priors defined for $(\sigma_x,r_y)$, the obtained posteriors should not differ in theory. As they are given as samples, one can plot the marginal distributions of each quantities with the true instances that were used to generate the data and see that their posteriors look quite the same, as expected.
+
+![](img/postSDX.png)
+![](img/postRY.png)
+However, MCMC algorithms yield different correlations in the sample of posterior values generated by the competing methods, which matters for the numerical precision of the estimates that can be derived from the various Monte Carlo Markov chains.  The effective sample size (which can be computed using the coda package) is the size of an independent sample that would achieve the same precision. The following figure shows that greta provides the best effective sample size for all components of $X$ and the two parameters $\sigma_x$ and $r_y$.
 
 
-<!-- [A more sophisticated example with latent factors](https://mdscheuerell.github.io/gretaDFA/#background) -->
+![](img/effectiveSize.png)
+
+## Conclusion
+greta allows to perform inference with Hamiltonian Monte Carlo algorithm like Stan or nimble. Currently, the only implemented MCMC procedure in greta is static Hamiltonian Monte Carlo. In regards of our case study, greta give similar results than JAGS and nimble. However, its early version and the small amount of documentation do not allow (yet) the implementation of complex model. greta seems promising and its development is interesting to follow for users of MCMC software.
+
+
+## Reference
+[greta on GitHub](https://greta-dev.github.io/greta/index.html)
+
+
+[A more sophisticated example with latent factors](https://mdscheuerell.github.io/gretaDFA/#background)
 
 

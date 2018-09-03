@@ -1,7 +1,5 @@
 ---
-title: "Web scraping"
-subtitle: "Occurrences Google"
-author: "Sophie Donnet, Marie-Pierre Etienne, Pierre Navarro, Vincent Runge"
+title: "Comptage d'occurrences de mot dans Google"
 date: "27 août 2018"
 output: 
   html_document:

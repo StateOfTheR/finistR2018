@@ -9,9 +9,7 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Marie, Avner, Éric, Julien" />
 
-<meta name="date" content="2018-08-29" />
 
 <title>Personalisation de Rmarkdown</title>
 
@@ -25,25 +23,54 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
 
 <style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
-}
-</script>
-
 
 
 <style type="text/css">
@@ -281,12 +308,25 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Home</a>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    accueil
+  </a>
+</li>
+<li>
+  <a href="https://github.com/StateOfTheR/finistR2018">
+    <span class="fa fa-github"></span>
+     
+    dépôt github
+  </a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-refresh"></span>
+     
     Webscrapping
      
     <span class="caret"></span>
@@ -307,18 +347,14 @@ div.tocify {
       <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
     </li>
     <li>
-      <a href="atelier1_webscraping_googlefight.html">Google Fight</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_googlenews.html">Google News</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_youtube.html">Youtube</a>
+      <a href="atelier1_webscraping_googlefight.html">Occurrences Google</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-wheelchair-alt"></span>
+     
     Optimisation et accélération
      
     <span class="caret"></span>
@@ -339,6 +375,9 @@ div.tocify {
       <a href="atelier2_tensorflow.html">TensorFlow</a>
     </li>
     <li>
+      <a href="atelier2_greta.html">Greta</a>
+    </li>
+    <li>
       <a href="atelier2_rcpp_modules.html">Modules Rcpp</a>
     </li>
     <li>
@@ -348,6 +387,8 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-thumbs-o-up"></span>
+     
     Bonnes pratiques
      
     <span class="caret"></span>
@@ -376,9 +417,6 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Personalisation de Rmarkdown</h1>
-<h3 class="subtitle"><em>R Bootcamp, Beg Meil</em></h3>
-<h4 class="author"><em>Marie, Avner, Éric, Julien</em></h4>
-<h4 class="date"><em>August 29, 2018</em></h4>
 
 </div>
 
@@ -388,7 +426,7 @@ div.tocify {
 <div id="resume-de-la-chaine-de-traitement" class="section level2">
 <h2>Résumé de la chaîne de traitement</h2>
 <div class="figure">
-<img src="schema_rmd.png" alt="Process de création d’un document" />
+<img src="img/schema_rmd.png" alt="Process de création d’un document" />
 <p class="caption">Process de création d’un document</p>
 </div>
 </div>
@@ -462,41 +500,41 @@ div.tocify {
 <div id="options-globales" class="section level2">
 <h2>Options globales</h2>
 <p>Elles sont communes à tout type de sortie</p>
-<pre class="yaml"><code>---
-title: titre du document
-subtitle: &quot;sous titre&quot;
-author: auteur du document
-date: &quot;`r Sys.Date()`&quot;
----</code></pre>
+<div class="sourceCode"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span class="ot">---</span>
+<span class="fu">title:</span><span class="at"> titre du document</span>
+<span class="fu">subtitle:</span><span class="at"> </span><span class="st">&quot;sous titre&quot;</span>
+<span class="fu">author:</span><span class="at"> auteur du document</span>
+<span class="fu">date:</span><span class="at"> </span><span class="st">&quot;`r Sys.Date()`&quot;</span>
+<span class="ot">---</span></code></pre></div>
 </div>
 <div id="options-specifiques" class="section level2">
 <h2>Options spécifiques</h2>
 <p>On peut distinguer pour HTML ou les fichiers de définition inclus (css ou .sty) ou ou l’utilisation de certaines commandes (on donne une valeur à une variable).</p>
 <div id="exemple-pour-html_document" class="section level3">
 <h3>Exemple pour html_document()</h3>
-<pre class="yaml"><code>---
-title: titre du document
-author: auteur du document
-output:
-  html_document:
-    number_sections: yes
-    toc: true
-    mathjax: &quot;http://example.com/MathJax.js&quot;
-    css: monstyle.css
----</code></pre>
+<div class="sourceCode"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span class="ot">---</span>
+<span class="fu">title:</span><span class="at"> titre du document</span>
+<span class="fu">author:</span><span class="at"> auteur du document</span>
+<span class="fu">output:</span>
+  <span class="fu">html_document:</span>
+    <span class="fu">number_sections:</span><span class="at"> yes</span>
+    <span class="fu">toc:</span><span class="at"> true</span>
+    <span class="fu">mathjax:</span><span class="at"> </span><span class="st">&quot;http://example.com/MathJax.js&quot;</span>
+    <span class="fu">css:</span><span class="at"> monstyle.css</span>
+<span class="ot">---</span></code></pre></div>
 </div>
 <div id="exemple-pour-pdf_document" class="section level3">
 <h3>Exemple pour pdf_document()</h3>
-<pre class="yaml"><code>---
-title: titre du document
-author: auteur du document
-output:
-  pdf_document:
-    number_sections: yes
-    toc: true
-    include:
-      in_header: preamble.sty
----</code></pre>
+<div class="sourceCode"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span class="ot">---</span>
+<span class="fu">title:</span><span class="at"> titre du document</span>
+<span class="fu">author:</span><span class="at"> auteur du document</span>
+<span class="fu">output:</span>
+  <span class="fu">pdf_document:</span>
+    <span class="fu">number_sections:</span><span class="at"> yes</span>
+    <span class="fu">toc:</span><span class="at"> true</span>
+    <span class="fu">include:</span>
+      <span class="fu">in_header:</span><span class="at"> preamble.sty</span>
+<span class="ot">---</span></code></pre></div>
 </div>
 </div>
 <div id="example-avance-pour-la-sortie-beamer_presentation" class="section level2">
@@ -511,225 +549,225 @@ output:
 <h2>Exemple: un package pour une publication scientifique</h2>
 <p>Un exemple simple est le template d’un journal. Il faut créer package qui s’organisera comme dans la figure suivante :</p>
 <div class="figure">
-<img src="TreePackageRmarkdown.png" alt="arborescence" />
+<img src="img/TreePackageRmarkdown.png" alt="arborescence" />
 <p class="caption">arborescence</p>
 </div>
 <div class="figure">
-<img src="arborescence_pkg_template.png" alt="arborescence type" />
+<img src="img/arborescence_pkg_template.png" alt="arborescence type" />
 <p class="caption">arborescence type</p>
 </div>
 <div id="definition-dun-processiong-de-sortie-en-html" class="section level3">
 <h3>Définition d’un processiong de sortie en HTML</h3>
 <p>Le fichier <code>html.R</code> contient la fonction <code>html_article()</code> assurant la chaîne de traîtement. Ici, un exemple simple se basant sur la fonction existante <code>html_document()</code></p>
-<pre class="r"><code>html_article &lt;- function(...) {
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">html_article &lt;-<span class="st"> </span><span class="cf">function</span>(...) {
 
   ## call the base html_document format with the appropriate options
-  rmarkdown::html_document(theme = &quot;united&quot;,
-                            highlight = &quot;tango&quot;,
-                            toc = TRUE,
-                            df_print = &quot;paged&quot;,
-                            code_folding = &quot;show&quot;,
-                            code_download = TRUE,
-                            toc_float = TRUE,
-                            number_sections = TRUE,
+  rmarkdown<span class="op">::</span><span class="kw">html_document</span>(<span class="dt">theme =</span> <span class="st">&quot;united&quot;</span>,
+                            <span class="dt">highlight =</span> <span class="st">&quot;tango&quot;</span>,
+                            <span class="dt">toc =</span> <span class="ot">TRUE</span>,
+                            <span class="dt">df_print =</span> <span class="st">&quot;paged&quot;</span>,
+                            <span class="dt">code_folding =</span> <span class="st">&quot;show&quot;</span>,
+                            <span class="dt">code_download =</span> <span class="ot">TRUE</span>,
+                            <span class="dt">toc_float =</span> <span class="ot">TRUE</span>,
+                            <span class="dt">number_sections =</span> <span class="ot">TRUE</span>,
                            )
-}</code></pre>
+}</code></pre></div>
 </div>
 <div id="definition-dun-processiong-de-sortie-en-pdf" class="section level3">
 <h3>Définition d’un processiong de sortie en PDF</h3>
 <p>Le fichier <code>pdf.R</code> contient la fonction <code>pdf_article()</code> assurant la chaîne de traîtement. Ici, un exemple simple se basant sur la fonction existante <code>pdf_document()</code> et complétant légèrement le processus</p>
-<pre class="r"><code>pdf_article &lt;- function(...) {
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pdf_article &lt;-<span class="st"> </span><span class="cf">function</span>(...) {
 
     ## call the base pdf_document format with the appropriate options
-    format &lt;- rmarkdown::pdf_document(fig_width = 8, fig_height = 5, fig_crop = TRUE,
-                                      dev = &#39;pdf&#39;, highlight = &quot;pygments&quot;,
-                                      citation_package = &quot;natbib&quot;,
-                                      template = template_resources(&quot;pdf_article&quot;, &quot;template.tex&quot;), ...)
+    format &lt;-<span class="st"> </span>rmarkdown<span class="op">::</span><span class="kw">pdf_document</span>(<span class="dt">fig_width =</span> <span class="dv">8</span>, <span class="dt">fig_height =</span> <span class="dv">5</span>, <span class="dt">fig_crop =</span> <span class="ot">TRUE</span>,
+                                      <span class="dt">dev =</span> <span class="st">&#39;pdf&#39;</span>, <span class="dt">highlight =</span> <span class="st">&quot;pygments&quot;</span>,
+                                      <span class="dt">citation_package =</span> <span class="st">&quot;natbib&quot;</span>,
+                                      <span class="dt">template =</span> <span class="kw">template_resources</span>(<span class="st">&quot;pdf_article&quot;</span>, <span class="st">&quot;template.tex&quot;</span>), ...)
 
     ## create knitr options (ensure opts and hooks are non-null)
-    knitr_options &lt;- rmarkdown::knitr_options_pdf(8, 5, TRUE, &#39;pdf&#39;)
-    if (is.null(knitr_options$opts_knit))  knitr_options$opts_knit = list()
-    if (is.null(knitr_options$knit_hooks)) knitr_options$knit_hooks = list()
+    knitr_options &lt;-<span class="st"> </span>rmarkdown<span class="op">::</span><span class="kw">knitr_options_pdf</span>(<span class="dv">8</span>, <span class="dv">5</span>, <span class="ot">TRUE</span>, <span class="st">&#39;pdf&#39;</span>)
+    <span class="cf">if</span> (<span class="kw">is.null</span>(knitr_options<span class="op">$</span>opts_knit))  knitr_options<span class="op">$</span>opts_knit =<span class="st"> </span><span class="kw">list</span>()
+    <span class="cf">if</span> (<span class="kw">is.null</span>(knitr_options<span class="op">$</span>knit_hooks)) knitr_options<span class="op">$</span>knit_hooks =<span class="st"> </span><span class="kw">list</span>()
 
     ## set options
-    knitr_options$opts_chunk$tidy = TRUE
-    knitr_options$opts_knit$width = 45
+    knitr_options<span class="op">$</span>opts_chunk<span class="op">$</span>tidy =<span class="st"> </span><span class="ot">TRUE</span>
+    knitr_options<span class="op">$</span>opts_knit<span class="op">$</span>width =<span class="st"> </span><span class="dv">45</span>
 
     ## set hooks for special plot output
-    knitr_options$knit_hooks$plot &lt;- function(x, options) {
-        knitr::hook_plot_tex(x, options)
+    knitr_options<span class="op">$</span>knit_hooks<span class="op">$</span>plot &lt;-<span class="st"> </span><span class="cf">function</span>(x, options) {
+        knitr<span class="op">::</span><span class="kw">hook_plot_tex</span>(x, options)
     }
 
     ## override the knitr settings of the base format and return the format
-    format$knitr &lt;- knitr_options
-    format$inherits &lt;- &#39;pdf_document&#39;
+    format<span class="op">$</span>knitr &lt;-<span class="st"> </span>knitr_options
+    format<span class="op">$</span>inherits &lt;-<span class="st"> &#39;pdf_document&#39;</span>
     format
-}</code></pre>
+}</code></pre></div>
 </div>
 <div id="template-pandoc" class="section level3">
 <h3>template PANDOC</h3>
 <p>Le fichier <code>template.tex</code> (resp. l’équivalent <code>style.css</code>) contient le template pandoc pour la sortie tex (respectivement, HTML)</p>
-<pre class="latex"><code>\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$lang$,$endif$$if(papersize)$$papersize$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+<div class="sourceCode"><pre class="sourceCode latex"><code class="sourceCode latex"><span class="bu">\documentclass</span>[<span class="ss">$if(fontsize)</span><span class="er">$$</span><span class="ss">fontsize$</span>,<span class="ss">$endif</span><span class="er">$$</span><span class="ss">if(lang)</span><span class="er">$$</span><span class="ss">lang$</span>,<span class="ss">$endif</span><span class="er">$$</span><span class="ss">if(papersize)</span><span class="er">$$</span><span class="ss">papersize$</span>,<span class="ss">$endif</span><span class="er">$$</span><span class="ss">for(classoption)</span><span class="er">$$</span><span class="ss">classoption</span><span class="er">$$</span><span class="ss">sep$</span>,<span class="ss">$endfor$</span>]{<span class="ss">$documentclass$</span>}
 
-% ams
-\usepackage{amssymb,amsmath}
-\usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e}
-\usepackage[OT1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{eurosym}
+<span class="co">% ams</span>
+<span class="bu">\usepackage</span>{<span class="ex">amssymb,amsmath</span>}
+<span class="bu">\usepackage</span>{<span class="ex">ifxetex,ifluatex</span>}
+<span class="bu">\usepackage</span>{<span class="ex">fixltx2e</span>}
+<span class="bu">\usepackage</span>[OT1]{<span class="ex">fontenc</span>}
+<span class="bu">\usepackage</span>[utf8]{<span class="ex">inputenc</span>}
+<span class="bu">\usepackage</span>{<span class="ex">eurosym</span>}
 
-% graphix
-\usepackage{graphicx}
+<span class="co">% graphix</span>
+<span class="bu">\usepackage</span>{<span class="ex">graphicx</span>}
 
-% url
-\usepackage{url}
+<span class="co">% url</span>
+<span class="bu">\usepackage</span>{<span class="ex">url</span>}
 
-% hyperref
-\usepackage{hyperref}
+<span class="co">% hyperref</span>
+<span class="bu">\usepackage</span>{<span class="ex">hyperref</span>}
 
-% units.
-\usepackage{units}
+<span class="co">% units.</span>
+<span class="bu">\usepackage</span>{<span class="ex">units</span>}
 
-$if(lang)$
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-  \usepackage[shorthands=off,$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=$babel-lang$]{babel}
-$if(babel-newcommands)$
-  $babel-newcommands$
-$endif$
-\else
-  \usepackage{polyglossia}
-  \setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
-$for(polyglossia-otherlangs)$
-  \setotherlanguage[$polyglossia-otherlangs.options$]{$polyglossia-otherlangs.name$}
-$endfor$
-\fi
-$endif$
+<span class="ss">$if(lang)$</span>
+<span class="fu">\ifnum</span> 0<span class="fu">\ifxetex</span> 1<span class="fu">\fi\ifluatex</span> 1<span class="fu">\fi</span>=0 <span class="co">% if pdftex</span>
+  <span class="bu">\usepackage</span>[shorthands=off,<span class="ss">$for(babel-otherlangs)</span><span class="er">$$</span><span class="ss">babel-otherlangs$</span>,<span class="ss">$endfor$</span>main=<span class="ss">$babel-lang$</span>]{<span class="ex">babel</span>}
+<span class="ss">$if(babel-newcommands)$</span>
+  <span class="ss">$babel-newcommands$</span>
+<span class="ss">$endif$</span>
+<span class="fu">\else</span>
+  <span class="bu">\usepackage</span>{<span class="ex">polyglossia</span>}
+  <span class="fu">\setmainlanguage</span>[<span class="ss">$polyglossia-lang.options$</span>]{<span class="ss">$polyglossia-lang.name$</span>}
+<span class="ss">$for(polyglossia-otherlangs)$</span>
+  <span class="fu">\setotherlanguage</span>[<span class="ss">$polyglossia-otherlangs.options$</span>]{<span class="ss">$polyglossia-otherlangs.name$</span>}
+<span class="ss">$endfor$</span>
+<span class="fu">\fi</span>
+<span class="ss">$endif$</span>
 
-$if(numbersections)$
-\setcounter{secnumdepth}{2}
-$else$
-\setcounter{secnumdepth}{-1}
-$endif$
+<span class="ss">$if(numbersections)$</span>
+<span class="fu">\setcounter</span>{secnumdepth}{2}
+<span class="ss">$else$</span>
+<span class="fu">\setcounter</span>{secnumdepth}{-1}
+<span class="ss">$endif$</span>
 
-% citations
-$if(natbib)$
-\usepackage{natbib}
-\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
-$endif$
-$if(biblatex)$
-\usepackage{biblatex}
-$for(bibliography)$
-\addbibresource{$bibliography$}
-$endfor$
-$endif$
+<span class="co">% citations</span>
+<span class="ss">$if(natbib)$</span>
+<span class="bu">\usepackage</span>{<span class="ex">natbib</span>}
+<span class="bu">\bibliographystyle</span>{<span class="ss">$if(biblio-style)</span><span class="er">$$</span><span class="ss">biblio-style</span><span class="er">$$</span><span class="ss">else$</span><span class="ex">plainnat</span><span class="ss">$endif$</span>}
+<span class="ss">$endif$</span>
+<span class="ss">$if(biblatex)$</span>
+<span class="bu">\usepackage</span>{<span class="ex">biblatex</span>}
+<span class="ss">$for(bibliography)$</span>
+<span class="fu">\addbibresource</span>{<span class="ss">$bibliography$</span>}
+<span class="ss">$endfor$</span>
+<span class="ss">$endif$</span>
 
-% pandoc syntax highlighting
-$if(highlighting-macros)$
-$highlighting-macros$
-$endif$
+<span class="co">% pandoc syntax highlighting</span>
+<span class="ss">$if(highlighting-macros)$</span>
+<span class="ss">$highlighting-macros$</span>
+<span class="ss">$endif$</span>
 
-% multiplecol
-\usepackage{multicol}
+<span class="co">% multiplecol</span>
+<span class="bu">\usepackage</span>{<span class="ex">multicol</span>}
 
-% strikeout
-\usepackage[normalem]{ulem}
+<span class="co">% strikeout</span>
+<span class="bu">\usepackage</span>[normalem]{<span class="ex">ulem</span>}
 
-% tightlist macro required by pandoc &gt;= 1.14
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+<span class="co">% tightlist macro required by pandoc &gt;= 1.14</span>
+<span class="fu">\providecommand</span>{<span class="fu">\tightlist</span>}{<span class="co">%</span>
+  <span class="fu">\setlength</span>{<span class="fu">\itemsep</span>}{0pt}<span class="fu">\setlength</span>{<span class="fu">\parskip</span>}{0pt}}
 
-% title / author / date
-$if(title)$
-\title{$title$}
-$endif$
-$if(author)$
-\author{$for(author)$$author$$sep$ \and $endfor$}
-$endif$
-$if(date)$
-\date{$date$}
-$else$
-\date{}
-$endif$
+<span class="co">% title / author / date</span>
+<span class="ss">$if(title)$</span>
+<span class="fu">\title</span>{<span class="ss">$title$</span>}
+<span class="ss">$endif$</span>
+<span class="ss">$if(author)$</span>
+<span class="fu">\author</span>{<span class="ss">$for(author)</span><span class="er">$$</span><span class="ss">author</span><span class="er">$$</span><span class="ss">sep$</span> <span class="fu">\and</span> <span class="ss">$endfor$</span>}
+<span class="ss">$endif$</span>
+<span class="ss">$if(date)$</span>
+<span class="fu">\date</span>{<span class="ss">$date$</span>}
+<span class="ss">$else$</span>
+<span class="fu">\date</span>{}
+<span class="ss">$endif$</span>
 
-%% colored links, setting &#39;borrowed&#39; from RJournal.sty with &#39;Thanks, Achim!&#39;
-\RequirePackage{color}
-\definecolor{link}{rgb}{0.1,0.1,0.8} %% blue with some grey
-\hypersetup{
-  colorlinks,%
-  citecolor=link,%
-  filecolor=link,%
-  linkcolor=link,%
+<span class="co">%% colored links, setting &#39;borrowed&#39; from RJournal.sty with &#39;Thanks, Achim!&#39;</span>
+<span class="fu">\RequirePackage</span>{color}
+<span class="fu">\definecolor</span>{link}{rgb}{0.1,0.1,0.8} <span class="co">%% blue with some grey</span>
+<span class="fu">\hypersetup</span>{
+  colorlinks,<span class="co">%</span>
+  citecolor=link,<span class="co">%</span>
+  filecolor=link,<span class="co">%</span>
+  linkcolor=link,<span class="co">%</span>
   urlcolor=link
 }
 
-$for(header-includes)$
-$header-includes$
-$endfor$
+<span class="ss">$for(header-includes)$</span>
+<span class="ss">$header-includes$</span>
+<span class="ss">$endfor$</span>
 
-\begin{document}
+<span class="kw">\begin</span>{<span class="ex">document</span>}
 
-$if(title)$
-\maketitle
-$endif$
+<span class="ss">$if(title)$</span>
+<span class="fu">\maketitle</span>
+<span class="ss">$endif$</span>
 
-$if(abstract)$
-\begin{abstract}
-\noindent $abstract$
-\end{abstract}
-$endif$
+<span class="ss">$if(abstract)$</span>
+<span class="kw">\begin</span>{<span class="ex">abstract</span>}
+<span class="fu">\noindent</span> <span class="ss">$abstract$</span>
+<span class="kw">\end</span>{<span class="ex">abstract</span>}
+<span class="ss">$endif$</span>
 
-$for(include-before)$
-$include-before$
-$endfor$
+<span class="ss">$for(include-before)$</span>
+<span class="ss">$include-before$</span>
+<span class="ss">$endfor$</span>
 
-$if(toc)$
+<span class="ss">$if(toc)$</span>
 {
-$if(colorlinks)$
-\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
-$endif$
-\setcounter{tocdepth}{$toc-depth$}
-\tableofcontents
+<span class="ss">$if(colorlinks)$</span>
+<span class="fu">\hypersetup</span>{linkcolor=<span class="ss">$if(toccolor)</span><span class="er">$$</span><span class="ss">toccolor</span><span class="er">$$</span><span class="ss">else$</span>black<span class="ss">$endif$</span>}
+<span class="ss">$endif$</span>
+<span class="fu">\setcounter</span>{tocdepth}{<span class="ss">$toc-depth$</span>}
+<span class="fu">\tableofcontents</span>
 }
-$endif$
-$if(lot)$
-\listoftables
-$endif$
-$if(lof)$
-\listoffigures
-$endif$
+<span class="ss">$endif$</span>
+<span class="ss">$if(lot)$</span>
+<span class="fu">\listoftables</span>
+<span class="ss">$endif$</span>
+<span class="ss">$if(lof)$</span>
+<span class="fu">\listoffigures</span>
+<span class="ss">$endif$</span>
 
-$body$
+<span class="ss">$body$</span>
 
-$if(natbib)$
-$if(bibliography)$
-$if(biblio-title)$
-$if(book-class)$
-\renewcommand\bibname{$biblio-title$}
-$else$
-\renewcommand\refname{$biblio-title$}
-$endif$
-$endif$
-\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+<span class="ss">$if(natbib)$</span>
+<span class="ss">$if(bibliography)$</span>
+<span class="ss">$if(biblio-title)$</span>
+<span class="ss">$if(book-class)$</span>
+<span class="fu">\renewcommand\bibname</span>{<span class="ss">$biblio-title$</span>}
+<span class="ss">$else$</span>
+<span class="fu">\renewcommand\refname</span>{<span class="ss">$biblio-title$</span>}
+<span class="ss">$endif$</span>
+<span class="ss">$endif$</span>
+<span class="bu">\bibliography</span>{<span class="ss">$for(bibliography)</span><span class="er">$$</span><span class="ss">bibliography</span><span class="er">$$</span><span class="ss">sep$</span><span class="ex">,</span><span class="ss">$endfor$</span>}
 
-$endif$
-$endif$
-$if(biblatex)$
-\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+<span class="ss">$endif$</span>
+<span class="ss">$endif$</span>
+<span class="ss">$if(biblatex)$</span>
+<span class="fu">\printbibliography</span><span class="ss">$if(biblio-title)$</span>[title=<span class="ss">$biblio-title$</span>]<span class="ss">$endif$</span>
 
-$endif$
+<span class="ss">$endif$</span>
 
-$for(include-after)$
-$include-after$
-$endfor$
+<span class="ss">$for(include-after)$</span>
+<span class="ss">$include-after$</span>
+<span class="ss">$endfor$</span>
 
-\end{document}</code></pre>
+<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
 </div>
 <div id="definition-dun-squelette-pour-lutilisateur" class="section level3">
 <h3>Définition d’un squelette pour l’utilisateur</h3>
 <p>Le fichier <code>skeleton.Rmd</code> contient le squelette du fichier Rmd auquel on accède via l’interface Rstudio lors de la création d’un nouveau document, dont les spécification sont définies dans <code>teamplate.yml</code></p>
 <div class="figure">
-<img src="new_Rmarkdown.png" alt="création Rmd via Rstudio" />
+<img src="img/new_Rmarkdown.png" alt="création Rmd via Rstudio" />
 <p class="caption">création Rmd via Rstudio</p>
 </div>
 </div>

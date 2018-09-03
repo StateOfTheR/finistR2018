@@ -11,7 +11,7 @@
 
 
 
-<title></title>
+<title>Introduction à git</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,26 +19,58 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
 
 <style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
-}
-</script>
-
 
 
 <style type="text/css">
@@ -166,6 +198,101 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -181,12 +308,25 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Home</a>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    accueil
+  </a>
+</li>
+<li>
+  <a href="https://github.com/StateOfTheR/finistR2018">
+    <span class="fa fa-github"></span>
+     
+    dépôt github
+  </a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-refresh"></span>
+     
     Webscrapping
      
     <span class="caret"></span>
@@ -207,18 +347,14 @@ $(document).ready(function () {
       <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
     </li>
     <li>
-      <a href="atelier1_webscraping_googlefight.html">Google Fight</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_googlenews.html">Google News</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_youtube.html">Youtube</a>
+      <a href="atelier1_webscraping_googlefight.html">Occurrences Google</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-wheelchair-alt"></span>
+     
     Optimisation et accélération
      
     <span class="caret"></span>
@@ -239,6 +375,9 @@ $(document).ready(function () {
       <a href="atelier2_tensorflow.html">TensorFlow</a>
     </li>
     <li>
+      <a href="atelier2_greta.html">Greta</a>
+    </li>
+    <li>
       <a href="atelier2_rcpp_modules.html">Modules Rcpp</a>
     </li>
     <li>
@@ -248,6 +387,8 @@ $(document).ready(function () {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-thumbs-o-up"></span>
+     
     Bonnes pratiques
      
     <span class="caret"></span>
@@ -275,6 +416,7 @@ $(document).ready(function () {
 
 
 
+<h1 class="title toc-ignore">Introduction à git</h1>
 
 </div>
 
@@ -318,7 +460,7 @@ $(document).ready(function () {
 <div id="local-version-control-systems" class="section level1">
 <h1>Local Version Control Systems</h1>
 <div class="figure">
-<img src="atelier3_images/local.png" alt="Local" style="width:50.0%" />
+<img src="img/local.png" alt="Local" style="width:50.0%" />
 <p class="caption">Local</p>
 </div>
 <ul>
@@ -330,7 +472,7 @@ $(document).ready(function () {
 <div id="centralized-version-control-systems" class="section level1">
 <h1>Centralized Version Control Systems</h1>
 <div class="figure">
-<img src="atelier3_images/cvs.png" alt="CVS" style="width:50.0%" />
+<img src="img/cvs.png" alt="CVS" style="width:50.0%" />
 <p class="caption">CVS</p>
 </div>
 <ul>
@@ -345,7 +487,7 @@ $(document).ready(function () {
 <div id="distributed-version-control-systems" class="section level1">
 <h1>Distributed Version Control Systems</h1>
 <div class="figure">
-<img src="atelier3_images/git.png" alt="Git" style="width:30.0%" />
+<img src="img/git.png" alt="Git" style="width:30.0%" />
 <p class="caption">Git</p>
 </div>
 <ul>
@@ -358,21 +500,21 @@ $(document).ready(function () {
 <div id="configure-git" class="section level1">
 <h1>Configure Git</h1>
 <p>Install git on windows <a href="https://gitforwindows.org" class="uri">https://gitforwindows.org</a></p>
-<pre class="bash"><code>$ git config --global user.name &quot;Pierre Navaro&quot;
-$ git config --global user.email &quot;pierre.navaro@univ-rennes1.fr&quot;
-$ git config --global core.editor mvim
-$ git config --global merge.tool opendiff</code></pre>
-<pre class="bash"><code>$ git config --list
-   user.name=Pierre Navaro
-   user.email=pierre.navaro@univ-rennes1.fr
-   core.editor=mvim
-   merge.tool=opendiff</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="fu">git</span> config --global user.name <span class="st">&quot;Pierre Navaro&quot;</span>
+$ <span class="fu">git</span> config --global user.email <span class="st">&quot;pierre.navaro@univ-rennes1.fr&quot;</span>
+$ <span class="fu">git</span> config --global core.editor mvim
+$ <span class="fu">git</span> config --global merge.tool opendiff</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="fu">git</span> config --list
+   <span class="ex">user.name</span>=Pierre Navaro
+   <span class="ex">user.email</span>=pierre.navaro@univ-rennes1.fr
+   <span class="ex">core.editor</span>=mvim
+   <span class="ex">merge.tool</span>=opendiff</code></pre></div>
 <p>Settings are saved on the computer for all your git repositories.</p>
 </div>
 <div id="four-file-status-in-the-repository" class="section level1">
 <h1>Four File status in the repository</h1>
 <div class="figure">
-<img src="atelier3_images/18333fig0201-tn.png" alt="Status" style="width:50.0%" />
+<img src="img/18333fig0201-tn.png" alt="Status" style="width:50.0%" />
 <p class="caption">Status</p>
 </div>
 </div>
@@ -447,7 +589,7 @@ $ git commit -m &#39;Add my contribution to the project&#39;</code></pre>
 <div id="git-workflow" class="section level1">
 <h1>Git Workflow</h1>
 <div class="figure">
-<img src="atelier3_images/four_stages.png" alt="4-stages" style="width:30.0%" />
+<img src="img/four_stages.png" alt="4-stages" style="width:30.0%" />
 <p class="caption">4-stages</p>
 </div>
 </div>
@@ -515,7 +657,7 @@ Changes to be committed:
 </div>
 <div id="fast-commit" class="section level1">
 <h1>Fast commit</h1>
-<p><img src="atelier3_images/index1.png" alt="index1" style="width:50.0%" /> <img src="atelier3_images/index2.png" alt="index2" style="width:50.0%" /></p>
+<p><img src="img/index1.png" alt="index1" style="width:50.0%" /> <img src="img/index2.png" alt="index2" style="width:50.0%" /></p>
 <p>Use it carefully!</p>
 </div>
 <div id="share-your-work-and-make-it-available-on-the-server" class="section level1">
@@ -587,14 +729,14 @@ $ git merge master
 <div id="git-cycle-on-a-single-branch" class="section level1">
 <h1>Git cycle on a single branch</h1>
 <div class="figure">
-<img src="atelier3_images/git_cycle.png" alt="Cycle" style="width:50.0%" />
+<img src="img/git_cycle.png" alt="Cycle" style="width:50.0%" />
 <p class="caption">Cycle</p>
 </div>
 </div>
 <div id="progressive-stability-branching" class="section level1">
 <h1>Progressive-stability branching</h1>
 <div class="figure">
-<img src="atelier3_images/lr-branches-2.png" alt="Branches" style="width:50.0%" />
+<img src="img/lr-branches-2.png" alt="Branches" style="width:50.0%" />
 <p class="caption">Branches</p>
 </div>
 </div>
@@ -681,6 +823,8 @@ $ git reset --hard</code></pre>
 
 
 
+</div>
+</div>
 
 </div>
 

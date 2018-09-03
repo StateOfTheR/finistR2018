@@ -1,7 +1,5 @@
 ---
 title: "Scraping de nos menus de la semaine"
-author: "Mathieu Carmassi, Félix Cheysson, Pierre Gloaguen, Jean-Baptiste Lecomte"
-date: "27 août 2018"
 output: 
   html_document:
    toc: true
@@ -32,7 +30,7 @@ library(ggmap)# Pour le résultat final
 
 ## Notre cible
 
-![](tripadvisor.png)
+![](img/tripadvisor.png)
 
 ## Accès aux noms
 ```{r, AccesNom}
@@ -48,7 +46,7 @@ nomRestau <- webpage %>% #Argument principal
 
 - *Ctrl+U
 - *Clic droit -> Examiner l'élément
-![](tripadvisor_bouzin.png)
+![](img/tripadvisor_bouzin.png)
 
 
 ## Accès aux notes
@@ -154,7 +152,7 @@ myFinalData <- do.call(rbind.data.frame, lapply(allWebPages, function(url){
 }))
 ```
 
-# Obtention d'un objet R au bon format
+## Obtention d'un objet R au bon format
 
 ```{r}
 head(myFinalData)

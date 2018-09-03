@@ -3,46 +3,49 @@ output_dir: "../docs"
 navbar:
  title: "FinistR 2018"
  left:
-  - text: "Home"
+  - text: "accueil"
+    icon: fa-home
     href: index.html
+  - text: "dépôt github"
+    icon: fa-github
+    href: https://github.com/StateOfTheR/finistR2018
  right:
   - text: "Webscrapping"
+    icon: fa-refresh
     href: atelier1_webscraping.html
     menu:
       - text: "Introduction"
         href: atelier1_webscraping_intro.html
       - text: "--------"
-      - text: "Ateliers"
       - text: "Un exemple simple"
         href: atelier1_webscraping_simple.html
       - text: "Généalogie mathématique"
         href: atelier1_webscraping_genealogie.html
       - text: "Trip advisor"
         href: atelier1_webscraping_tripadvisor.html
-      - text: "Google Fight"
+      - text: "Occurrences Google"
         href: atelier1_webscraping_googlefight.html
-      - text: "Google News"
-        href: atelier1_webscraping_googlenews.html
-      - text: "Youtube"
-        href: atelier1_webscraping_youtube.html
   - text: "Optimisation et accélération"
+    icon: fa-wheelchair-alt
     menu:
       - text: "Introduction"
         href: atelier2_introduction.html
       - text: "--------"
-      - text: "Ateliers"
       - text: "Outils d'optimisation standard"
         href: atelier2_background_optim.html
       - text: "R et GPU"
         href: atelier2_rgpu.html
       - text: "TensorFlow"
         href: atelier2_tensorflow.html
+      - text: "Greta"
+        href: atelier2_greta.html
       - text: "Modules Rcpp"
         href: atelier2_rcpp_modules.html
       - text: "Julia"
         href: atelier2_julia.html
   - text: "Bonnes pratiques"
     href: atelier3_bp.html
+    icon: fa-thumbs-o-up
     menu:
       - text: "Introduction"
       - text: "-------"
@@ -55,4 +58,4 @@ navbar:
 output:
   html_document:
     theme: lumen
-    highlight: textmate
+    highlight: tango

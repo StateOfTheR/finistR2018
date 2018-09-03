@@ -9,9 +9,7 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Antoine, Béwentaoré, Marie, Pierre, Raphaëlle" />
 
-<meta name="date" content="2018-09-03" />
 
 <title>Pour un package propre et transportable</title>
 
@@ -25,25 +23,54 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
 
 <style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
-}
-</script>
-
 
 
 <style type="text/css">
@@ -281,12 +308,25 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Home</a>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    accueil
+  </a>
+</li>
+<li>
+  <a href="https://github.com/StateOfTheR/finistR2018">
+    <span class="fa fa-github"></span>
+     
+    dépôt github
+  </a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-refresh"></span>
+     
     Webscrapping
      
     <span class="caret"></span>
@@ -307,18 +347,14 @@ div.tocify {
       <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
     </li>
     <li>
-      <a href="atelier1_webscraping_googlefight.html">Google Fight</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_googlenews.html">Google News</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_youtube.html">Youtube</a>
+      <a href="atelier1_webscraping_googlefight.html">Occurrences Google</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-wheelchair-alt"></span>
+     
     Optimisation et accélération
      
     <span class="caret"></span>
@@ -339,6 +375,9 @@ div.tocify {
       <a href="atelier2_tensorflow.html">TensorFlow</a>
     </li>
     <li>
+      <a href="atelier2_greta.html">Greta</a>
+    </li>
+    <li>
       <a href="atelier2_rcpp_modules.html">Modules Rcpp</a>
     </li>
     <li>
@@ -348,6 +387,8 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-thumbs-o-up"></span>
+     
     Bonnes pratiques
      
     <span class="caret"></span>
@@ -376,16 +417,14 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Pour un package propre et transportable</h1>
-<h4 class="author"><em>Antoine, Béwentaoré, Marie, Pierre, Raphaëlle</em></h4>
-<h4 class="date"><em>2018-09-03</em></h4>
 
 </div>
 
 
-<pre class="r"><code># path to the testPackage directory
-packagePath &lt;- &quot;testPackage&quot;
-print(getwd())
-[1] &quot;/home/jchiquet/work/StateOfTheR/finistR2018/finistr2018_website&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># path to the testPackage directory</span>
+packagePath &lt;-<span class="st"> &quot;testPackage&quot;</span>
+<span class="kw">print</span>(<span class="kw">getwd</span>())
+[<span class="dv">1</span>] <span class="st">&quot;/home/jchiquet/git/StateOfTheR/finistR2018/finistr2018_website&quot;</span></code></pre></div>
 <div id="objectif" class="section level1">
 <h1>Objectif</h1>
 <p>L’objectif est de faire un package qui soit:</p>
@@ -431,11 +470,11 @@ VignetteBuilder: knitr</code></pre></li>
 <div id="le-package-testpackage" class="section level1">
 <h1>Le package <code>testPackage</code></h1>
 <p>Ce package a pour objectif d’obtenir de manière ultra rapide les estimations dans un modèle de régression linéaire. Il ne contient qu’une seule et unique fonction, centrale, la fonction <code>estimate</code>, codée comme ceci:</p>
-<pre class="r"><code>estimate &lt;- function(y,x){
-  return(lm(y ~ x)$coefficients)
-}</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">estimate &lt;-<span class="st"> </span><span class="cf">function</span>(y,x){
+  <span class="kw">return</span>(<span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x)<span class="op">$</span>coefficients)
+}</code></pre></div>
 <p>Afin de pouvoir utiliser ce package, il faut le “construire” (avec le bouton <code>Build</code> dans RStudio, ou <code>Ctrl-Shift-B</code>), ou encore:</p>
-<pre class="r"><code>devtools::build(packagePath)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw">build</span>(packagePath)</code></pre></div>
 <p>Il est important de vérifier régulièrement que tout va bien dans le package,</p>
 <ul>
 <li><p>Que la doc est bien renseignée;</p></li>
@@ -443,23 +482,23 @@ VignetteBuilder: knitr</code></pre></li>
 <li><p>Tout simplement que le package se construit toujours!</p></li>
 </ul>
 <p>Pour ça il faut faire de réguliers <code>check</code>.</p>
-<pre class="r"><code>devtools::check(packagePath)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw">check</span>(packagePath)</code></pre></div>
 <div id="deployer-rapidement-un-package-sur-son-github-personnel" class="section level2">
 <h2>Déployer rapidement un package sur son github personnel</h2>
 <p>Pré-requis : git bien configuré sur la machine (en particulier <code>user.name</code> et <code>user.email</code> !)</p>
 <p>Expliqué dans <a href="https://r-mageddon.netlify.com/post/writing-an-r-package-from-scratch/" class="uri">https://r-mageddon.netlify.com/post/writing-an-r-package-from-scratch/</a> à partir de Step 6.</p>
 <p>Utilise le package <code>usethis</code> et créer automatiquement votre repository github complet du package en… <em>3 lignes</em> de commande R.</p>
-<pre class="r"><code>library(usethis)
-devtools::use_git()
-usethis::browse_github_pat()</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(usethis)
+devtools<span class="op">::</span><span class="kw">use_git</span>()
+usethis<span class="op">::</span><span class="kw">browse_github_pat</span>()</code></pre></div>
 <p>Github s’ouvre dans le browser, le but est de générer un token afin de lier votre compte github et le package. Les paramètres de création du token sont déjà cochés par défaut, copier le token généré et l’insérer à la place de <strong>xxxtokenxxx</strong> ci-dessous.</p>
-<pre class="r"><code>devtools::use_github(protocol=&quot;https&quot;, auth_token=&quot;xxxtokenxxx&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw">use_github</span>(<span class="dt">protocol=</span><span class="st">&quot;https&quot;</span>, <span class="dt">auth_token=</span><span class="st">&quot;xxxtokenxxx&quot;</span>)</code></pre></div>
 </div>
 <div id="standardisation-du-code" class="section level2">
 <h2>Standardisation du code</h2>
 <p>J’ai envie de faire en sorte que ce package soit <em>proprement</em> écrit, c’est à dire selon certaines normes d’écritures. Ces normes d’écriture sont rassemblées dans le package <code>lintr</code>.</p>
-<pre class="r"><code>library(lintr)
-lint_package(packagePath)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(lintr)
+<span class="kw">lint_package</span>(packagePath)</code></pre></div>
 <p>Il est possible de Je peux ainsi modifier mon code en conséquence en ajoutant un espace entre <code>x</code> et <code>y</code>.</p>
 </div>
 <div id="documentation" class="section level2">
@@ -467,28 +506,28 @@ lint_package(packagePath)</code></pre>
 <div id="aide-aux-fonctions" class="section level3">
 <h3>Aide aux fonctions</h3>
 <p>Un bon package doit être bien documenté. Pour cela, il faut installer le package <code>roxygen2</code> qui offre une syntaxe <em>user-friendly</em> permettant de commenter le code tout en faisant la doc.</p>
-<pre class="r"><code>#&#39; Ultra fast equivalent of fonction coeff()
-#&#39;
-#&#39; Mimicks coeff() function but with greater SWAG
-#&#39;
-#&#39; @param x regressors
-#&#39; @param y observations
-#&#39;
-#&#39; @return Estimated coefficients of linear regression, using least square loss
-#&#39; @seealso lm function (deprecated)
-#&#39; @examples
-#&#39; x &lt;- seq(0, 1, length = 10);
-#&#39; y &lt;- 1 + 2 * x + rnorm(length(x), 0, 0.1)
-#&#39; estimate(y, x)
-#&#39; @export
-estimate &lt;- function(y,x){
-  return(lm(y ~ x)$coefficients)
-}</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&#39; Ultra fast equivalent of fonction coeff()</span>
+<span class="co">#&#39;</span>
+<span class="co">#&#39; Mimicks coeff() function but with greater SWAG</span>
+<span class="co">#&#39;</span>
+<span class="co">#&#39; @param x regressors</span>
+<span class="co">#&#39; @param y observations</span>
+<span class="co">#&#39;</span>
+<span class="co">#&#39; @return Estimated coefficients of linear regression, using least square loss</span>
+<span class="co">#&#39; @seealso lm function (deprecated)</span>
+<span class="co">#&#39; @examples</span>
+<span class="co">#&#39; x &lt;- seq(0, 1, length = 10);</span>
+<span class="co">#&#39; y &lt;- 1 + 2 * x + rnorm(length(x), 0, 0.1)</span>
+<span class="co">#&#39; estimate(y, x)</span>
+<span class="co">#&#39; @export</span>
+estimate &lt;-<span class="st"> </span><span class="cf">function</span>(y,x){
+  <span class="kw">return</span>(<span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x)<span class="op">$</span>coefficients)
+}</code></pre></div>
 </div>
 <div id="vignettes" class="section level3">
 <h3>Vignettes</h3>
 <p>On peut également créer une vignette (en <code>Rmarkdown</code>). Il faut faire attention à ne pas placer le fichier <code>vignette.rmd</code> n’importe où. Toutes les structures nécessaires, en plus d’un squelette à reprendre pour faire sa vignette sont créés par la fonction</p>
-<pre class="r"><code>devtools::use_vignette()</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw">use_vignette</span>()</code></pre></div>
 <p>Cela créé un dossier contenant un fichier <code>.Rmd</code>, le squelette de votre vignette</p>
 <pre><code>---
 title: &quot;Pour un package propre et transportable&quot;
@@ -512,26 +551,34 @@ L&#39;objectif est de faire un package qui soit:</code></pre>
 <p>Une fonction étant amenée à évoluer, il est utile de garantir qu’au cours du développement du package, elle respecte toujour un certain cahier des charges.</p>
 <p>Pour cela on crée des fonction tests.</p>
 <p>La première bonne démarche est de ne pas modifier la structure de package de manière <em>anarchique</em>. À cette fin, on utilise à nouveau devtools, et le package <code>testthat</code>.</p>
-<pre class="r"><code>library(testthat)
-devtools::use_testthat()</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(testthat)
+devtools<span class="op">::</span><span class="kw">use_testthat</span>()</code></pre></div>
 <p>Cette fonction créé un dossier <code>tests</code> qui contiendra un fichier <code>testthat.R</code></p>
-<pre class="r"><code>library(testthat)
-library(testPackage) 
-test_check(&quot;testPackage&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(testthat)
+<span class="kw">library</span>(testPackage) 
+<span class="kw">test_check</span>(<span class="st">&quot;testPackage&quot;</span>)</code></pre></div>
 <p>Ce script a pour but d’effectuer tous les tests présents dans le package.</p>
 <p>Ceux ci doivent être placés dans un dossier créé par <code>devtools::use_testthat</code>, le dossier <code>tests/testthat</code>. L’architecture des tests est détaillée sur .</p>
 <p>En gros, l’idée est de coder des tests unitaires simples (des <em>expectations</em>), au niveau minimal (dans les fonctions). Ces <em>expectations</em>, une fois assemblées donnent un test sur la fonction (le <em>test</em>). Chaque test doit être encapsulé dans un script de type <code>test_nomdutest.R</code>, enregistré dans <code>tests/testthat</code>. Le préfixe <code>test_</code> étant essentiel. Un fichier test comprend la fonction <code>test_that</code> qui regroupe tous les tests unitaires:</p>
-<pre class="r"><code>#fichier test_estimate.R
-library(testthat)
-test_that(&quot;If it quacks like a duck, it&#39;s a duck&quot;, {
-  expect_equal(&quot;quack&quot;, &quot;quack&quot;)
-  expect_is(estimate(rnorm(10), rnorm(10)), class = &quot;numeric&quot;)
-})</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#fichier test_estimate.R</span>
+<span class="kw">library</span>(testthat)
+
+Attaching package<span class="op">:</span><span class="st"> &#39;testthat&#39;</span>
+The following object is masked from <span class="st">&#39;package:dplyr&#39;</span><span class="op">:</span>
+
+<span class="st">    </span>matches
+The following object is masked from <span class="st">&#39;package:purrr&#39;</span><span class="op">:</span>
+
+<span class="st">    </span>is_null
+<span class="kw">test_that</span>(<span class="st">&quot;If it quacks like a duck, it&#39;s a duck&quot;</span>, {
+  <span class="kw">expect_equal</span>(<span class="st">&quot;quack&quot;</span>, <span class="st">&quot;quack&quot;</span>)
+  <span class="kw">expect_is</span>(<span class="kw">estimate</span>(<span class="kw">rnorm</span>(<span class="dv">10</span>), <span class="kw">rnorm</span>(<span class="dv">10</span>)), <span class="dt">class =</span> <span class="st">&quot;numeric&quot;</span>)
+})</code></pre></div>
 <p>La fonction <code>devtools::test</code> testera alors tous les fichiers de ce type</p>
-<pre class="r"><code>devtools::test(packagePath)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw">test</span>(packagePath)</code></pre></div>
 <p>Il existe aussi un autre package pour les test unitaires: <code>RUnit</code>. Nous ne l’avons pas explorer.</p>
 <p>Il est possible de recenser la proportion des fonctions testées, grâce au package <code>covr</code>. On a ainsi une idée de la couverture des tests du package.</p>
-<pre class="r"><code>covr::package_coverage(packagePath)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">covr<span class="op">::</span><span class="kw">package_coverage</span>(packagePath)</code></pre></div>
 <p>Cet outil est un indicateur (il ne dit rien de la qualité des tests).</p>
 </div>
 <div id="travis" class="section level1">
@@ -539,13 +586,13 @@ test_that(&quot;If it quacks like a duck, it&#39;s a duck&quot;, {
 <p>Travis peut être utiliser pour lancer systématiquement des tests lorsque l’on met à jour un repo git. Il faut se créer un compte sur travais en lien avec son compte github.</p>
 <p>Ensuite, on trouve de bonnes explications très simples sur (<a href="https://juliasilge.com/blog/beginners-guide-to-travis/" class="uri">https://juliasilge.com/blog/beginners-guide-to-travis/</a>)</p>
 <p>Il faut créer un fichier <code>.travis.yml</code> qui va indiquer à travis comment lancer les tests. Pour le faire on peut utiliser la commande</p>
-<pre class="r"><code>devtools::use_travis()</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw">use_travis</span>()</code></pre></div>
 <p>cette commande crée le fichier</p>
-<pre class="r"><code>  # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="co"># R for travis: see documentation at https://docs.travis-ci.com/user/languages/r</span>
 
-language: R
-sudo: false
-cache: packages</code></pre>
+language<span class="op">:</span><span class="st"> </span>R
+sudo<span class="op">:</span><span class="st"> </span>false
+cache<span class="op">:</span><span class="st"> </span>packages</code></pre></div>
 <p>Il faut ajouter le fichier dans le fichier <code>.Rbuildignore</code> pour qu’il soit ignoré lors de la construction du paquet ( (c) Paul Bastide).</p>
 <p>Par défaut, les warnings sont traités comme des ereurs, pour éviter ce comportement par défaut il faut ajouter <code>warnings_are_errors: false</code> dans le fichier .travis.yml</p>
 </div>

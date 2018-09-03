@@ -9,7 +9,6 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Antoine Bichat" />
 
 
 <title>Répartition des premiers chiffres pour une croissance exponentielle</title>
@@ -24,25 +23,54 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
 
 <style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
-}
-</script>
-
 
 
 <style type="text/css">
@@ -280,12 +308,25 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Home</a>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    accueil
+  </a>
+</li>
+<li>
+  <a href="https://github.com/StateOfTheR/finistR2018">
+    <span class="fa fa-github"></span>
+     
+    dépôt github
+  </a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-refresh"></span>
+     
     Webscrapping
      
     <span class="caret"></span>
@@ -306,18 +347,14 @@ div.tocify {
       <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
     </li>
     <li>
-      <a href="atelier1_webscraping_googlefight.html">Google Fight</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_googlenews.html">Google News</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_youtube.html">Youtube</a>
+      <a href="atelier1_webscraping_googlefight.html">Occurrences Google</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-wheelchair-alt"></span>
+     
     Optimisation et accélération
      
     <span class="caret"></span>
@@ -338,6 +375,9 @@ div.tocify {
       <a href="atelier2_tensorflow.html">TensorFlow</a>
     </li>
     <li>
+      <a href="atelier2_greta.html">Greta</a>
+    </li>
+    <li>
       <a href="atelier2_rcpp_modules.html">Modules Rcpp</a>
     </li>
     <li>
@@ -347,6 +387,8 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-thumbs-o-up"></span>
+     
     Bonnes pratiques
      
     <span class="caret"></span>
@@ -375,22 +417,21 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Répartition des premiers chiffres pour une croissance exponentielle</h1>
-<h4 class="author"><em>Antoine Bichat</em></h4>
 <h4 class="date"><em>27/08/2018</em></h4>
 
 </div>
 
 
-<pre class="r"><code>library(tidyverse)
-library(rvest)
-theme_set(theme_bw())</code></pre>
-<pre class="r"><code>df &lt;- 
-  &quot;https://fr.wikipedia.org/wiki/Liste_des_pays_par_population&quot; %&gt;% 
-  read_html() %&gt;% 
-  html_node(&#39;table&#39;) %&gt;% 
-  html_table() %&gt;% 
-  as_tibble()
-df</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(rvest)
+<span class="kw">theme_set</span>(<span class="kw">theme_bw</span>())</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span>
+<span class="st">  &quot;https://fr.wikipedia.org/wiki/Liste_des_pays_par_population&quot;</span> <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">read_html</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">html_node</span>(<span class="st">&#39;table&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">html_table</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">as_tibble</span>()
+df</code></pre></div>
 <pre><code>## # A tibble: 204 x 6
 ##    Rang  `Pays ou territo… `Population[Note…  Date Source Commentaires    
 ##    &lt;chr&gt; &lt;chr&gt;             &lt;chr&gt;             &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           
@@ -405,23 +446,23 @@ df</code></pre>
 ##  9 8     Bangladesh        160 339 154        2016 Offic… &quot;&quot;              
 ## 10 9     Russie            146 544 710        2016 Offic… La population r…
 ## # ... with 194 more rows</code></pre>
-<pre class="r"><code>pop &lt;- pull(df, `Population[Note 2]`)
-head(pop)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pop &lt;-<span class="st"> </span><span class="kw">pull</span>(df, <span class="st">`</span><span class="dt">Population[Note 2]</span><span class="st">`</span>)
+<span class="kw">head</span>(pop)</code></pre></div>
 <pre><code>## [1] &quot;1 415 045 928&quot; &quot;1 355 621 800&quot; &quot;512 596 403&quot;   &quot;328 286 400&quot;  
 ## [5] &quot;266 471 000&quot;   &quot;207 774 520&quot;</code></pre>
-<pre class="r"><code>premier_chiffre &lt;- str_sub(pop, 1, 1)
-head(premier_chiffre)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">premier_chiffre &lt;-<span class="st"> </span><span class="kw">str_sub</span>(pop, <span class="dv">1</span>, <span class="dv">1</span>)
+<span class="kw">head</span>(premier_chiffre)</code></pre></div>
 <pre><code>## [1] &quot;1&quot; &quot;1&quot; &quot;5&quot; &quot;3&quot; &quot;2&quot; &quot;2&quot;</code></pre>
-<pre class="r"><code>qplot(premier_chiffre) + geom_bar(fill = &quot;grey50&quot;, color = &quot;black&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qplot</span>(premier_chiffre) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">fill =</span> <span class="st">&quot;grey50&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)</code></pre></div>
 <p><img src="atelier1_webscraping_simple_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>frequences &lt;- 
-  tibble(premier_chiffre) %&gt;% 
-  group_by(premier_chiffre) %&gt;% 
-  summarise(eff_obs = n()) %&gt;% 
-  mutate(freq_obs = eff_obs/sum(eff_obs)) %&gt;% 
-  mutate(freq_unif = 1/9,
-         freq_benford = c(0.301,    0.176,  0.125,  0.097, 0.079,   0.067, 0.058,   0.051, 0.046))
-frequences</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">frequences &lt;-<span class="st"> </span>
+<span class="st">  </span><span class="kw">tibble</span>(premier_chiffre) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(premier_chiffre) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">eff_obs =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">freq_obs =</span> eff_obs<span class="op">/</span><span class="kw">sum</span>(eff_obs)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">freq_unif =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">9</span>,
+         <span class="dt">freq_benford =</span> <span class="kw">c</span>(<span class="fl">0.301</span>,    <span class="fl">0.176</span>,  <span class="fl">0.125</span>,  <span class="fl">0.097</span>, <span class="fl">0.079</span>,   <span class="fl">0.067</span>, <span class="fl">0.058</span>,   <span class="fl">0.051</span>, <span class="fl">0.046</span>))
+frequences</code></pre></div>
 <pre><code>## # A tibble: 9 x 5
 ##   premier_chiffre eff_obs freq_obs freq_unif freq_benford
 ##   &lt;chr&gt;             &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
@@ -434,18 +475,18 @@ frequences</code></pre>
 ## 7 7                     8   0.0392     0.111        0.058
 ## 8 8                    10   0.0490     0.111        0.051
 ## 9 9                    14   0.0686     0.111        0.046</code></pre>
-<pre class="r"><code>frequences %&gt;% 
-  select(premier_chiffre, freq_obs, freq_unif, freq_benford) %&gt;% 
-  gather(-premier_chiffre, key = type, value = freq) %&gt;% 
-  mutate(type = factor(type, 
-                       levels = c(&quot;freq_obs&quot;, &quot;freq_benford&quot;, &quot;freq_unif&quot;),
-                       labels = c(&quot;Observé&quot;, &quot;Benford&quot;, &quot;Uniforme&quot;))) %&gt;% 
-  print() %&gt;% 
-  ggplot() +
-  aes(x = premier_chiffre, y = freq, fill = type) +
-  geom_col(position = &quot;dodge&quot;, color = &quot;black&quot;) +
-  labs(x = &quot;Premier chiffre&quot;, y = &quot;Fréquence&quot;, 
-       fill = &quot;Type&quot;, title = &quot;Barplot des différences fréquences&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">frequences <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(premier_chiffre, freq_obs, freq_unif, freq_benford) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">gather</span>(<span class="op">-</span>premier_chiffre, <span class="dt">key =</span> type, <span class="dt">value =</span> freq) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="kw">factor</span>(type, 
+                       <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;freq_obs&quot;</span>, <span class="st">&quot;freq_benford&quot;</span>, <span class="st">&quot;freq_unif&quot;</span>),
+                       <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Observé&quot;</span>, <span class="st">&quot;Benford&quot;</span>, <span class="st">&quot;Uniforme&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">print</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">aes</span>(<span class="dt">x =</span> premier_chiffre, <span class="dt">y =</span> freq, <span class="dt">fill =</span> type) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Premier chiffre&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Fréquence&quot;</span>, 
+       <span class="dt">fill =</span> <span class="st">&quot;Type&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Barplot des différences fréquences&quot;</span>)</code></pre></div>
 <pre><code>## # A tibble: 27 x 3
 ##    premier_chiffre type       freq
 ##    &lt;chr&gt;           &lt;fct&gt;     &lt;dbl&gt;

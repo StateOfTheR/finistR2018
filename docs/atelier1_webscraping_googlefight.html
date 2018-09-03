@@ -9,10 +9,9 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Sophie Donnet, Marie-Pierre Etienne, Pierre Navarro, Vincent Runge" />
 
 
-<title>Web scraping</title>
+<title>Comptage d’occurrences de mot dans Google</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -24,25 +23,54 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
 
 <style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
-}
-</script>
-
 
 
 <style type="text/css">
@@ -280,12 +308,25 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Home</a>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    accueil
+  </a>
+</li>
+<li>
+  <a href="https://github.com/StateOfTheR/finistR2018">
+    <span class="fa fa-github"></span>
+     
+    dépôt github
+  </a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-refresh"></span>
+     
     Webscrapping
      
     <span class="caret"></span>
@@ -306,18 +347,14 @@ div.tocify {
       <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
     </li>
     <li>
-      <a href="atelier1_webscraping_googlefight.html">Google Fight</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_googlenews.html">Google News</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_youtube.html">Youtube</a>
+      <a href="atelier1_webscraping_googlefight.html">Occurrences Google</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-wheelchair-alt"></span>
+     
     Optimisation et accélération
      
     <span class="caret"></span>
@@ -338,6 +375,9 @@ div.tocify {
       <a href="atelier2_tensorflow.html">TensorFlow</a>
     </li>
     <li>
+      <a href="atelier2_greta.html">Greta</a>
+    </li>
+    <li>
       <a href="atelier2_rcpp_modules.html">Modules Rcpp</a>
     </li>
     <li>
@@ -347,6 +387,8 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-thumbs-o-up"></span>
+     
     Bonnes pratiques
      
     <span class="caret"></span>
@@ -374,9 +416,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Web scraping</h1>
-<h3 class="subtitle"><em>Occurrences Google</em></h3>
-<h4 class="author"><em>Sophie Donnet, Marie-Pierre Etienne, Pierre Navarro, Vincent Runge</em></h4>
+<h1 class="title toc-ignore">Comptage d’occurrences de mot dans Google</h1>
 <h4 class="date"><em>27 août 2018</em></h4>
 
 </div>
@@ -385,87 +425,87 @@ div.tocify {
 <div id="web-scraping-obtenir-le-nombre-doccurrence-sur-google" class="section level1">
 <h1>Web scraping : obtenir le nombre d’occurrence sur Google</h1>
 <p>Notre objectif est de construire une fonction qui retourne le nombre d’occurences d’une requête “exacte” sur Google. Cela revient à rechercher le nombre d’occurrences sur google en ajoutant des guillemets autour de l’expression recherchée. Le but est de vérifier la pertinence de notre anglais par exemple.</p>
-<pre class="r"><code>library(rvest)
-library(stringr)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rvest)
+<span class="kw">library</span>(stringr)</code></pre></div>
 <div id="construction-de-lurl" class="section level2">
 <h2>Construction de l’url</h2>
 <p>Choix d’une recherche google</p>
-<pre class="r"><code>expr &lt;- &quot;responsible for&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">expr &lt;-<span class="st"> &quot;responsible for&quot;</span></code></pre></div>
 <p>Rajout des guillemets et du signe + entre les mots de notre requête</p>
-<pre class="r"><code> words &lt;- as.vector(strsplit(expr, &quot; &quot;))
-  request &lt;- NULL
-  if(length(words[[1]]) &gt; 1)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> words &lt;-<span class="st"> </span><span class="kw">as.vector</span>(<span class="kw">strsplit</span>(expr, <span class="st">&quot; &quot;</span>))
+  request &lt;-<span class="st"> </span><span class="ot">NULL</span>
+  <span class="cf">if</span>(<span class="kw">length</span>(words[[<span class="dv">1</span>]]) <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>)
   {
-    #build the request by adding + and &quot;
-    for(i in 1:(length(words[[1]]) - 1))
-    {request &lt;- paste(request, paste(words[[1]][i], &#39;+&#39;, sep=&quot;&quot;), sep=&quot;&quot;)}
+    <span class="co">#build the request by adding + and &quot;</span>
+    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>(<span class="kw">length</span>(words[[<span class="dv">1</span>]]) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))
+    {request &lt;-<span class="st"> </span><span class="kw">paste</span>(request, <span class="kw">paste</span>(words[[<span class="dv">1</span>]][i], <span class="st">&#39;+&#39;</span>, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>), <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)}
   }
-request &lt;- paste(request, words[[1]][length(words[[1]])], sep=&quot;&quot;)
-request</code></pre>
+request &lt;-<span class="st"> </span><span class="kw">paste</span>(request, words[[<span class="dv">1</span>]][<span class="kw">length</span>(words[[<span class="dv">1</span>]])], <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)
+request</code></pre></div>
 <p>Construction de l’url</p>
-<pre class="r"><code>webpage &lt;- &quot;http://www.google.com&quot;
-mypage &lt;- paste(webpage, paste(&#39;%22&#39;, paste(request,&#39;%22&#39;, sep = &quot;&quot;), sep = &quot;&quot;), sep=&quot;/search?q=&quot;)
-mypage</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webpage &lt;-<span class="st"> &quot;http://www.google.com&quot;</span>
+mypage &lt;-<span class="st"> </span><span class="kw">paste</span>(webpage, <span class="kw">paste</span>(<span class="st">&#39;%22&#39;</span>, <span class="kw">paste</span>(request,<span class="st">&#39;%22&#39;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>), <span class="dt">sep=</span><span class="st">&quot;/search?q=&quot;</span>)
+mypage</code></pre></div>
 </div>
 <div id="rvest-functions" class="section level2">
 <h2>rvest functions</h2>
 <p>Extraction structurée par read_htlm</p>
-<pre class="r"><code>mydata &lt;- read_html(mypage)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mydata &lt;-<span class="st"> </span><span class="kw">read_html</span>(mypage)</code></pre></div>
 <p>Lecture du noeud asssocié à l’identifiant (id) resultStats dans le htlm et obtention du texte associé par htlm_text</p>
-<pre class="r"><code>res &lt;- html_node(mydata, &quot;#resultStats&quot;) %&gt;% html_text
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">html_node</span>(mydata, <span class="st">&quot;#resultStats&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>html_text
 res
-class(res)</code></pre>
+<span class="kw">class</span>(res)</code></pre></div>
 <p>Noter que ‘clic droit -&gt; examiner l’élément’ permet d’obtenir les informations sur les identifiants ou la classe associé à l’élément d’intérêt.</p>
 </div>
 <div id="bidouillage-final" class="section level2">
 <h2>bidouillage final</h2>
 <p>Avec la fonction du package stringr nommé str_extract_all, on obtient une liste contenant un vecteur de string contenant les nombres inclus dans la variable ‘res’.</p>
 <p>Avec paste et as.numeric, on achève le boulot.</p>
-<pre class="r"><code>as.numeric(paste(str_extract_all(res,&quot;\\(?[0-9,.]+\\)?&quot;)[[1]], collapse = &#39;&#39;))</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.numeric</span>(<span class="kw">paste</span>(<span class="kw">str_extract_all</span>(res,<span class="st">&quot;</span><span class="ch">\\</span><span class="st">(?[0-9,.]+</span><span class="ch">\\</span><span class="st">)?&quot;</span>)[[<span class="dv">1</span>]], <span class="dt">collapse =</span> <span class="st">&#39;&#39;</span>))</code></pre></div>
 </div>
 </div>
 <div id="la-fonction-nbgoogleresults" class="section level1">
 <h1>La fonction nbGoogleResults</h1>
-<pre class="r"><code>nbGoogleResults &lt;- function(expr)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nbGoogleResults &lt;-<span class="st"> </span><span class="cf">function</span>(expr)
 {
-  words &lt;- as.vector(strsplit(expr, &quot; &quot;))
-  request &lt;- NULL
-  if(length(words[[1]])&gt;1)
+  words &lt;-<span class="st"> </span><span class="kw">as.vector</span>(<span class="kw">strsplit</span>(expr, <span class="st">&quot; &quot;</span>))
+  request &lt;-<span class="st"> </span><span class="ot">NULL</span>
+  <span class="cf">if</span>(<span class="kw">length</span>(words[[<span class="dv">1</span>]])<span class="op">&gt;</span><span class="dv">1</span>)
   {
-    #build the request by adding + and &quot;
-    for(i in 1:(length(words[[1]])-1))
-    {request &lt;- paste(request,paste(words[[1]][i],&#39;+&#39;,sep=&quot;&quot;),sep=&quot;&quot;)}
+    <span class="co">#build the request by adding + and &quot;</span>
+    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>(<span class="kw">length</span>(words[[<span class="dv">1</span>]])<span class="op">-</span><span class="dv">1</span>))
+    {request &lt;-<span class="st"> </span><span class="kw">paste</span>(request,<span class="kw">paste</span>(words[[<span class="dv">1</span>]][i],<span class="st">&#39;+&#39;</span>,<span class="dt">sep=</span><span class="st">&quot;&quot;</span>),<span class="dt">sep=</span><span class="st">&quot;&quot;</span>)}
   }
-  request &lt;- paste(request,words[[1]][length(words[[1]])],sep=&quot;&quot;)
+  request &lt;-<span class="st"> </span><span class="kw">paste</span>(request,words[[<span class="dv">1</span>]][<span class="kw">length</span>(words[[<span class="dv">1</span>]])],<span class="dt">sep=</span><span class="st">&quot;&quot;</span>)
   
-  webpage &lt;- &quot;http://www.google.com&quot;
-  mypage &lt;- paste(webpage, paste(&#39;%22&#39;, paste(request,&#39;%22&#39;, sep = &quot;&quot;), sep = &quot;&quot;), sep=&quot;/search?q=&quot;)
+  webpage &lt;-<span class="st"> &quot;http://www.google.com&quot;</span>
+  mypage &lt;-<span class="st"> </span><span class="kw">paste</span>(webpage, <span class="kw">paste</span>(<span class="st">&#39;%22&#39;</span>, <span class="kw">paste</span>(request,<span class="st">&#39;%22&#39;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>), <span class="dt">sep=</span><span class="st">&quot;/search?q=&quot;</span>)
   
-  mydata &lt;- read_html(mypage)
-  res &lt;- html_node(mydata, &quot;#resultStats&quot;) %&gt;% html_text
+  mydata &lt;-<span class="st"> </span><span class="kw">read_html</span>(mypage)
+  res &lt;-<span class="st"> </span><span class="kw">html_node</span>(mydata, <span class="st">&quot;#resultStats&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>html_text
   
-  return(as.numeric(paste(str_extract_all(res,&quot;\\(?[0-9,.]+\\)?&quot;)[[1]], collapse = &#39;&#39;)))
-}</code></pre>
+  <span class="kw">return</span>(<span class="kw">as.numeric</span>(<span class="kw">paste</span>(<span class="kw">str_extract_all</span>(res,<span class="st">&quot;</span><span class="ch">\\</span><span class="st">(?[0-9,.]+</span><span class="ch">\\</span><span class="st">)?&quot;</span>)[[<span class="dv">1</span>]], <span class="dt">collapse =</span> <span class="st">&#39;&#39;</span>)))
+}</code></pre></div>
 <p>Tests</p>
-<pre class="r"><code>nbGoogleResults(&quot;responsible&quot;)
-nbGoogleResults(&quot;responsible of&quot;)
-nbGoogleResults(&quot;responsible with&quot;)
-nbGoogleResults(&quot;responsible for&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nbGoogleResults</span>(<span class="st">&quot;responsible&quot;</span>)
+<span class="kw">nbGoogleResults</span>(<span class="st">&quot;responsible of&quot;</span>)
+<span class="kw">nbGoogleResults</span>(<span class="st">&quot;responsible with&quot;</span>)
+<span class="kw">nbGoogleResults</span>(<span class="st">&quot;responsible for&quot;</span>)</code></pre></div>
 </div>
 <div id="la-bonne-preposition" class="section level1">
 <h1>La bonne préposition ?</h1>
-<pre class="r"><code>prep &lt;- c(&quot;on&quot;, &quot;in&quot;, &quot;at&quot;, &quot;of&quot;, &quot;for&quot;, &quot;from&quot;, &quot;to&quot;, &quot;into&quot;, &quot;by&quot;, &quot;across&quot;, &quot;around&quot;, &quot;near&quot;, &quot;with&quot;, &quot;about&quot;, &quot;along&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prep &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;on&quot;</span>, <span class="st">&quot;in&quot;</span>, <span class="st">&quot;at&quot;</span>, <span class="st">&quot;of&quot;</span>, <span class="st">&quot;for&quot;</span>, <span class="st">&quot;from&quot;</span>, <span class="st">&quot;to&quot;</span>, <span class="st">&quot;into&quot;</span>, <span class="st">&quot;by&quot;</span>, <span class="st">&quot;across&quot;</span>, <span class="st">&quot;around&quot;</span>, <span class="st">&quot;near&quot;</span>, <span class="st">&quot;with&quot;</span>, <span class="st">&quot;about&quot;</span>, <span class="st">&quot;along&quot;</span>)</code></pre></div>
 <p>Mon choix</p>
-<pre class="r"><code>word &lt;- &quot;responsible&quot;</code></pre>
-<pre class="r"><code>n &lt;- length(prep)
-res &lt;- NULL
-for (i in 1:n)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">word &lt;-<span class="st"> &quot;responsible&quot;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span><span class="kw">length</span>(prep)
+res &lt;-<span class="st"> </span><span class="ot">NULL</span>
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n)
 {
-  print(i)
-  res &lt;- c(res, nbGoogleResults(paste(word, prep[i])))
+  <span class="kw">print</span>(i)
+  res &lt;-<span class="st"> </span><span class="kw">c</span>(res, <span class="kw">nbGoogleResults</span>(<span class="kw">paste</span>(word, prep[i])))
 }
 res
-prep[which.max(res)]</code></pre>
+prep[<span class="kw">which.max</span>(res)]</code></pre></div>
 </div>
 
 

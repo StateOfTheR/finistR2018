@@ -24,6 +24,9 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -306,12 +309,25 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Home</a>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    accueil
+  </a>
+</li>
+<li>
+  <a href="https://github.com/StateOfTheR/finistR2018">
+    <span class="fa fa-github"></span>
+     
+    dépôt github
+  </a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-refresh"></span>
+     
     Webscrapping
      
     <span class="caret"></span>
@@ -332,18 +348,14 @@ div.tocify {
       <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
     </li>
     <li>
-      <a href="atelier1_webscraping_googlefight.html">Google Fight</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_googlenews.html">Google News</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_youtube.html">Youtube</a>
+      <a href="atelier1_webscraping_googlefight.html">Occurrences Google</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-wheelchair-alt"></span>
+     
     Optimisation et accélération
      
     <span class="caret"></span>
@@ -364,6 +376,9 @@ div.tocify {
       <a href="atelier2_tensorflow.html">TensorFlow</a>
     </li>
     <li>
+      <a href="atelier2_greta.html">Greta</a>
+    </li>
+    <li>
       <a href="atelier2_rcpp_modules.html">Modules Rcpp</a>
     </li>
     <li>
@@ -373,6 +388,8 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-thumbs-o-up"></span>
+     
     Bonnes pratiques
      
     <span class="caret"></span>
@@ -471,10 +488,10 @@ df_participants</code></pre></div>
           <span class="st">&quot;Enterome&quot;</span>, <span class="fl">48.851725</span>, <span class="fl">2.376756</span>,
           <span class="st">&quot;EDF Lab Les Renardières&quot;</span>, <span class="fl">48.375008</span>, <span class="fl">2.843243</span>,
           <span class="st">&quot;Institut Pasteur&quot;</span>, <span class="fl">48.840352</span>, <span class="fl">2.311357</span>,
-          <span class="st">&quot;IRMAR&quot;</span>, <span class="fl">48.119174</span>, <span class="op">-</span><span class="fl">1.641708</span>,
-          <span class="st">&quot;Agrocampus Ouest&quot;</span>, <span class="fl">48.113799</span>, <span class="op">-</span><span class="fl">1.706054</span>,
+          <span class="st">&quot;IRMAR&quot;</span>, <span class="fl">48.119174</span>, <span class="fl">-1.641708</span>,
+          <span class="st">&quot;Agrocampus Ouest&quot;</span>, <span class="fl">48.113799</span>, <span class="fl">-1.706054</span>,
           <span class="st">&quot;AgroParisTech&quot;</span>, <span class="fl">48.839827</span>, <span class="fl">2.348523</span>,
-          <span class="st">&quot;Université de Rennes&quot;</span>, <span class="fl">48.115951</span>, <span class="op">-</span><span class="fl">1.673121</span>) 
+          <span class="st">&quot;Université de Rennes&quot;</span>, <span class="fl">48.115951</span>, <span class="fl">-1.673121</span>) 
 df_labos</code></pre></div>
 <pre><code>## # A tibble: 10 x 3
 ##    Labo                      Lat  Long

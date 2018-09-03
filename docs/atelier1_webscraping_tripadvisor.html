@@ -9,7 +9,6 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Mathieu Carmassi, Félix Cheysson, Pierre Gloaguen, Jean-Baptiste Lecomte" />
 
 
 <title>Scraping de nos menus de la semaine</title>
@@ -24,25 +23,54 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
 
 <style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
-}
-</script>
-
 
 
 <style type="text/css">
@@ -280,12 +308,25 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Home</a>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    accueil
+  </a>
+</li>
+<li>
+  <a href="https://github.com/StateOfTheR/finistR2018">
+    <span class="fa fa-github"></span>
+     
+    dépôt github
+  </a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-refresh"></span>
+     
     Webscrapping
      
     <span class="caret"></span>
@@ -306,18 +347,14 @@ div.tocify {
       <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
     </li>
     <li>
-      <a href="atelier1_webscraping_googlefight.html">Google Fight</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_googlenews.html">Google News</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_youtube.html">Youtube</a>
+      <a href="atelier1_webscraping_googlefight.html">Occurrences Google</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-wheelchair-alt"></span>
+     
     Optimisation et accélération
      
     <span class="caret"></span>
@@ -338,6 +375,9 @@ div.tocify {
       <a href="atelier2_tensorflow.html">TensorFlow</a>
     </li>
     <li>
+      <a href="atelier2_greta.html">Greta</a>
+    </li>
+    <li>
       <a href="atelier2_rcpp_modules.html">Modules Rcpp</a>
     </li>
     <li>
@@ -347,6 +387,8 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-thumbs-o-up"></span>
+     
     Bonnes pratiques
      
     <span class="caret"></span>
@@ -375,8 +417,6 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Scraping de nos menus de la semaine</h1>
-<h4 class="author"><em>Mathieu Carmassi, Félix Cheysson, Pierre Gloaguen, Jean-Baptiste Lecomte</em></h4>
-<h4 class="date"><em>27 août 2018</em></h4>
 
 </div>
 
@@ -392,47 +432,55 @@ div.tocify {
 </div>
 <div id="packages" class="section level2">
 <h2>Packages</h2>
-<pre class="r"><code>rm(list = ls())# Bonne pratique
-library(rvest)# Pour la lecture des pages HTML
-library(parallel)# Pour paralléliser les traitements (c&#39;est long!)
-library(stringr)
-library(qdapRegex)# Manip de chaîne de caractère
-library(ggmap)# Pour le résultat final</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>())<span class="co"># Bonne pratique</span>
+<span class="kw">library</span>(rvest)<span class="co"># Pour la lecture des pages HTML</span>
+<span class="kw">library</span>(parallel)<span class="co"># Pour paralléliser les traitements (c&#39;est long!)</span>
+<span class="kw">library</span>(stringr)
+<span class="kw">library</span>(qdapRegex)<span class="co"># Manip de chaîne de caractère</span></code></pre></div>
+<pre><code>
+Attaching package: &#39;qdapRegex&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:dplyr&#39;:
+
+    explain</code></pre>
+<pre><code>The following object is masked from &#39;package:ggplot2&#39;:
+
+    %+%</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggmap)<span class="co"># Pour le résultat final</span></code></pre></div>
 <pre><code>Google Maps API Terms of Service: http://developers.google.com/maps/terms.</code></pre>
 <pre><code>Please cite ggmap if you use it: see citation(&#39;ggmap&#39;) for details.</code></pre>
 </div>
 <div id="notre-cible" class="section level2">
 <h2>Notre cible</h2>
 <div class="figure">
-<img src="tripadvisor.png" />
+<img src="img/tripadvisor.png" />
 
 </div>
 </div>
 <div id="acces-aux-noms" class="section level2">
 <h2>Accès aux noms</h2>
-<pre class="r"><code>url &lt;- &quot;https://www.tripadvisor.fr/Restaurants-g2238793-Beg_Meil_Fouesnant_Finistere_Brittany.html&quot;
-webpage &lt;- read_html(url)#Lecture de la page html
-nomRestau &lt;- webpage %&gt;% #Argument principal
-  html_nodes(&quot;a.property_title&quot;) %&gt;% # Se rendre sur la balise adéquate
-  html_text()# obtention du texte d&#39;intérêt de la balise
-#    str_remove_all(pattern = &quot;\n&quot;)# mise en forme optionnelle</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">url &lt;-<span class="st"> &quot;https://www.tripadvisor.fr/Restaurants-g2238793-Beg_Meil_Fouesnant_Finistere_Brittany.html&quot;</span>
+webpage &lt;-<span class="st"> </span><span class="kw">read_html</span>(url)<span class="co">#Lecture de la page html</span>
+nomRestau &lt;-<span class="st"> </span>webpage <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#Argument principal</span>
+<span class="st">  </span><span class="kw">html_nodes</span>(<span class="st">&quot;a.property_title&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Se rendre sur la balise adéquate</span>
+<span class="st">  </span><span class="kw">html_text</span>()<span class="co"># obtention du texte d&#39;intérêt de la balise</span>
+<span class="co">#    str_remove_all(pattern = &quot;\n&quot;)# mise en forme optionnelle</span></code></pre></div>
 </div>
 <div id="utilisation-de-lexplorateur" class="section level2">
 <h2>Utilisation de l’explorateur</h2>
 <ul>
 <li>*Ctrl+U</li>
-<li>*Clic droit -&gt; Examiner l’élément <img src="tripadvisor_bouzin.png" /></li>
+<li>*Clic droit -&gt; Examiner l’élément <img src="img/tripadvisor_bouzin.png" /></li>
 </ul>
 </div>
 <div id="acces-aux-notes" class="section level2">
 <h2>Accès aux notes</h2>
-<pre class="r"><code>charNotes &lt;- webpage %&gt;% 
-  html_nodes(&quot;span.ui_bubble_rating&quot;) %&gt;%
-  html_attr(&quot;alt&quot;)
-# Equivalent de str_remove
-notes &lt;- sapply(strsplit(gsub(&quot;,&quot;, &quot;.&quot;, charNotes), &quot; &quot;), function(x) as.numeric(x[1]))
-nR &lt;- length(nomRestau)# Tous les retaus ne sont pas notés..
-notes &lt;- c(notes, rep(NA, nR - length(notes)))# Première approximation</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">charNotes &lt;-<span class="st"> </span>webpage <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">html_nodes</span>(<span class="st">&quot;span.ui_bubble_rating&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">html_attr</span>(<span class="st">&quot;alt&quot;</span>)
+<span class="co"># Equivalent de str_remove</span>
+notes &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="kw">strsplit</span>(<span class="kw">gsub</span>(<span class="st">&quot;,&quot;</span>, <span class="st">&quot;.&quot;</span>, charNotes), <span class="st">&quot; &quot;</span>), <span class="cf">function</span>(x) <span class="kw">as.numeric</span>(x[<span class="dv">1</span>]))
+nR &lt;-<span class="st"> </span><span class="kw">length</span>(nomRestau)<span class="co"># Tous les retaus ne sont pas notés..</span>
+notes &lt;-<span class="st"> </span><span class="kw">c</span>(notes, <span class="kw">rep</span>(<span class="ot">NA</span>, nR <span class="op">-</span><span class="st"> </span><span class="kw">length</span>(notes)))<span class="co"># Première approximation</span></code></pre></div>
 </div>
 <div id="acces-aux-coordonnees" class="section level2">
 <h2>Accès aux coordonnées</h2>
@@ -440,29 +488,29 @@ notes &lt;- c(notes, rep(NA, nR - length(notes)))# Première approximation</code
 <li>Les coordonnées ne sont disponibles que sur les sous pages spécifiques</li>
 <li>Accès au lien vers ces sous pages:</li>
 </ul>
-<pre class="r"><code>hyperRef &lt;- webpage %&gt;% 
-  html_nodes(&quot;a.property_title&quot;) %&gt;%
-  html_attr(&quot;href&quot;)# Obtention d&#39;un attribut</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hyperRef &lt;-<span class="st"> </span>webpage <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">html_nodes</span>(<span class="st">&quot;a.property_title&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">html_attr</span>(<span class="st">&quot;href&quot;</span>)<span class="co"># Obtention d&#39;un attribut</span></code></pre></div>
 </div>
 <div id="recolte-des-coordonnees" class="section level2">
 <h2>Recolte des coordonnées</h2>
-<pre class="r"><code>coords &lt;- do.call(rbind, mclapply(hyperRef, function(url){
-  subpage &lt;- read_html(paste0(&quot;https://www.tripadvisor.fr&quot;, url))
-  # Ici, c&#39;est un enfer
-  # Après fouille et discussion:
-  # Accees a un gros bloc cible
-  scriptInfo &lt;-  subpage %&gt;% 
-    html_nodes(&quot;script&quot;)
-  # Acces au sous bloc contenant la latitude
-  toCheck &lt;- which(grepl(&quot;lat:&quot;, scriptInfo))
-  myLine &lt;- as.character(scriptInfo[toCheck])
-  # Extraction brute de force et laide
-  lat &lt;- as.numeric(rm_between(myLine, &#39;\nlat:&#39;, &#39;,&#39;, extract=TRUE)[[1]])
-  long &lt;- as.numeric(rm_between(myLine, &#39;\nlng:&#39;, &#39;,&#39;, extract=TRUE)[[1]])
-  c(long = long, lat = lat)
-}, mc.cores = detectCores()))
-output &lt;- data.frame(Restau = nomRestau, Note = notes, data.frame(coords))
-head(output)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coords &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind, <span class="kw">mclapply</span>(hyperRef, <span class="cf">function</span>(url){
+  subpage &lt;-<span class="st"> </span><span class="kw">read_html</span>(<span class="kw">paste0</span>(<span class="st">&quot;https://www.tripadvisor.fr&quot;</span>, url))
+  <span class="co"># Ici, c&#39;est un enfer</span>
+  <span class="co"># Après fouille et discussion:</span>
+  <span class="co"># Accees a un gros bloc cible</span>
+  scriptInfo &lt;-<span class="st">  </span>subpage <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">html_nodes</span>(<span class="st">&quot;script&quot;</span>)
+  <span class="co"># Acces au sous bloc contenant la latitude</span>
+  toCheck &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">grepl</span>(<span class="st">&quot;lat:&quot;</span>, scriptInfo))
+  myLine &lt;-<span class="st"> </span><span class="kw">as.character</span>(scriptInfo[toCheck])
+  <span class="co"># Extraction brute de force et laide</span>
+  lat &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">rm_between</span>(myLine, <span class="st">&#39;</span><span class="ch">\n</span><span class="st">lat:&#39;</span>, <span class="st">&#39;,&#39;</span>, <span class="dt">extract=</span><span class="ot">TRUE</span>)[[<span class="dv">1</span>]])
+  long &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">rm_between</span>(myLine, <span class="st">&#39;</span><span class="ch">\n</span><span class="st">lng:&#39;</span>, <span class="st">&#39;,&#39;</span>, <span class="dt">extract=</span><span class="ot">TRUE</span>)[[<span class="dv">1</span>]])
+  <span class="kw">c</span>(<span class="dt">long =</span> long, <span class="dt">lat =</span> lat)
+}, <span class="dt">mc.cores =</span> <span class="kw">detectCores</span>()))
+output &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Restau =</span> nomRestau, <span class="dt">Note =</span> notes, <span class="kw">data.frame</span>(coords))
+<span class="kw">head</span>(output)</code></pre></div>
 <pre><code>                               Restau Note      long      lat
 1             \nLa Boite a Sardines\n  4.0 -3.986469 47.86116
 2             \nBistrot Chez Hubert\n  4.0 -3.988376 47.86188
@@ -476,59 +524,59 @@ head(output)</code></pre>
 <ul>
 <li>Fouille de la page pour obtenir les pages suivantes</li>
 </ul>
-<pre class="r"><code>mainName &lt;- &quot;https://www.tripadvisor.fr/Restaurants-g2238793-Beg_Meil_Fouesnant_Finistere_Brittany.html&quot;
-mainPage &lt;- read_html(mainName)
-nombresPages &lt;- mainPage %&gt;%
-  html_node(&quot;div.pageNumbers&quot;)%&gt;%
-  html_nodes(&quot;a&quot;) %&gt;%
-  length() + 1
-dataOffset &lt;- mainPage %&gt;%
-  html_node(&quot;div.pageNumbers&quot;)%&gt;%
-  html_node(&quot;a&quot;) %&gt;%
-  html_attr(&quot;data-offset&quot;) %&gt;%
-  as.numeric()
-allWebPages &lt;- sapply(seq(0, (nombresPages - 1) * dataOffset, by = dataOffset),
-                      function(i){
-                        if(i == 0)
-                          return(mainName)
-                        paste0(&quot;https://www.tripadvisor.fr/Restaurants-g2238793-&quot;,
-                               &quot;oa&quot;, i,
-                               &quot;-Beg_Meil_Fouesnant_Finistere_Brittany.html&quot;)
-                      })</code></pre>
-<pre class="r"><code>library(parallel)# Pour paralléliser les traitements (c&#39;est long!)
-myFinalData &lt;- do.call(rbind.data.frame, lapply(allWebPages, function(url){
-  webpage &lt;- read_html(url)#Lecture de la page html
-  nomRestau &lt;- webpage %&gt;% #Argument principal
-    html_nodes(&quot;a.property_title&quot;) %&gt;% # Se rendre sur la balise adéquate
-    html_text()# obtention du texte d&#39;intérêt de la balise
-  #    str_remove_all(pattern = &quot;\n&quot;)# mise en forme optionnelle
-  hyperRef &lt;- webpage %&gt;% 
-    html_nodes(&quot;a.property_title&quot;) %&gt;%
-    html_attr(&quot;href&quot;)
-  charNotes &lt;- webpage %&gt;% 
-    html_nodes(&quot;span.ui_bubble_rating&quot;) %&gt;%
-    html_attr(&quot;alt&quot;)
-  # Equivalent de str_remove
-  notes &lt;- sapply(strsplit(gsub(&quot;,&quot;, &quot;.&quot;, charNotes), &quot; &quot;), function(x) as.numeric(x[1]))
-  nR &lt;- length(nomRestau)# Tous les retaus ne sont pas notés..
-  notes &lt;- c(notes, rep(NA, nR - length(notes)))# Première approximation
-  coords &lt;- do.call(rbind, mclapply(hyperRef, function(url){
-    subpage &lt;- read_html(paste0(&quot;https://www.tripadvisor.fr&quot;, url))
-    scriptInfo &lt;-  subpage %&gt;% 
-      html_nodes(&quot;script&quot;)
-    toCheck &lt;- which(grepl(&quot;lat:&quot;, scriptInfo))
-    myLine &lt;- as.character(scriptInfo[toCheck])
-    lat &lt;- as.numeric(rm_between(myLine, &#39;\nlat:&#39;, &#39;,&#39;, extract=TRUE)[[1]])
-    long &lt;- as.numeric(rm_between(myLine, &#39;\nlng:&#39;, &#39;,&#39;, extract=TRUE)[[1]])
-    c(long = long, lat = lat)
-  }, mc.cores = detectCores()))
-  data.frame(Restau = sapply(strsplit(nomRestau, &quot;\n&quot;), function(x) paste(x, collapse =&quot;&quot;)),
-             Note = notes, data.frame(coords))
-}))</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mainName &lt;-<span class="st"> &quot;https://www.tripadvisor.fr/Restaurants-g2238793-Beg_Meil_Fouesnant_Finistere_Brittany.html&quot;</span>
+mainPage &lt;-<span class="st"> </span><span class="kw">read_html</span>(mainName)
+nombresPages &lt;-<span class="st"> </span>mainPage <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">html_node</span>(<span class="st">&quot;div.pageNumbers&quot;</span>)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">html_nodes</span>(<span class="st">&quot;a&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">length</span>() <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+dataOffset &lt;-<span class="st"> </span>mainPage <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">html_node</span>(<span class="st">&quot;div.pageNumbers&quot;</span>)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">html_node</span>(<span class="st">&quot;a&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">html_attr</span>(<span class="st">&quot;data-offset&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">as.numeric</span>()
+allWebPages &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="kw">seq</span>(<span class="dv">0</span>, (nombresPages <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>dataOffset, <span class="dt">by =</span> dataOffset),
+                      <span class="cf">function</span>(i){
+                        <span class="cf">if</span>(i <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)
+                          <span class="kw">return</span>(mainName)
+                        <span class="kw">paste0</span>(<span class="st">&quot;https://www.tripadvisor.fr/Restaurants-g2238793-&quot;</span>,
+                               <span class="st">&quot;oa&quot;</span>, i,
+                               <span class="st">&quot;-Beg_Meil_Fouesnant_Finistere_Brittany.html&quot;</span>)
+                      })</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(parallel)<span class="co"># Pour paralléliser les traitements (c&#39;est long!)</span>
+myFinalData &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind.data.frame, <span class="kw">lapply</span>(allWebPages, <span class="cf">function</span>(url){
+  webpage &lt;-<span class="st"> </span><span class="kw">read_html</span>(url)<span class="co">#Lecture de la page html</span>
+  nomRestau &lt;-<span class="st"> </span>webpage <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#Argument principal</span>
+<span class="st">    </span><span class="kw">html_nodes</span>(<span class="st">&quot;a.property_title&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Se rendre sur la balise adéquate</span>
+<span class="st">    </span><span class="kw">html_text</span>()<span class="co"># obtention du texte d&#39;intérêt de la balise</span>
+  <span class="co">#    str_remove_all(pattern = &quot;\n&quot;)# mise en forme optionnelle</span>
+  hyperRef &lt;-<span class="st"> </span>webpage <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">html_nodes</span>(<span class="st">&quot;a.property_title&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">html_attr</span>(<span class="st">&quot;href&quot;</span>)
+  charNotes &lt;-<span class="st"> </span>webpage <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">html_nodes</span>(<span class="st">&quot;span.ui_bubble_rating&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">html_attr</span>(<span class="st">&quot;alt&quot;</span>)
+  <span class="co"># Equivalent de str_remove</span>
+  notes &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="kw">strsplit</span>(<span class="kw">gsub</span>(<span class="st">&quot;,&quot;</span>, <span class="st">&quot;.&quot;</span>, charNotes), <span class="st">&quot; &quot;</span>), <span class="cf">function</span>(x) <span class="kw">as.numeric</span>(x[<span class="dv">1</span>]))
+  nR &lt;-<span class="st"> </span><span class="kw">length</span>(nomRestau)<span class="co"># Tous les retaus ne sont pas notés..</span>
+  notes &lt;-<span class="st"> </span><span class="kw">c</span>(notes, <span class="kw">rep</span>(<span class="ot">NA</span>, nR <span class="op">-</span><span class="st"> </span><span class="kw">length</span>(notes)))<span class="co"># Première approximation</span>
+  coords &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind, <span class="kw">mclapply</span>(hyperRef, <span class="cf">function</span>(url){
+    subpage &lt;-<span class="st"> </span><span class="kw">read_html</span>(<span class="kw">paste0</span>(<span class="st">&quot;https://www.tripadvisor.fr&quot;</span>, url))
+    scriptInfo &lt;-<span class="st">  </span>subpage <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">      </span><span class="kw">html_nodes</span>(<span class="st">&quot;script&quot;</span>)
+    toCheck &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">grepl</span>(<span class="st">&quot;lat:&quot;</span>, scriptInfo))
+    myLine &lt;-<span class="st"> </span><span class="kw">as.character</span>(scriptInfo[toCheck])
+    lat &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">rm_between</span>(myLine, <span class="st">&#39;</span><span class="ch">\n</span><span class="st">lat:&#39;</span>, <span class="st">&#39;,&#39;</span>, <span class="dt">extract=</span><span class="ot">TRUE</span>)[[<span class="dv">1</span>]])
+    long &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">rm_between</span>(myLine, <span class="st">&#39;</span><span class="ch">\n</span><span class="st">lng:&#39;</span>, <span class="st">&#39;,&#39;</span>, <span class="dt">extract=</span><span class="ot">TRUE</span>)[[<span class="dv">1</span>]])
+    <span class="kw">c</span>(<span class="dt">long =</span> long, <span class="dt">lat =</span> lat)
+  }, <span class="dt">mc.cores =</span> <span class="kw">detectCores</span>()))
+  <span class="kw">data.frame</span>(<span class="dt">Restau =</span> <span class="kw">sapply</span>(<span class="kw">strsplit</span>(nomRestau, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>), <span class="cf">function</span>(x) <span class="kw">paste</span>(x, <span class="dt">collapse =</span><span class="st">&quot;&quot;</span>)),
+             <span class="dt">Note =</span> notes, <span class="kw">data.frame</span>(coords))
+}))</code></pre></div>
 </div>
-<div id="obtention-dun-objet-r-au-bon-format" class="section level1">
-<h1>Obtention d’un objet R au bon format</h1>
-<pre class="r"><code>head(myFinalData)</code></pre>
+<div id="obtention-dun-objet-r-au-bon-format" class="section level2">
+<h2>Obtention d’un objet R au bon format</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(myFinalData)</code></pre></div>
 <pre><code>                           Restau Note      long      lat
 1             La Boite a Sardines  4.0 -3.986469 47.86116
 2             Bistrot Chez Hubert  4.0 -3.988376 47.86188
@@ -536,11 +584,11 @@ myFinalData &lt;- do.call(rbind.data.frame, lapply(allWebPages, function(url){
 4 Le Restaurant La Pointe Cap Coz  4.5 -3.978467 47.88971
 5                  Brasserie Le 2  4.0 -3.987703 47.86121
 6    Bar / Crêperie de Kervastard  4.0 -3.987303 47.86128</code></pre>
-<pre class="r"><code>begMeil = c(lat = 47.863843, lon = -3.9852351)
-myMap = get_map(location=begMeil,zoom=12)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">begMeil =<span class="st"> </span><span class="kw">c</span>(<span class="dt">lat =</span> <span class="fl">47.863843</span>, <span class="dt">lon =</span> <span class="fl">-3.9852351</span>)
+myMap =<span class="st"> </span><span class="kw">get_map</span>(<span class="dt">location=</span>begMeil,<span class="dt">zoom=</span><span class="dv">12</span>)</code></pre></div>
 <pre><code>note : locations should be specified in the lon/lat format, not lat/lon.</code></pre>
 <pre><code>Map from URL : http://maps.googleapis.com/maps/api/staticmap?center=47.863843,-3.985235&amp;zoom=12&amp;size=640x640&amp;scale=2&amp;maptype=terrain&amp;language=en-EN&amp;sensor=false</code></pre>
-<pre class="r"><code>ggmap(myMap) + geom_point(data=myFinalData, aes(x=long, y=lat),size=1)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggmap</span>(myMap) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data=</span>myFinalData, <span class="kw">aes</span>(<span class="dt">x=</span>long, <span class="dt">y=</span>lat),<span class="dt">size=</span><span class="dv">1</span>)</code></pre></div>
 <pre><code>Warning: Removed 30 rows containing missing values (geom_point).</code></pre>
 <p><img src="atelier1_webscraping_tripadvisor_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 </div>

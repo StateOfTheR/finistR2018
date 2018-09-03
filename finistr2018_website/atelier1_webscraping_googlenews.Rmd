@@ -1,6 +1,5 @@
 ---
 title: "web scraping"
-author: "Groupe 4"
 date: "August 27, 2018"
 output: html_document
 ---

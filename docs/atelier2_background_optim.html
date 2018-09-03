@@ -9,7 +9,6 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Julien" />
 
 
 <title>Background in basic optimization with R</title>
@@ -24,25 +23,54 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
 
 <style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
-}
-</script>
-
 
 
 <style type="text/css">
@@ -280,12 +308,25 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Home</a>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    accueil
+  </a>
+</li>
+<li>
+  <a href="https://github.com/StateOfTheR/finistR2018">
+    <span class="fa fa-github"></span>
+     
+    dépôt github
+  </a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-refresh"></span>
+     
     Webscrapping
      
     <span class="caret"></span>
@@ -306,18 +347,14 @@ div.tocify {
       <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
     </li>
     <li>
-      <a href="atelier1_webscraping_googlefight.html">Google Fight</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_googlenews.html">Google News</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_youtube.html">Youtube</a>
+      <a href="atelier1_webscraping_googlefight.html">Occurrences Google</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-wheelchair-alt"></span>
+     
     Optimisation et accélération
      
     <span class="caret"></span>
@@ -338,6 +375,9 @@ div.tocify {
       <a href="atelier2_tensorflow.html">TensorFlow</a>
     </li>
     <li>
+      <a href="atelier2_greta.html">Greta</a>
+    </li>
+    <li>
       <a href="atelier2_rcpp_modules.html">Modules Rcpp</a>
     </li>
     <li>
@@ -347,6 +387,8 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-thumbs-o-up"></span>
+     
     Bonnes pratiques
      
     <span class="caret"></span>
@@ -375,7 +417,6 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Background in basic optimization with R</h1>
-<h4 class="author"><em>Julien</em></h4>
 
 </div>
 
@@ -430,15 +471,15 @@ div.tocify {
 <h2>Rosenbrock Banana function in R</h2>
 <div id="objective" class="section level3">
 <h3>objective</h3>
-<pre class="r"><code>objective &lt;- function(x) {
-  return( 100 * (x[2] - x[1] * x[1])^2 + (1 - x[1])^2 )
-}</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">objective &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
+  <span class="kw">return</span>( <span class="dv">100</span> <span class="op">*</span><span class="st"> </span>(x[<span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>x[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>x[<span class="dv">1</span>])<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>x[<span class="dv">1</span>])<span class="op">^</span><span class="dv">2</span> )
+}</code></pre></div>
 </div>
 <div id="gradient" class="section level3">
 <h3>gradient</h3>
-<pre class="r"><code>gradient &lt;- function(x) {
-  return( c( -400 * x[1] * (x[2] - x[1] * x[1]) - 2 * (1 - x[1]), 200 * (x[2] - x[1] * x[1]) ) )
-}</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gradient &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
+  <span class="kw">return</span>( <span class="kw">c</span>( <span class="dv">-400</span> <span class="op">*</span><span class="st"> </span>x[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>(x[<span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>x[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>x[<span class="dv">1</span>]) <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>x[<span class="dv">1</span>]), <span class="dv">200</span> <span class="op">*</span><span class="st"> </span>(x[<span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>x[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>x[<span class="dv">1</span>]) ) )
+}</code></pre></div>
 </div>
 </div>
 </div>
@@ -448,11 +489,11 @@ div.tocify {
 <h2><code>optim</code> usage</h2>
 <div id="definition" class="section level3">
 <h3>Definition</h3>
-<pre class="r"><code>optim(par, fn, gr = NULL, ...,
-      method = c(&quot;Nelder-Mead&quot;, &quot;BFGS&quot;, &quot;CG&quot;, &quot;L-BFGS-B&quot;, &quot;SANN&quot;,
-                 &quot;Brent&quot;),
-      lower = -Inf, upper = Inf,
-      control = list(), hessian = FALSE)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">optim</span>(par, fn, <span class="dt">gr =</span> <span class="ot">NULL</span>, ...,
+      <span class="dt">method =</span> <span class="kw">c</span>(<span class="st">&quot;Nelder-Mead&quot;</span>, <span class="st">&quot;BFGS&quot;</span>, <span class="st">&quot;CG&quot;</span>, <span class="st">&quot;L-BFGS-B&quot;</span>, <span class="st">&quot;SANN&quot;</span>,
+                 <span class="st">&quot;Brent&quot;</span>),
+      <span class="dt">lower =</span> <span class="op">-</span><span class="ot">Inf</span>, <span class="dt">upper =</span> <span class="ot">Inf</span>,
+      <span class="dt">control =</span> <span class="kw">list</span>(), <span class="dt">hessian =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <ul>
 <li>Nelder-Mead: approximation of the gradient</li>
 <li>BFGS: quasi-Newton</li>
@@ -464,8 +505,8 @@ div.tocify {
 </div>
 <div id="call-to-optim---bfgs" class="section level2">
 <h2>Call to optim - BFGS</h2>
-<pre class="r"><code>x0 &lt;- c(-1.2, 1)
-res_bfgs &lt;- optim(x0, objective, gradient, method = &quot;BFGS&quot;, control= list(trace = 2))</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x0 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="fl">1.2</span>, <span class="dv">1</span>)
+res_bfgs &lt;-<span class="st"> </span><span class="kw">optim</span>(x0, objective, gradient, <span class="dt">method =</span> <span class="st">&quot;BFGS&quot;</span>, <span class="dt">control=</span> <span class="kw">list</span>(<span class="dt">trace =</span> <span class="dv">2</span>))</code></pre></div>
 <pre><code>## initial  value 24.200000 
 ## iter  10 value 1.367383
 ## iter  20 value 0.134560
@@ -476,8 +517,8 @@ res_bfgs &lt;- optim(x0, objective, gradient, method = &quot;BFGS&quot;, control
 </div>
 <div id="call-to-optim---cg" class="section level2">
 <h2>Call to optim - CG</h2>
-<pre class="r"><code>x0 &lt;- c(-1.2, 1)
-res_cg &lt;- optim(x0, objective, gradient, method = &quot;CG&quot;, control= list(trace = 2))</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x0 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="fl">1.2</span>, <span class="dv">1</span>)
+res_cg &lt;-<span class="st"> </span><span class="kw">optim</span>(x0, objective, gradient, <span class="dt">method =</span> <span class="st">&quot;CG&quot;</span>, <span class="dt">control=</span> <span class="kw">list</span>(<span class="dt">trace =</span> <span class="dv">2</span>))</code></pre></div>
 <pre><code>##   Conjugate gradients function minimizer
 ## Method: Fletcher Reeves
 ## tolerance used in gradient test=3.63798e-12
@@ -691,7 +732,7 @@ res_cg &lt;- optim(x0, objective, gradient, method = &quot;CG&quot;, control= li
 <h2><code>nloptr</code> usage</h2>
 <div id="definition-1" class="section level3">
 <h3>Definition</h3>
-<pre class="r"><code>nloptr(x0, eval_f, eval_grad_f, ..., opts = list())</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nloptr</span>(x0, eval_f, eval_grad_f, ..., <span class="dt">opts =</span> <span class="kw">list</span>())</code></pre></div>
 <ul>
 <li>Many gradient free methods</li>
 <li>Most existing gradient-based methods</li>
@@ -701,10 +742,10 @@ res_cg &lt;- optim(x0, objective, gradient, method = &quot;CG&quot;, control= li
 </div>
 <div id="call-to-nloptr---bfgs" class="section level2">
 <h2>Call to <code>nloptr</code> - BFGS</h2>
-<pre class="r"><code>library(nloptr)
-opts &lt;- list(&quot;algorithm&quot;=&quot;NLOPT_LD_LBFGS&quot;, &quot;xtol_rel&quot;=1.0e-8)
-res &lt;- nloptr(x0=x0, eval_f=objective, eval_grad_f=gradient, opts=opts)
-print(res)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(nloptr)
+opts &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="st">&quot;algorithm&quot;</span>=<span class="st">&quot;NLOPT_LD_LBFGS&quot;</span>, <span class="st">&quot;xtol_rel&quot;</span>=<span class="fl">1.0e-8</span>)
+res &lt;-<span class="st"> </span><span class="kw">nloptr</span>(<span class="dt">x0=</span>x0, <span class="dt">eval_f=</span>objective, <span class="dt">eval_grad_f=</span>gradient, <span class="dt">opts=</span>opts)
+<span class="kw">print</span>(res)</code></pre></div>
 <pre><code>## 
 ## Call:
 ## 

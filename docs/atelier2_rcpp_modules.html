@@ -9,7 +9,6 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Mathieu Carmassi &amp; Timothée Tabouy" />
 
 
 <title>Introduction à Rcpp Modules</title>
@@ -24,25 +23,54 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
 
 <style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
-}
-</script>
-
 
 
 <style type="text/css">
@@ -280,12 +308,25 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Home</a>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    accueil
+  </a>
+</li>
+<li>
+  <a href="https://github.com/StateOfTheR/finistR2018">
+    <span class="fa fa-github"></span>
+     
+    dépôt github
+  </a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-refresh"></span>
+     
     Webscrapping
      
     <span class="caret"></span>
@@ -306,18 +347,14 @@ div.tocify {
       <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
     </li>
     <li>
-      <a href="atelier1_webscraping_googlefight.html">Google Fight</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_googlenews.html">Google News</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_youtube.html">Youtube</a>
+      <a href="atelier1_webscraping_googlefight.html">Occurrences Google</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-wheelchair-alt"></span>
+     
     Optimisation et accélération
      
     <span class="caret"></span>
@@ -338,6 +375,9 @@ div.tocify {
       <a href="atelier2_tensorflow.html">TensorFlow</a>
     </li>
     <li>
+      <a href="atelier2_greta.html">Greta</a>
+    </li>
+    <li>
       <a href="atelier2_rcpp_modules.html">Modules Rcpp</a>
     </li>
     <li>
@@ -347,6 +387,8 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-thumbs-o-up"></span>
+     
     Bonnes pratiques
      
     <span class="caret"></span>
@@ -375,9 +417,6 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Introduction à Rcpp Modules</h1>
-<h3 class="subtitle"><em>BootCamp BegMeil</em></h3>
-<h4 class="author"><em>Mathieu Carmassi &amp; Timothée Tabouy</em></h4>
-<h4 class="date"><em>30 août 2018</em></h4>
 
 </div>
 
@@ -392,17 +431,17 @@ div.tocify {
 <div id="importation-de-fonctions-c-dans-r" class="section level2">
 <h2>Importation de fonctions C++ dans R</h2>
 <p>L’importation et l’utilisation de fonctions codées en C++ dans R se fait de manière assez intuitive. En effet, grace au package Rcpp, il suffit de créer un fichier .cpp au même endroit que le fichier R et la fonction sourceCpp (équivalente à la fonction source de R) permet de charger les fonctions exportables de C++.</p>
-<pre class="r"><code>library(Rcpp)
-sourceCpp(&quot;file.cpp&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(Rcpp)
+<span class="kw">sourceCpp</span>(<span class="st">&quot;file.cpp&quot;</span>)</code></pre></div>
 <p>Le fichier file.cpp contient donc du C++ tel que:</p>
-<pre class="cpp"><code>#include &quot;RcppArmadillo.h&quot;
-using namespace arma;  // Evite d&#39;écrire arma::fonctionArmadillo
-// [[Rcpp::depends(RcppArmadillo)]]
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="pp">#include </span><span class="im">&quot;RcppArmadillo.h&quot;</span>
+<span class="kw">using</span> <span class="kw">namespace</span> arma;  <span class="co">// Evite d&#39;écrire arma::fonctionArmadillo</span>
+<span class="co">// [[Rcpp::depends(RcppArmadillo)]]</span>
 
-// [[Rcpp::export]] // Importe la fonction qui suit dans l&#39;environnement global de R
-mat addition(int a, mat M) {
-  return a + M;
-}</code></pre>
+<span class="co">// [[Rcpp::export]] // Importe la fonction qui suit dans l&#39;environnement global de R</span>
+mat addition(<span class="dt">int</span> a, mat M) {
+  <span class="cf">return</span> a + M;
+}</code></pre></div>
 <p>Plus de détails sont disponible sur le repos GitHub <a href="https://github.com/mathieucarmassi/RcppStateOfTheR.git" class="uri">https://github.com/mathieucarmassi/RcppStateOfTheR.git</a>.</p>
 </div>
 <div id="un-package-avec-rcpp" class="section level2">
@@ -410,7 +449,7 @@ mat addition(int a, mat M) {
 <div id="creation-dun-package-comprenant-du-c" class="section level3">
 <h3>Création d’un package comprenant du C++</h3>
 <p>Lorsqu’un package est créé normalement (voir <a href="https://stateofther.github.io/finistR2017/packages.html" class="uri">https://stateofther.github.io/finistR2017/packages.html</a> pour plus de détails), une fonction du package devtools permet de générer les dossiers et les modifications nécessaires à l’incorporation du C++ dans le package.</p>
-<pre class="r"><code>devtools::use_rcpp()</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw">use_rcpp</span>()</code></pre></div>
 <p>Les modifications opérées sont:</p>
 <ul>
 <li>la création d’un dossier src/ dans lequel seront stoqués les fichiers C++,</li>
@@ -418,9 +457,9 @@ mat addition(int a, mat M) {
 <li>l’introduction dans le .gitignore des extensions pour ne pas suivre les fichiers inutiles (dans le cas d’une utilisation de Git),</li>
 <li>l’ajout dans la documentation du package faite avec le package Roxygen:</li>
 </ul>
-<pre class="r"><code>#&#39; @useDynLib your-package-name
-#&#39; @importFrom Rcpp sourceCpp
-NULL</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&#39; @useDynLib your-package-name</span>
+<span class="co">#&#39; @importFrom Rcpp sourceCpp</span>
+<span class="ot">NULL</span></code></pre></div>
 <p>Ces prédentes lignes de code sont ajoutées dans l’entête de la documentation du package your-package-name.R. Cette documentation génère les fichiers Markdown nécessaires pour la documentation générale du package qui se situent dans le dossier man/.</p>
 </div>
 <div id="les-fichiers-makevars-et-makevars.win" class="section level3">
@@ -428,12 +467,12 @@ NULL</code></pre>
 <p>Les deux fichiers <code>Makevars</code> et <code>Makevars.win</code> sont un sujet à part entière. De la documentation complémentaire de ces deux fichiers est disponible sur <a href="http://kbroman.org/minimal_make/" class="uri">http://kbroman.org/minimal_make/</a>.</p>
 <p>Par défaut R génère la fonction makefile automatiquement. Pour vérifier les compatibilités avec les autres systèmes d’exploitation, il peut être intéressant de créer ces fichiers <code>Makevars</code> et <code>Makevars.win</code> (<code>Makevars.win</code> étant pour Windows) pour contrôler les variables définissant, entre autres, les compilateurs ou les chemins des librairies à utiliser.</p>
 <p>Un exemple de contenu pour les fichiers <code>Makevars</code> et <code>Makevars.win</code>:</p>
-<pre class="r"><code>CC=ccache clang -Qunused-arguments
-CXX=ccache clang++ -Qunused-arguments
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">CC=ccache clang <span class="op">-</span>Qunused<span class="op">-</span>arguments
+CXX=ccache clang<span class="op">++</span><span class="st"> </span><span class="op">-</span>Qunused<span class="op">-</span>arguments
 CCACHE_CPP2=yes
 
-PKG_CXXFLAGS = $(SHLIB_OPENMP_CXXFLAGS)
-PKG_LIBS = $(SHLIB_OPENMP_CFLAGS) $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)</code></pre>
+PKG_CXXFLAGS =<span class="st"> </span><span class="er">$</span>(SHLIB_OPENMP_CXXFLAGS)
+PKG_LIBS =<span class="st"> </span><span class="er">$</span>(SHLIB_OPENMP_CFLAGS) <span class="op">$</span>(LAPACK_LIBS) <span class="op">$</span>(BLAS_LIBS) <span class="op">$</span>(FLIBS)</code></pre></div>
 <p>Si ces fichiers ne sont pas présents dans le dossier src/, il peut être nécessaire de les ajouter pour pouvoir compiler du code C++ comme des fonctions de base de la librairie Armadillo.</p>
 </div>
 <div id="a-verifier" class="section level3">
@@ -456,19 +495,19 @@ PKG_LIBS = $(SHLIB_OPENMP_CFLAGS) $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)</code></p
 <p>Si l’on est pas en train d’écrire un package et que l’on veut exploiter la structure OO du C++, il est possible d’importer (depuis un fichier .R) la structure OO d’un autre fichier C++.</p>
 <p>Par exemple, on souhaite créer un fichier test.R qui réalise un regression linéaire avec un bruit Gaussien à partir d’une matrice X et d’un vecteur Y. Ce fichier doit utiliser une classe C++ contenue dans un fichier .cpp qui réalise l’estimation.</p>
 <p>L’écriture de la classe en C++ se réalise en deux temps. Le premier est le codage brut de la classe en C++ selon les normes. La seconde est une partie de RCPP_MODULE qui fait le lien entre les différents éléments de la classe C++ avec R.</p>
-<pre class="cpp"><code>#include &lt;iostream&gt;
-#include &lt;RcppArmadillo.h&gt;
-// [[Rcpp::depends(Matrix,RcppArmadillo)]]
-using namespace Rcpp;
-using namespace arma;
-using namespace std;
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span>
+<span class="pp">#include </span><span class="im">&lt;RcppArmadillo.h&gt;</span>
+<span class="co">// [[Rcpp::depends(Matrix,RcppArmadillo)]]</span>
+<span class="kw">using</span> <span class="kw">namespace</span> Rcpp;
+<span class="kw">using</span> <span class="kw">namespace</span> arma;
+<span class="kw">using</span> <span class="kw">namespace</span> std;
 
-class GaussModLin{
-public:
+<span class="kw">class</span> GaussModLin{
+<span class="kw">public</span>:
   vec beta;
   mat X;
   vec Y;
-  double sigma2;
+  <span class="dt">double</span> sigma2;
 
   GaussModLin(mat X_, vec Y_):
     X(X_) , Y(Y_) {}
@@ -476,22 +515,21 @@ public:
   List estim(){
     beta = inv(X.t()*X)*X.t()*Y;
     sigma2 = sum(square(Y - X * beta))/(X.n_rows - X.n_cols);
-    return(List::create(Named(&quot;beta&quot;)=beta, Named(&quot;sigma2&quot;)=sigma2));
+    <span class="cf">return</span>(List::create(Named(<span class="st">&quot;beta&quot;</span>)=beta, Named(<span class="st">&quot;sigma2&quot;</span>)=sigma2));
   }
 };
 
-// Expose the classes
+<span class="co">// Expose the classes</span>
 RCPP_MODULE(MyModule) {
-  using namespace Rcpp;
+  <span class="kw">using</span> <span class="kw">namespace</span> Rcpp;
 
-  class_&lt;GaussModLin&gt;(&quot;GaussModLin&quot;)
-    .constructor&lt;mat,vec&gt;(&quot;constructor&quot;) // This exposes the default constructor
-    .method(&quot;estim&quot;, &amp;GaussModLin::estim) // This exposes the estim method
-    .field(&quot;X&quot;, &amp;GaussModLin::X)
+  <span class="va">class_</span>&lt;GaussModLin&gt;(<span class="st">&quot;GaussModLin&quot;</span>)
+    .constructor&lt;mat,vec&gt;(<span class="st">&quot;constructor&quot;</span>) <span class="co">// This exposes the default constructor</span>
+    .method(<span class="st">&quot;estim&quot;</span>, &amp;GaussModLin::estim) <span class="co">// This exposes the estim method</span>
+    .field(<span class="st">&quot;X&quot;</span>, &amp;GaussModLin::X)
   ;
 
-}
-</code></pre>
+}</code></pre></div>
 <p>L’entête du précédent chunk est similaire à celui d’une fonction C++ qui serait utilisée en tant que tel. La création de la classe <code>GaussModLin</code> est classique avec la définition de 4 champs publics (<code>beta</code>, <code>X</code>, <code>Y</code> et <code>sigma2</code>), d’un constructeur <code>GaussModLin</code> qui attribue des valeurs de <code>X</code> et de <code>Y</code> au champs correspondants et une méthode <code>estim()</code> qui réalise l’estimation en renvoyant une liste contenant les valeurs de <code>beta</code> et <code>sigma2</code>.</p>
 <p>La deuxième partie concerne la liaison entre R et C++. Par le biais de <code>RCPP_MODULE(NomModule)</code> on définit un objet RCPP_MODULE qui permet d’associer les champs, constructeurs, et méthodes définis en C++ à R. Ainsi, dans l’exemple précédent, on définit la classe GaussModLin que l’on exporte avec la commande <code>class_&lt;GaussModLin&gt;(&quot;GaussModLin&quot;)</code>. Suivi de cette commande se trouve les fonctions qui exporte éléments de la classe en R:</p>
 <ul>
@@ -505,18 +543,18 @@ RCPP_MODULE(MyModule) {
 <li><code>.field_readonly(&quot;field_readonly&quot;)</code> permet d’exporter le champ sans la possibilité de modification.</li>
 </ul>
 <p>Le fichier test.R qui pourra exploiter cette classe C++ sera construit de la manière suivante:</p>
-<pre class="r"><code>library(Rcpp)
-sourceCpp(test.cpp)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(Rcpp)
+<span class="kw">sourceCpp</span>(test.cpp)
 
-data &lt;- c(1,1,5,0,1,1,1,1,1)
-X &lt;- matrix(data, nr=3,nc=3)
-Y &lt;- rep(3,3)
+data &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>)
+X &lt;-<span class="st"> </span><span class="kw">matrix</span>(data, <span class="dt">nr=</span><span class="dv">3</span>,<span class="dt">nc=</span><span class="dv">3</span>)
+Y &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">3</span>,<span class="dv">3</span>)
 
-t &lt;- new(GaussModLin,X,Y)
-t$estim()</code></pre>
+t &lt;-<span class="st"> </span><span class="kw">new</span>(GaussModLin,X,Y)
+t<span class="op">$</span><span class="kw">estim</span>()</code></pre></div>
 <p>Ce fichier R doit “sourcer” le fichier C++ contenant la classe puis avec la fonction <code>new()</code>, du package Rcpp, et permet d’instancier un objet d’une classe donnée. On peut remarquer que si le constructeur contient des arguments en entrée il est possible de les insérer directement dans la fonction <code>new()</code>. La variable t contient alors la classe définie dans le fichier test.cpp. Ainsi en lançant la commande t$estim() on excécute la méthode associée à la classe GaussModLin définie. Dans le RCPP_MODULE précédent on a laissé la possibilité de modifier le champ X. Il est alors possible de donner:</p>
-<pre class="r"><code>t$X &lt;- 2*X
-t$estim()</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">t<span class="op">$</span>X &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">*</span>X
+t<span class="op">$</span><span class="kw">estim</span>()</code></pre></div>
 <p>Ce chunk permet de modifier l’objet X dans la classe contenue dans t et de relancer l’estimation. Le contrôle de l’apparition des champs dans R se fait par RCPP_MODULE et l’intérêt de déclarer les variables en public ou en privée semble limitée. En effet il est tout à fait possible de définir un champ public sans pour autant y avoir accès dans R (si celui-ci n’est pas définit dans RCPP_MODULE). Cela constraste avec la POO faite en R avec les packages R6 ou S4. Celà étant pour la reproductibilité du programme C++, il est important de respecter les définitions publiques et privées.</p>
 </div>
 <div id="rcpp-modules-dans-un-package" class="section level2">
@@ -528,32 +566,32 @@ t$estim()</code></pre>
 <li>ajouter dans le fichier de surcouche R la ligne <code>loadModule(&quot;MyModule&quot;, TRUE)</code> qui permet de charger le module en R.</li>
 </ul>
 <p>Le fichier R:</p>
-<pre class="r"><code>loadModule(&quot;MyModule&quot;, TRUE)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">loadModule</span>(<span class="st">&quot;MyModule&quot;</span>, <span class="ot">TRUE</span>)
 
-#&#39; function that calls the class of Rcpp
-#&#39;
-#&#39; @export
-exportRcppClass &lt;- function(class)
+<span class="co">#&#39; function that calls the class of Rcpp</span>
+<span class="co">#&#39;</span>
+<span class="co">#&#39; @export</span>
+exportRcppClass &lt;-<span class="st"> </span><span class="cf">function</span>(class)
 {
-  res = new(class)
-  return(res)
-}</code></pre>
+  res =<span class="st"> </span><span class="kw">new</span>(class)
+  <span class="kw">return</span>(res)
+}</code></pre></div>
 <p>Le fichier Rcpp:</p>
-<pre class="cpp"><code>#include &lt;iostream&gt;
-#include &lt;RcppArmadillo.h&gt;
-// [[Rcpp::depends(Matrix,RcppArmadillo)]]
-using namespace Rcpp;
-using namespace arma;
-using namespace std;
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span>
+<span class="pp">#include </span><span class="im">&lt;RcppArmadillo.h&gt;</span>
+<span class="co">// [[Rcpp::depends(Matrix,RcppArmadillo)]]</span>
+<span class="kw">using</span> <span class="kw">namespace</span> Rcpp;
+<span class="kw">using</span> <span class="kw">namespace</span> arma;
+<span class="kw">using</span> <span class="kw">namespace</span> std;
 
 
-//&#39; @export GaussModLin
-class GaussModLin{
-public:
+<span class="co">//&#39; @export GaussModLin</span>
+<span class="kw">class</span> GaussModLin{
+<span class="kw">public</span>:
   vec beta;
   mat X;
   vec Y;
-  double sigma2;
+  <span class="dt">double</span> sigma2;
 
   GaussModLin(mat X_, vec Y_):
     X(X_) , Y(Y_) {}
@@ -561,43 +599,43 @@ public:
   List estim(){
     beta = inv(X.t()*X)*X.t()*Y;
     sigma2 = sum(square(Y - X * beta))/(X.n_rows - X.n_cols);
-    return(List::create(Named(&quot;beta&quot;)=beta, Named(&quot;sigma2&quot;)=sigma2));
+    <span class="cf">return</span>(List::create(Named(<span class="st">&quot;beta&quot;</span>)=beta, Named(<span class="st">&quot;sigma2&quot;</span>)=sigma2));
   }
 };
 
 
-// Expose the classes
+<span class="co">// Expose the classes</span>
 RCPP_MODULE(MyModule) {
-  using namespace Rcpp;
+  <span class="kw">using</span> <span class="kw">namespace</span> Rcpp;
 
-  class_&lt;GaussModLin&gt;(&quot;GaussModLin&quot;)
-    .constructor&lt;mat,vec&gt;(&quot;constructor&quot;) // This exposes the default constructor
-    .method(&quot;estim&quot;, &amp;GaussModLin::estim) // This exposes the estim method
-    .field(&quot;X&quot;, &amp;GaussModLin::X)
+  <span class="va">class_</span>&lt;GaussModLin&gt;(<span class="st">&quot;GaussModLin&quot;</span>)
+    .constructor&lt;mat,vec&gt;(<span class="st">&quot;constructor&quot;</span>) <span class="co">// This exposes the default constructor</span>
+    .method(<span class="st">&quot;estim&quot;</span>, &amp;GaussModLin::estim) <span class="co">// This exposes the estim method</span>
+    .field(<span class="st">&quot;X&quot;</span>, &amp;GaussModLin::X)
   ;
 
-}</code></pre>
+}</code></pre></div>
 <p>Le fichier DESCRIPTION:</p>
-<pre class="r"><code>Package: myPackage
-Type: Package
-Title: A Minimum Example of an Rcpp Module
-Version: 0.1.0
-Author: Tim &amp; Mathieu
-Maintainer: Tim &amp; Mathieu &lt;TimMat@stateofther.fr&gt;
-Description: This package provides a minimal example for using an Rcpp pacakge.
-License: GPL (&gt;=2)
-Encoding: UTF-8
-LazyData: true
-Depends:
-    Rcpp (&gt;= 0.12.8)
-Imports:
-    Rcpp (&gt;= 0.12.8)
-LinkingTo:
-    Rcpp,
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Package<span class="op">:</span><span class="st"> </span>myPackage
+Type<span class="op">:</span><span class="st"> </span>Package
+Title<span class="op">:</span><span class="st"> </span>A Minimum Example of an Rcpp Module
+Version<span class="op">:</span><span class="st"> </span><span class="dv">0</span>.<span class="fl">1.0</span>
+Author<span class="op">:</span><span class="st"> </span>Tim <span class="op">&amp;</span><span class="st"> </span>Mathieu
+Maintainer<span class="op">:</span><span class="st"> </span>Tim <span class="op">&amp;</span><span class="st"> </span>Mathieu <span class="op">&lt;</span>TimMat<span class="op">@</span>stateofther.fr<span class="op">&gt;</span>
+Description<span class="op">:</span><span class="st"> </span>This package provides a minimal example <span class="cf">for</span> using an Rcpp pacakge.
+License<span class="op">:</span><span class="st"> </span><span class="kw">GPL</span> (<span class="op">&gt;=</span><span class="dv">2</span>)
+Encoding<span class="op">:</span><span class="st"> </span>UTF<span class="dv">-8</span>
+LazyData<span class="op">:</span><span class="st"> </span>true
+Depends<span class="op">:</span>
+<span class="st">    </span><span class="kw">Rcpp</span> (<span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span>.<span class="fl">12.8</span>)
+Imports<span class="op">:</span>
+<span class="st">    </span><span class="kw">Rcpp</span> (<span class="op">&gt;=</span><span class="st"> </span><span class="dv">0</span>.<span class="fl">12.8</span>)
+LinkingTo<span class="op">:</span>
+<span class="st">    </span>Rcpp,
     RcppArmadillo,
     Matrix
-RcppModules: MyModule
-RoxygenNote: 6.1.0</code></pre>
+RcppModules<span class="op">:</span><span class="st"> </span>MyModule
+RoxygenNote<span class="op">:</span><span class="st"> </span><span class="dv">6</span>.<span class="fl">1.0</span></code></pre></div>
 <p>Les fichiers Rcpp exports et NAMESPACE sont automatiquement générés et gérés par la commande <code>devtools::document()</code> si les entêtes Roxygen ont bien été renseignés.</p>
 </div>
 </div>

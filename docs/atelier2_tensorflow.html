@@ -9,7 +9,6 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Sophie Donnet, Saint-Clair" />
 
 
 <title>Introduction à Tensorflow</title>
@@ -24,6 +23,9 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -306,12 +308,25 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Home</a>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    accueil
+  </a>
+</li>
+<li>
+  <a href="https://github.com/StateOfTheR/finistR2018">
+    <span class="fa fa-github"></span>
+     
+    dépôt github
+  </a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-refresh"></span>
+     
     Webscrapping
      
     <span class="caret"></span>
@@ -332,18 +347,14 @@ div.tocify {
       <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
     </li>
     <li>
-      <a href="atelier1_webscraping_googlefight.html">Google Fight</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_googlenews.html">Google News</a>
-    </li>
-    <li>
-      <a href="atelier1_webscraping_youtube.html">Youtube</a>
+      <a href="atelier1_webscraping_googlefight.html">Occurrences Google</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-wheelchair-alt"></span>
+     
     Optimisation et accélération
      
     <span class="caret"></span>
@@ -364,6 +375,9 @@ div.tocify {
       <a href="atelier2_tensorflow.html">TensorFlow</a>
     </li>
     <li>
+      <a href="atelier2_greta.html">Greta</a>
+    </li>
+    <li>
       <a href="atelier2_rcpp_modules.html">Modules Rcpp</a>
     </li>
     <li>
@@ -373,6 +387,8 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-thumbs-o-up"></span>
+     
     Bonnes pratiques
      
     <span class="caret"></span>
@@ -401,8 +417,6 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Introduction à Tensorflow</h1>
-<h4 class="author"><em>Sophie Donnet, Saint-Clair</em></h4>
-<h4 class="date"><em>28 août 2018</em></h4>
 
 </div>
 
@@ -413,7 +427,7 @@ div.tocify {
 <p>Pour minimiser une fonction, on a par exemple recourt à un algorithme de descente de gradient plus ou moins complexe (stochastique ou non, contraint ou non). Par défaut, on utilisera sour R la fonction <code>optim</code>. Deux cas se présentent : soit le gradient est calculable à la main et alors on peut le fournir comme argument de la fonction <code>optim</code>, ou alors par défaut ce gradient est approché numériquement. L’approximation numérique du gradient conduit à des temps de calculs élévés.</p>
 <p>La puissance de TensorFlow est de faire appel à la différenciation automatique pour calculer le gradient. La différenciation automatique est introduite sur la page Wikipedia correspondante &lt; <a href="https://en.wikipedia.org/wiki/Automatic_differentiation" class="uri">https://en.wikipedia.org/wiki/Automatic_differentiation</a>&gt;. En quelques mots, si <span class="math inline">\(f\)</span> est la fonction d’intéret, la différenciation automatique commence par décomposer cette fonction <span class="math inline">\(f\)</span> en opérations simples telles que des sommes, produits, puissances, exponentielles, etc. On obtient alors la représentation de la fonction <span class="math inline">\(f\)</span> sous forme d’arbre, où les noeuds dont les opérations et les arêtes représentent le flux des données/variables. Par exemple, on peut décomposer la densité de la gaussienne selon le schéma suivant:</p>
 <center>
-<img src="gaussian_tensor_flow.png" alt="Décomposition de la densité d’une gaussienne" width="400" />
+<img src="img/gaussian_tensor_flow.png" alt="Décomposition de la densité d’une gaussienne" width="400" />
 </center>
 <p>Une fois la fonction encodée sous forme d’arbre composée d’opérations simples, les dérivées partielels sont obtenues par l’application de la Chain Rule (dérivation des fonctions composées). Ces dérivées peuvent être obtenues en remontant l’arbre ou en le descendant, aboutissant ainsi à deux algorithmes: forward et backward.</p>
 <p>Cette méthode de calcul des dérivées est connue pour être efficace. C’est ce qui a permis entre autre le développement des méthodes d’apprentissage profond. Nous pouvons espérer utiliser cette puissance au service d’autres problèmes d’optimisation.</p>
@@ -460,16 +474,16 @@ sess<span class="op">$</span><span class="kw">run</span>(tf<span class="op">$</s
   <span class="cf">if</span> (step <span class="op">%%</span><span class="st"> </span><span class="dv">20</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)
     <span class="kw">cat</span>(step, <span class="st">&quot;-&quot;</span>, sess<span class="op">$</span><span class="kw">run</span>(a), sess<span class="op">$</span><span class="kw">run</span>(b), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
 }</code></pre></div>
-<pre><code>## 20 - 0.1222981 0.3038565 
-## 40 - 0.1145072 0.3079129 
-## 60 - 0.1123584 0.3090316 
-## 80 - 0.1117658 0.3093401 
-## 100 - 0.1116024 0.3094253 
-## 120 - 0.1115573 0.3094487 
-## 140 - 0.1115449 0.3094552 
-## 160 - 0.1115414 0.309457 
-## 180 - 0.1115405 0.3094575 
-## 200 - 0.1115403 0.3094576</code></pre>
+<pre><code>## 20 - 0.0703861 0.3223835 
+## 40 - 0.05355401 0.3310279 
+## 60 - 0.04979218 0.3329598 
+## 80 - 0.04895144 0.3333916 
+## 100 - 0.04876353 0.3334881 
+## 120 - 0.04872156 0.3335097 
+## 140 - 0.04871216 0.3335145 
+## 160 - 0.04871006 0.3335156 
+## 180 - 0.04870959 0.3335158 
+## 200 - 0.04870952 0.3335158</code></pre>
 </div>
 <div id="exemple-2-calcul-du-mode-dune-loi-gamma." class="section level3">
 <h3>Exemple 2 : calcul du mode d’une loi <span class="math inline">\(\Gamma\)</span>.</h3>
@@ -556,7 +570,7 @@ abs_x &lt;-<span class="st"> </span>tf<span class="op">$</span><span class="kw">
 <h3>Exemple : dérivée de la densité d’une loi gaussienne</h3>
 <p>La fonction à dériver doit être écrite sous forme de fonction mathématique de base <code>tensorflow</code> :</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gaussian &lt;-<span class="st"> </span><span class="cf">function</span>(x, mu, sig) {
-  <span class="dv">1</span>.<span class="op">/</span>(sig <span class="op">*</span><span class="st"> </span>tf<span class="op">$</span><span class="kw">sqrt</span>(<span class="dv">2</span>. <span class="op">*</span><span class="st"> </span>pi )) <span class="op">*</span><span class="st"> </span>tf<span class="op">$</span><span class="kw">exp</span>(<span class="op">-</span>.<span class="dv">5</span> <span class="op">*</span><span class="st"> </span>((x <span class="op">-</span><span class="st"> </span>mu)<span class="op">/</span>sig)<span class="op">**</span><span class="dv">2</span>)
+  <span class="fl">1.</span><span class="op">/</span>(sig <span class="op">*</span><span class="st"> </span>tf<span class="op">$</span><span class="kw">sqrt</span>(<span class="fl">2.</span> <span class="op">*</span><span class="st"> </span>pi )) <span class="op">*</span><span class="st"> </span>tf<span class="op">$</span><span class="kw">exp</span>(<span class="op">-</span>.<span class="dv">5</span> <span class="op">*</span><span class="st"> </span>((x <span class="op">-</span><span class="st"> </span>mu)<span class="op">/</span>sig)<span class="op">**</span><span class="dv">2</span>)
 }</code></pre></div>
 <p>Il est important de réinitialiser le graphe <code>tensorflow</code>. Celui-ci n’est pas stocké dans les variables d’environnement et vider l’environnement de travail sous <code>Rstudio</code> ne réinitialise pas le graph <code>tensorflow</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tf<span class="op">$</span><span class="kw">reset_default_graph</span>()
@@ -574,9 +588,14 @@ dgauss &lt;-<span class="st"> </span>tf<span class="op">$</span><span class="kw"
 
 <span class="kw">tensorboard</span>(<span class="dt">log_dir =</span> <span class="st">&quot;dgauss_log_summary&quot;</span>)</code></pre></div>
 <div class="figure">
-<img src="tensorboard.png" alt="Caption" />
+<img src="img/tensorboard.png" alt="Caption" />
 <p class="caption">Caption</p>
 </div>
+</div>
+</div>
+<div id="un-exemple-en-python-avec-jupyter-lab" class="section level2">
+<h2>Un exemple en python avec Jupyter lab</h2>
+<p><a href="https://github.com/StateOfTheR/finistR2018/blob/master/atelier2/TensorFlow/TF_diabetes.ipynb">Python notebook - régression linéaire appris par descente de gradient stochastique</a></p>
 <!-- ### Remarques  -->
 <!-- Ce que j'aurais voulu faire en plus : récupérer juste la valeur du gradient en un $x$ donné :  -->
 <!-- ```{r, echo=TRUE, eval = FALSE} -->
@@ -584,7 +603,6 @@ dgauss &lt;-<span class="st"> </span>tf<span class="op">$</span><span class="kw"
 <!-- var_grad_val <- sess$run(var_grad,feed_dict = dict(x=1,convert=TRUE))  -->
 <!-- ``` -->
 <!-- Faisable sous python mais pas réussi sous R?  -->
-</div>
 </div>
 
 

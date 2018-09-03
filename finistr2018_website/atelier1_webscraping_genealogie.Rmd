@@ -1,13 +1,9 @@
 ---
 title: "Mathematical genealogy scraping"
-author: "Antoine Bichat"
-date: "27/08/2018"
 output: 
   html_document:
    toc: true
    toc_float: true
-   number_sections: false
-   highlight: tango
 ---
 
 ```{r setup, include=FALSE}
@@ -22,7 +18,7 @@ library(tidygraph)
 library(ggraph)
 ```
 
-# A la main
+# À la main
 
 ## Rémi Peyre
 

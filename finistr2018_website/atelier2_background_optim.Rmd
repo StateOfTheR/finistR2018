@@ -1,6 +1,5 @@
 ---
 title: 'Background in basic optimization  with R'
-author: Julien
 output: 
   html_document:
     toc: true
