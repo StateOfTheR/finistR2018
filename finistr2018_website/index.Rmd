@@ -2,6 +2,31 @@
   title: "FinistR à Beg Meil"
 ---
   
-  Le site agrocampus Ouest de Beg Meil a accueilli du 27 au 31 aoùt 2018, le deuxième R Bootcamp du groupe State Of The R. 
-  Cette semaine a été consacré à approfondir divers aspects du logiciel R. Ce site propose un compte rendu des différents thèmes abordés.
-  
+Le site agrocampus Ouest de Beg Meil a accueilli du 27 au 31 aoùt 2018, le deuxième R Bootcamp du groupe State Of The R. 
+
+Cette semaine a été consacré à approfondir divers aspects du logiciel R. Ce site propose un compte rendu des différents thèmes abordés.
+
+## Participants
+
+![La fine équipe finistR2018](../pictures/finisteR18_1.jpg)
+
+  - 1er rang: Marie Perrot (UMR MIA Paris), Timothée Tabouy (UMR MIA Paris), Félix Cheysson (UMR MIA Paris), Mathieu Carmassi (UMR MIA Paris - EDF)
+  - 2ème rang: Marie-Pierre Étienne (IRMAR/ Agrocampus Ouest), Antoine Bichat (UMR Maiage - INRA), Julien Chiquet (UMR MIA Paris - INRA), Sophie Donnet (UMR MIA Paris - INRA), 
+  - 3ème rang: Bewentaoré Sawadogo (UMR MIA Paris), Pierre Gloaguen (UMR MIA Paris - Agroparistech), Avner Bar-Hen (CNAM), Saint-Clair Chabert-Liddell (UMR MIA Paris), Vincent Runge (UMR LaMME - Université  Paris Saclay), Jean-Baptiste Lecomte (UMR ESE - Agrocampus Ouest), Gabriel Lang (UMR MIA Paris - Agroparistech),  Raphaëlle Momal (UMR MIA Paris), Pierre Navaro (IRMAR - CNRS), Éric Parent (UMR MIA Paris - Agroparistech)
+
+## Planning indicatif
+
+```{r programme, echo = FALSE}
+library(tidyr)
+library(dplyr)
+library(tibble)
+
+programme <- readODS::read.ods(file = '../Programme.ods')[[1]] %>% 
+  rename(Horaire = A, Lundi = B, Mardi = C, Mercredi = D, Jeudi = E, Vendredi = F) %>% 
+  filter(!(Horaire == ''))
+
+DT::datatable(programme) %>% DT::formatStyle( columns = colnames(programme)[-1],
+  backgroundColor = DT::styleEqual(c('','Repas', 'Pause','Atelier 1 : Web scraping/ Textmining', 'Atelier 2 : R Interface', 'Atelier 3 : bonnes pratiques de programmation','Atelier 4 : SIG et représentation graphique', 'Optimisation – J. Chiquet', 'Package – J. Chiquet', 'Base de données -MP Etienne', 'Atelier 3 : Point P. Navarro','Atelier 1 : Bilan','Atelier 2 : Bilan','Atelier 3 : Bilan','Atelier 4 : Bilan', 'Bilan', 'Finalisation des rendus' ), c('lightgray','#c9dfe8', '#c9dfe8','#def7cf',  '#c3f2a7','#b5f48d','#96e863','#f2fc9c', '#f2fc9c', '#f2fc9c', '#f2fc9c', '#9ceefc', '#9ceefc', '#9ceefc', '#9ceefc', '#9ceefc', '#9ceefc') ))
+```
+
+Les séquences en vert correspondent à des séances d'atelier en sous groupes. Les séquences en jaune correspondent à un panorama du sujet indiqué, tandis que les séquences en bleu correspondent à des temps de réflexion et rédaction sur le rendu final.

@@ -38,13 +38,10 @@ navbar:
     menu:
       - text: "Versionning"
         href: atelier3_git.html
-      - text: "Package"
-        href: atelier3_package.html
-        menu: 
-          - text: "Création"
-            href: atelier3_package_creation.html
-          - text: "Développement et tests"
-            href: atelier3_package_dvp.html
+      - text: "Créationde packages"
+        href: atelier3_package_creation.html
+      - text: "Développement et tests"
+        href: atelier3_package_dvp.html
       - text: "Production de documents"
         href: atelier3_advancedrmd.html
 output:
