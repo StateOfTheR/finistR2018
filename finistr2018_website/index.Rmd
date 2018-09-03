@@ -1,6 +1,10 @@
 ---
 title: "FinistR: bootcamp R à Beg Meil"
 date: "du 27 au 31 août 2018"
+output: 
+  html_document:
+   toc: true
+   toc_float: true
 ---
 
 ## Où ? Quand ?
