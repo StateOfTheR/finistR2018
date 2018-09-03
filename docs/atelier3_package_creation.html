@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Antoine, Béwentaoré, Marie, Pierre, Raphaëlle" />
+
+<meta name="date" content="2018-09-03" />
+
+<title>Pour un package propre et transportable</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 54px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+
+.section h2 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h3 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h4 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h5 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h6 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FinistR 2018</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Webscrapping
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier1_webscraping_intro.html">Introduction</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Ateliers</li>
+    <li>
+      <a href="atelier1_webscraping_simple.html">Un exemple simple</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_genealogie.html">Généalogie mathématique</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_googlefight.html">Google Fight</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_googlenews.html">Google News</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_youtube.html">Youtube</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Optimisation et accélération
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier2_introduction.html">Introduction</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Ateliers</li>
+    <li>
+      <a href="atelier2_background_optim.html">Outils d'optimisation standard</a>
+    </li>
+    <li>
+      <a href="atelier2_rgpu.html">R et GPU</a>
+    </li>
+    <li>
+      <a href="atelier2_tensorflow.html">TensorFlow</a>
+    </li>
+    <li>
+      <a href="atelier2_rcpp_modules.html">Modules Rcpp</a>
+    </li>
+    <li>
+      <a href="atelier2_julia.html">Julia</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Bonnes pratiques
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Introduction</li>
+    <li class="divider"></li>
+    <li>
+      <a href="atelier3_git.html">Versioning</a>
+    </li>
+    <li>
+      <a href="atelier3_package_creation.html">Packages: création, développement, tests</a>
+    </li>
+    <li>
+      <a href="atelier3_advancedrmd.html">Production de documents</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Pour un package propre et transportable</h1>
+<h4 class="author"><em>Antoine, Béwentaoré, Marie, Pierre, Raphaëlle</em></h4>
+<h4 class="date"><em>2018-09-03</em></h4>
+
+</div>
+
+
+<pre class="r"><code># path to the testPackage directory
+packagePath &lt;- &quot;testPackage&quot;
+print(getwd())
+[1] &quot;/home/jchiquet/work/StateOfTheR/finistR2018/finistr2018_website&quot;</code></pre>
+<div id="objectif" class="section level1">
+<h1>Objectif</h1>
+<p>L’objectif est de faire un package qui soit:</p>
+<ul>
+<li>Ecrit de manière standardisée (utilisation de <code>lintr</code>)</li>
+<li>Documenté (utilisation du package <code>roxygen2</code>)</li>
+<li>Testé (utilisation du package <code>testhat</code>)</li>
+<li>Transportable d’une plateforme à l’autre (utilisation de la plateforme <code>Travis</code>, )</li>
+<li>Potentiellement capable de faire un <code>qqplot</code> correct en <code>ggplot</code>, mais ça, c’est du bonus!</li>
+</ul>
+</div>
+<div id="creation-du-package" class="section level1">
+<h1>Création du package</h1>
+<p>Création d’un package par défaut. On le met sur <code>github</code>.</p>
+<ul>
+<li><code>New Project -&gt; From Empty directory -&gt; R package</code></li>
+</ul>
+<p>Cela crée un dossier minimal contenant:</p>
+<ul>
+<li><p>Un fichier <code>DESCRIPTION</code></p>
+<pre><code>Package: testPackage
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Author: Who wrote it
+Maintainer: The package maintainer &lt;yourself@somewhere.net&gt;
+Description: More about what it does (maybe more than one line)
+Use four spaces when indenting paragraphs within the Description.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+Imports:
+car
+RoxygenNote: 6.1.0
+Suggests: knitr,
+rmarkdown,
+testthat
+VignetteBuilder: knitr</code></pre></li>
+<li><p>Un dossier <code>R</code> qui contiendra <strong>toutes les fonctions</strong> du package;</p></li>
+<li><p>Un dossier <code>man</code> qui contiendra les fichiers <code>.Rd</code> (la documentation) des fonctions du package. Le package central est <code>devtools</code> qui réunit un ensemble de fonctions pour la création d’un package.</p></li>
+</ul>
+</div>
+<div id="le-package-testpackage" class="section level1">
+<h1>Le package <code>testPackage</code></h1>
+<p>Ce package a pour objectif d’obtenir de manière ultra rapide les estimations dans un modèle de régression linéaire. Il ne contient qu’une seule et unique fonction, centrale, la fonction <code>estimate</code>, codée comme ceci:</p>
+<pre class="r"><code>estimate &lt;- function(y,x){
+  return(lm(y ~ x)$coefficients)
+}</code></pre>
+<p>Afin de pouvoir utiliser ce package, il faut le “construire” (avec le bouton <code>Build</code> dans RStudio, ou <code>Ctrl-Shift-B</code>), ou encore:</p>
+<pre class="r"><code>devtools::build(packagePath)</code></pre>
+<p>Il est important de vérifier régulièrement que tout va bien dans le package,</p>
+<ul>
+<li><p>Que la doc est bien renseignée;</p></li>
+<li><p>Que les fonctions (et les exemples associées) tournent;</p></li>
+<li><p>Tout simplement que le package se construit toujours!</p></li>
+</ul>
+<p>Pour ça il faut faire de réguliers <code>check</code>.</p>
+<pre class="r"><code>devtools::check(packagePath)</code></pre>
+<div id="deployer-rapidement-un-package-sur-son-github-personnel" class="section level2">
+<h2>Déployer rapidement un package sur son github personnel</h2>
+<p>Pré-requis : git bien configuré sur la machine (en particulier <code>user.name</code> et <code>user.email</code> !)</p>
+<p>Expliqué dans <a href="https://r-mageddon.netlify.com/post/writing-an-r-package-from-scratch/" class="uri">https://r-mageddon.netlify.com/post/writing-an-r-package-from-scratch/</a> à partir de Step 6.</p>
+<p>Utilise le package <code>usethis</code> et créer automatiquement votre repository github complet du package en… <em>3 lignes</em> de commande R.</p>
+<pre class="r"><code>library(usethis)
+devtools::use_git()
+usethis::browse_github_pat()</code></pre>
+<p>Github s’ouvre dans le browser, le but est de générer un token afin de lier votre compte github et le package. Les paramètres de création du token sont déjà cochés par défaut, copier le token généré et l’insérer à la place de <strong>xxxtokenxxx</strong> ci-dessous.</p>
+<pre class="r"><code>devtools::use_github(protocol=&quot;https&quot;, auth_token=&quot;xxxtokenxxx&quot;)</code></pre>
+</div>
+<div id="standardisation-du-code" class="section level2">
+<h2>Standardisation du code</h2>
+<p>J’ai envie de faire en sorte que ce package soit <em>proprement</em> écrit, c’est à dire selon certaines normes d’écritures. Ces normes d’écriture sont rassemblées dans le package <code>lintr</code>.</p>
+<pre class="r"><code>library(lintr)
+lint_package(packagePath)</code></pre>
+<p>Il est possible de Je peux ainsi modifier mon code en conséquence en ajoutant un espace entre <code>x</code> et <code>y</code>.</p>
+</div>
+<div id="documentation" class="section level2">
+<h2>Documentation</h2>
+<div id="aide-aux-fonctions" class="section level3">
+<h3>Aide aux fonctions</h3>
+<p>Un bon package doit être bien documenté. Pour cela, il faut installer le package <code>roxygen2</code> qui offre une syntaxe <em>user-friendly</em> permettant de commenter le code tout en faisant la doc.</p>
+<pre class="r"><code>#&#39; Ultra fast equivalent of fonction coeff()
+#&#39;
+#&#39; Mimicks coeff() function but with greater SWAG
+#&#39;
+#&#39; @param x regressors
+#&#39; @param y observations
+#&#39;
+#&#39; @return Estimated coefficients of linear regression, using least square loss
+#&#39; @seealso lm function (deprecated)
+#&#39; @examples
+#&#39; x &lt;- seq(0, 1, length = 10);
+#&#39; y &lt;- 1 + 2 * x + rnorm(length(x), 0, 0.1)
+#&#39; estimate(y, x)
+#&#39; @export
+estimate &lt;- function(y,x){
+  return(lm(y ~ x)$coefficients)
+}</code></pre>
+</div>
+<div id="vignettes" class="section level3">
+<h3>Vignettes</h3>
+<p>On peut également créer une vignette (en <code>Rmarkdown</code>). Il faut faire attention à ne pas placer le fichier <code>vignette.rmd</code> n’importe où. Toutes les structures nécessaires, en plus d’un squelette à reprendre pour faire sa vignette sont créés par la fonction</p>
+<pre class="r"><code>devtools::use_vignette()</code></pre>
+<p>Cela créé un dossier contenant un fichier <code>.Rmd</code>, le squelette de votre vignette</p>
+<pre><code>---
+title: &quot;Pour un package propre et transportable&quot;
+author: &quot;Marie, Pierre&quot;
+date: &quot;2018-09-03&quot;
+output: rmarkdown::html_vignette
+vignette: &gt;
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Objectif
+
+L&#39;objectif est de faire un package qui soit:</code></pre>
+</div>
+</div>
+</div>
+<div id="test-des-fonctions" class="section level1">
+<h1>Test des fonctions</h1>
+<p>Une fonction étant amenée à évoluer, il est utile de garantir qu’au cours du développement du package, elle respecte toujour un certain cahier des charges.</p>
+<p>Pour cela on crée des fonction tests.</p>
+<p>La première bonne démarche est de ne pas modifier la structure de package de manière <em>anarchique</em>. À cette fin, on utilise à nouveau devtools, et le package <code>testthat</code>.</p>
+<pre class="r"><code>library(testthat)
+devtools::use_testthat()</code></pre>
+<p>Cette fonction créé un dossier <code>tests</code> qui contiendra un fichier <code>testthat.R</code></p>
+<pre class="r"><code>library(testthat)
+library(testPackage) 
+test_check(&quot;testPackage&quot;)</code></pre>
+<p>Ce script a pour but d’effectuer tous les tests présents dans le package.</p>
+<p>Ceux ci doivent être placés dans un dossier créé par <code>devtools::use_testthat</code>, le dossier <code>tests/testthat</code>. L’architecture des tests est détaillée sur .</p>
+<p>En gros, l’idée est de coder des tests unitaires simples (des <em>expectations</em>), au niveau minimal (dans les fonctions). Ces <em>expectations</em>, une fois assemblées donnent un test sur la fonction (le <em>test</em>). Chaque test doit être encapsulé dans un script de type <code>test_nomdutest.R</code>, enregistré dans <code>tests/testthat</code>. Le préfixe <code>test_</code> étant essentiel. Un fichier test comprend la fonction <code>test_that</code> qui regroupe tous les tests unitaires:</p>
+<pre class="r"><code>#fichier test_estimate.R
+library(testthat)
+test_that(&quot;If it quacks like a duck, it&#39;s a duck&quot;, {
+  expect_equal(&quot;quack&quot;, &quot;quack&quot;)
+  expect_is(estimate(rnorm(10), rnorm(10)), class = &quot;numeric&quot;)
+})</code></pre>
+<p>La fonction <code>devtools::test</code> testera alors tous les fichiers de ce type</p>
+<pre class="r"><code>devtools::test(packagePath)</code></pre>
+<p>Il existe aussi un autre package pour les test unitaires: <code>RUnit</code>. Nous ne l’avons pas explorer.</p>
+<p>Il est possible de recenser la proportion des fonctions testées, grâce au package <code>covr</code>. On a ainsi une idée de la couverture des tests du package.</p>
+<pre class="r"><code>covr::package_coverage(packagePath)</code></pre>
+<p>Cet outil est un indicateur (il ne dit rien de la qualité des tests).</p>
+</div>
+<div id="travis" class="section level1">
+<h1>Travis</h1>
+<p>Travis peut être utiliser pour lancer systématiquement des tests lorsque l’on met à jour un repo git. Il faut se créer un compte sur travais en lien avec son compte github.</p>
+<p>Ensuite, on trouve de bonnes explications très simples sur (<a href="https://juliasilge.com/blog/beginners-guide-to-travis/" class="uri">https://juliasilge.com/blog/beginners-guide-to-travis/</a>)</p>
+<p>Il faut créer un fichier <code>.travis.yml</code> qui va indiquer à travis comment lancer les tests. Pour le faire on peut utiliser la commande</p>
+<pre class="r"><code>devtools::use_travis()</code></pre>
+<p>cette commande crée le fichier</p>
+<pre class="r"><code>  # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
+language: R
+sudo: false
+cache: packages</code></pre>
+<p>Il faut ajouter le fichier dans le fichier <code>.Rbuildignore</code> pour qu’il soit ignoré lors de la construction du paquet ( (c) Paul Bastide).</p>
+<p>Par défaut, les warnings sont traités comme des ereurs, pour éviter ce comportement par défaut il faut ajouter <code>warnings_are_errors: false</code> dans le fichier .travis.yml</p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

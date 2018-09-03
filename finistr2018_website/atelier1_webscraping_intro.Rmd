@@ -1,0 +1,45 @@
+---
+title: "Introduction au Webscraping"
+author: "Avner"
+date: "31 août 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction au Webscrapping
+
+Le Web scraping est une technique permettant de convertir des données présentes dans un format non structuré (balises HTML) sur le Web en un format structuré facilement utilisable. Les exemples peuvent aller du texte sur Wikipedia, à des images sur Flickr en passant par les commentaires sur TripAdvisor, les articles d'actualité ou de chercheurs ou n'importe quelle page web présente sur Internet.
+
+Il existe plusieurs façons de récupérer les données du Web. Certains des moyens les plus populaires sont :
+
+* Copier-coller manuel : c'est un moyen lent mais efficace pour scraper les données du Web. On peut aussi copier la page Web intégralement puis utiliser des expressions régulières pour extraire l'info recherchée.
+* Interface API: De nombreux sites Web tels que Facebook, Twitter, LinkedIn, etc. fournissent des API publiques et / ou privées pouvant être appelées à l'aide d'un code standard pour récupérer les données dans le format prescrit. Il existe pas mal de librairies R qui permettent d'utiliser ces API directement dans R.
+  
+Une connaissance minimale du HTML et des CSS peut être utile. L'extension Selector Gadget sur Chrome permet d'inspecter la structure d'une page web et va être très utile.
+
+## Introduction à l'HTML
+L'idée du HTML est d'avoir des balises qui permettent de donner un sens à des partis de texte (est-ce un paragraphe ? Est-ce une liste à puces ? Est-ce une partie de tableau ?), pour structurer un document en sections logiques (a-t-on une en-tête ? Un tableau ? Combien de colonnes ? Y-a-t-il un menu de navigation ?) ainsi que pour intégrer du contenu comme des images ou des vidéos dans une page.
+
+Un langage de marquage comme HTML ou XML peut être schématisé comme une arborescence hiérarchisée. Les différentes composantes de l'arborescence sont appelés _noeuds_. Il existe différents types de noeuds et dans un document HTML il y a au moins trois types de noeuds : les noeud-élément, les noeud-attribut, et les noeud-texte.
+
+Prenons un exemple de ligne html
+
+      <h1 class="centre">Bonjour <i>tout le monde</i>&nbsp;!</h1>
+
+
+L'élément h1 a  trois noeuds enfants et un noeud associé : les nouds enfants sont le noeud texte avec le mot « Bonjour » suivi d'un espace, le noeuds élément de l'élément i, enfin le noeud texte constitué de la chaîne de caractères `&nbsp;!`. L'attribut class dans la balise ouvrante `<h1>` n'est pas un noeud enfant mais un noeud associé. Le noeud attribut a cependant un noeud enfant : la valeur affectée (`centre`). 
+
+De manière graphique on peut représenter une page HTML sous forme d'un arbre :
+
+
+![Représentation page HTML](img/HTMLDOMTree.png)
+
+Enfin il faut se rappeler que :
+
+* un id s'applique à un objet unique : il ne peut pas y avoir deux mêmes id dans une page
+* une classe peut caractériser plusieurs objets (identiques ou non).
+
+Dans une feuille de style CSS, les id seront écrits avec la syntaxe #nom_id et on trouve .nom_de_classe pour les classes.

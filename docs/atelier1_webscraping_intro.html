@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Avner" />
+
+
+<title>Introduction au Webscraping</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 54px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+
+.section h2 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h3 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h4 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h5 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h6 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FinistR 2018</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Webscrapping
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier1_webscraping_intro.html">Introduction</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Ateliers</li>
+    <li>
+      <a href="atelier1_webscraping_simple.html">Un exemple simple</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_genealogie.html">Généalogie mathématique</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_googlefight.html">Google Fight</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_googlenews.html">Google News</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_youtube.html">Youtube</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Optimisation et accélération
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier2_introduction.html">Introduction</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Ateliers</li>
+    <li>
+      <a href="atelier2_background_optim.html">Outils d'optimisation standard</a>
+    </li>
+    <li>
+      <a href="atelier2_rgpu.html">R et GPU</a>
+    </li>
+    <li>
+      <a href="atelier2_tensorflow.html">TensorFlow</a>
+    </li>
+    <li>
+      <a href="atelier2_rcpp_modules.html">Modules Rcpp</a>
+    </li>
+    <li>
+      <a href="atelier2_julia.html">Julia</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Bonnes pratiques
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Introduction</li>
+    <li class="divider"></li>
+    <li>
+      <a href="atelier3_git.html">Versioning</a>
+    </li>
+    <li>
+      <a href="atelier3_package_creation.html">Packages: création, développement, tests</a>
+    </li>
+    <li>
+      <a href="atelier3_advancedrmd.html">Production de documents</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Introduction au Webscraping</h1>
+<h4 class="author"><em>Avner</em></h4>
+<h4 class="date"><em>31 août 2018</em></h4>
+
+</div>
+
+
+<div id="introduction-au-webscrapping" class="section level2">
+<h2>Introduction au Webscrapping</h2>
+<p>Le Web scraping est une technique permettant de convertir des données présentes dans un format non structuré (balises HTML) sur le Web en un format structuré facilement utilisable. Les exemples peuvent aller du texte sur Wikipedia, à des images sur Flickr en passant par les commentaires sur TripAdvisor, les articles d’actualité ou de chercheurs ou n’importe quelle page web présente sur Internet.</p>
+<p>Il existe plusieurs façons de récupérer les données du Web. Certains des moyens les plus populaires sont :</p>
+<ul>
+<li>Copier-coller manuel : c’est un moyen lent mais efficace pour scraper les données du Web. On peut aussi copier la page Web intégralement puis utiliser des expressions régulières pour extraire l’info recherchée.</li>
+<li>Interface API: De nombreux sites Web tels que Facebook, Twitter, LinkedIn, etc. fournissent des API publiques et / ou privées pouvant être appelées à l’aide d’un code standard pour récupérer les données dans le format prescrit. Il existe pas mal de librairies R qui permettent d’utiliser ces API directement dans R.</li>
+</ul>
+<p>Une connaissance minimale du HTML et des CSS peut être utile. L’extension Selector Gadget sur Chrome permet d’inspecter la structure d’une page web et va être très utile.</p>
+</div>
+<div id="introduction-a-lhtml" class="section level2">
+<h2>Introduction à l’HTML</h2>
+<p>L’idée du HTML est d’avoir des balises qui permettent de donner un sens à des partis de texte (est-ce un paragraphe ? Est-ce une liste à puces ? Est-ce une partie de tableau ?), pour structurer un document en sections logiques (a-t-on une en-tête ? Un tableau ? Combien de colonnes ? Y-a-t-il un menu de navigation ?) ainsi que pour intégrer du contenu comme des images ou des vidéos dans une page.</p>
+<p>Un langage de marquage comme HTML ou XML peut être schématisé comme une arborescence hiérarchisée. Les différentes composantes de l’arborescence sont appelés <em>noeuds</em>. Il existe différents types de noeuds et dans un document HTML il y a au moins trois types de noeuds : les noeud-élément, les noeud-attribut, et les noeud-texte.</p>
+<p>Prenons un exemple de ligne html</p>
+<pre><code>  &lt;h1 class=&quot;centre&quot;&gt;Bonjour &lt;i&gt;tout le monde&lt;/i&gt;&amp;nbsp;!&lt;/h1&gt;</code></pre>
+<p>L’élément h1 a trois noeuds enfants et un noeud associé : les nouds enfants sont le noeud texte avec le mot « Bonjour » suivi d’un espace, le noeuds élément de l’élément i, enfin le noeud texte constitué de la chaîne de caractères <code>&amp;nbsp;!</code>. L’attribut class dans la balise ouvrante <code>&lt;h1&gt;</code> n’est pas un noeud enfant mais un noeud associé. Le noeud attribut a cependant un noeud enfant : la valeur affectée (<code>centre</code>).</p>
+<p>De manière graphique on peut représenter une page HTML sous forme d’un arbre :</p>
+<div class="figure">
+<img src="img/HTMLDOMTree.png" alt="Représentation page HTML" />
+<p class="caption">Représentation page HTML</p>
+</div>
+<p>Enfin il faut se rappeler que :</p>
+<ul>
+<li>un id s’applique à un objet unique : il ne peut pas y avoir deux mêmes id dans une page</li>
+<li>une classe peut caractériser plusieurs objets (identiques ou non).</li>
+</ul>
+<p>Dans une feuille de style CSS, les id seront écrits avec la syntaxe #nom_id et on trouve .nom_de_classe pour les classes.</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
