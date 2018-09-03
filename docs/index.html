@@ -15,7 +15,7 @@
 
 <script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -110,34 +110,34 @@ button.code-folding-btn:focus {
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
-  padding-top: 51px;
+  padding-top: 54px;
   padding-bottom: 40px;
 }
 /* offset scroll position for anchor links (for fixed navbar)  */
 .section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 
 .section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 .section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 .section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 .section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 .section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 </style>
 
@@ -201,10 +201,15 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="atelier1_webscraping_simple.html">Simple Example</a>
+      <a href="atelier1_webscraping_intro.html">Introduction</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Ateliers</li>
+    <li>
+      <a href="atelier1_webscraping_simple.html">Un exemple simple</a>
     </li>
     <li>
-      <a href="atelier1_webscraping_genealogie.html">Genealogie mathématique</a>
+      <a href="atelier1_webscraping_genealogie.html">Généalogie mathématique</a>
     </li>
     <li>
       <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
@@ -228,16 +233,24 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="atelier2_introduction.html">Introduction</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Ateliers</li>
+    <li>
+      <a href="atelier2_background_optim.html">Outils d'optimisation standard</a>
+    </li>
+    <li>
       <a href="atelier2_rgpu.html">R et GPU</a>
     </li>
     <li>
       <a href="atelier2_tensorflow.html">TensorFlow</a>
     </li>
     <li>
-      <a href="atelier2_julia.html">Julia</a>
+      <a href="atelier2_rcpp_modules.html">Modules Rcpp</a>
     </li>
     <li>
-      <a href="atelier2_rcpp_modules.html">Rcpp</a>
+      <a href="atelier2_julia.html">Julia</a>
     </li>
   </ul>
 </li>
@@ -248,14 +261,13 @@ $(document).ready(function () {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Introduction</li>
+    <li class="divider"></li>
     <li>
-      <a href="atelier3_git.html">Versionning</a>
+      <a href="atelier3_git.html">Versioning</a>
     </li>
     <li>
-      <a href="atelier3_package_creation.html">Créationde packages</a>
-    </li>
-    <li>
-      <a href="atelier3_package_dvp.html">Développement et tests</a>
+      <a href="atelier3_package_creation.html">Packages: création, développement, tests</a>
     </li>
     <li>
       <a href="atelier3_advancedrmd.html">Production de documents</a>
@@ -276,8 +288,8 @@ $(document).ready(function () {
 </div>
 
 
-<p>Le site agrocampus Ouest de Beg Meil a accueilli du 27 au 31 aoùt 2018, le deuxième R Bootcamp du groupe State Of The R.</p>
-<p>Cette semaine a été consacré à approfondir divers aspects du logiciel R. Ce site propose un compte rendu des différents thèmes abordés.</p>
+<p>Le site agrocampus Ouest de Beg Meil a accueilli du 27 au 31 aoùt 2018, le deuxième R Bootcamp du <a href="https://stateofther.github.io/">groupe State Of The R</a>.</p>
+<p>Cette semaine a été consacrée à l’approfondissement de diverses thématiques (méthodologiques, techniques) autour du logiciel <code>R</code>: ce site propose un compte rendu des différents thèmes abordés.</p>
 <div id="participants" class="section level2">
 <h2>Participants</h2>
 <div class="figure">
@@ -292,8 +304,8 @@ $(document).ready(function () {
 </div>
 <div id="planning-indicatif" class="section level2">
 <h2>Planning indicatif</h2>
-<div id="htmlwidget-7ad353354feca232394b" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7ad353354feca232394b">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10"],["8h30-9h30","9h30-10h30","10h30-11h00","11h00-12h30","12h30-13h30","13h30-14h30","14h30-16h00","16h00-16h30","16h30-17h30","17h30-18h30"],["","","","","Repas","Introduction : Objectif, Organisation, Rendus","Atelier 1 : Web scraping/ Textmining","Pause","Atelier 1 : Web scraping/ Textmining","Atelier 1 : Bilan"],["Optimisation – J. Chiquet","Atelier 2 : R Interface","Pause","Atelier 2 : R Interface","Repas","Atelier 2 : R Interface","Atelier 2 : R Interface","Pause","Atelier 2 : R Interface","Atelier 2 : Bilan"],["Package – J. Chiquet","Atelier 3 : bonnes pratiques de programmation","Pause","Atelier 3 : bonnes pratiques de programmation","Repas","Atelier 3 : bonnes pratiques de programmation","Atelier 3 : bonnes pratiques de programmation","Pause","Atelier 3 : Point P. Navarro","Atelier 3 : Bilan"],["Base de données -MP Etienne","Atelier 4 : SIG et représentation graphique","Pause","Atelier 4 : SIG et représentation graphique","Repas","Atelier 4 : SIG et représentation graphique","Atelier 4 : SIG et représentation graphique","Pause","Atelier 4 : SIG et représentation graphique","Atelier 4 : Bilan"],["Bilan","Finalisation des rendus","Pause","Finalisation des rendus","Repas","","","","",""]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Horaire<\/th>\n      <th>Lundi<\/th>\n      <th>Mardi<\/th>\n      <th>Mercredi<\/th>\n      <th>Jeudi<\/th>\n      <th>Vendredi<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"rowCallback":"function(row, data) {\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'background-color':value == '' ? 'lightgray' : value == 'Repas' ? '#c9dfe8' : value == 'Pause' ? '#c9dfe8' : value == 'Atelier 1 : Web scraping/ Textmining' ? '#def7cf' : value == 'Atelier 2 : R Interface' ? '#c3f2a7' : value == 'Atelier 3 : bonnes pratiques de programmation' ? '#b5f48d' : value == 'Atelier 4 : SIG et représentation graphique' ? '#96e863' : value == 'Optimisation – J. Chiquet' ? '#f2fc9c' : value == 'Package – J. Chiquet' ? '#f2fc9c' : value == 'Base de données -MP Etienne' ? '#f2fc9c' : value == 'Atelier 3 : Point P. Navarro' ? '#f2fc9c' : value == 'Atelier 1 : Bilan' ? '#9ceefc' : value == 'Atelier 2 : Bilan' ? '#9ceefc' : value == 'Atelier 3 : Bilan' ? '#9ceefc' : value == 'Atelier 4 : Bilan' ? '#9ceefc' : value == 'Bilan' ? '#9ceefc' : value == 'Finalisation des rendus' ? '#9ceefc' : ''});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'background-color':value == '' ? 'lightgray' : value == 'Repas' ? '#c9dfe8' : value == 'Pause' ? '#c9dfe8' : value == 'Atelier 1 : Web scraping/ Textmining' ? '#def7cf' : value == 'Atelier 2 : R Interface' ? '#c3f2a7' : value == 'Atelier 3 : bonnes pratiques de programmation' ? '#b5f48d' : value == 'Atelier 4 : SIG et représentation graphique' ? '#96e863' : value == 'Optimisation – J. Chiquet' ? '#f2fc9c' : value == 'Package – J. Chiquet' ? '#f2fc9c' : value == 'Base de données -MP Etienne' ? '#f2fc9c' : value == 'Atelier 3 : Point P. Navarro' ? '#f2fc9c' : value == 'Atelier 1 : Bilan' ? '#9ceefc' : value == 'Atelier 2 : Bilan' ? '#9ceefc' : value == 'Atelier 3 : Bilan' ? '#9ceefc' : value == 'Atelier 4 : Bilan' ? '#9ceefc' : value == 'Bilan' ? '#9ceefc' : value == 'Finalisation des rendus' ? '#9ceefc' : ''});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'background-color':value == '' ? 'lightgray' : value == 'Repas' ? '#c9dfe8' : value == 'Pause' ? '#c9dfe8' : value == 'Atelier 1 : Web scraping/ Textmining' ? '#def7cf' : value == 'Atelier 2 : R Interface' ? '#c3f2a7' : value == 'Atelier 3 : bonnes pratiques de programmation' ? '#b5f48d' : value == 'Atelier 4 : SIG et représentation graphique' ? '#96e863' : value == 'Optimisation – J. Chiquet' ? '#f2fc9c' : value == 'Package – J. Chiquet' ? '#f2fc9c' : value == 'Base de données -MP Etienne' ? '#f2fc9c' : value == 'Atelier 3 : Point P. Navarro' ? '#f2fc9c' : value == 'Atelier 1 : Bilan' ? '#9ceefc' : value == 'Atelier 2 : Bilan' ? '#9ceefc' : value == 'Atelier 3 : Bilan' ? '#9ceefc' : value == 'Atelier 4 : Bilan' ? '#9ceefc' : value == 'Bilan' ? '#9ceefc' : value == 'Finalisation des rendus' ? '#9ceefc' : ''});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'background-color':value == '' ? 'lightgray' : value == 'Repas' ? '#c9dfe8' : value == 'Pause' ? '#c9dfe8' : value == 'Atelier 1 : Web scraping/ Textmining' ? '#def7cf' : value == 'Atelier 2 : R Interface' ? '#c3f2a7' : value == 'Atelier 3 : bonnes pratiques de programmation' ? '#b5f48d' : value == 'Atelier 4 : SIG et représentation graphique' ? '#96e863' : value == 'Optimisation – J. Chiquet' ? '#f2fc9c' : value == 'Package – J. Chiquet' ? '#f2fc9c' : value == 'Base de données -MP Etienne' ? '#f2fc9c' : value == 'Atelier 3 : Point P. Navarro' ? '#f2fc9c' : value == 'Atelier 1 : Bilan' ? '#9ceefc' : value == 'Atelier 2 : Bilan' ? '#9ceefc' : value == 'Atelier 3 : Bilan' ? '#9ceefc' : value == 'Atelier 4 : Bilan' ? '#9ceefc' : value == 'Bilan' ? '#9ceefc' : value == 'Finalisation des rendus' ? '#9ceefc' : ''});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'background-color':value == '' ? 'lightgray' : value == 'Repas' ? '#c9dfe8' : value == 'Pause' ? '#c9dfe8' : value == 'Atelier 1 : Web scraping/ Textmining' ? '#def7cf' : value == 'Atelier 2 : R Interface' ? '#c3f2a7' : value == 'Atelier 3 : bonnes pratiques de programmation' ? '#b5f48d' : value == 'Atelier 4 : SIG et représentation graphique' ? '#96e863' : value == 'Optimisation – J. Chiquet' ? '#f2fc9c' : value == 'Package – J. Chiquet' ? '#f2fc9c' : value == 'Base de données -MP Etienne' ? '#f2fc9c' : value == 'Atelier 3 : Point P. Navarro' ? '#f2fc9c' : value == 'Atelier 1 : Bilan' ? '#9ceefc' : value == 'Atelier 2 : Bilan' ? '#9ceefc' : value == 'Atelier 3 : Bilan' ? '#9ceefc' : value == 'Atelier 4 : Bilan' ? '#9ceefc' : value == 'Bilan' ? '#9ceefc' : value == 'Finalisation des rendus' ? '#9ceefc' : ''});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+<div id="htmlwidget-d26007ba37a33cba72e5" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d26007ba37a33cba72e5">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10"],["8h30-9h30","9h30-10h30","10h30-11h00","11h00-12h30","12h30-13h30","13h30-14h30","14h30-16h00","16h00-16h30","16h30-17h30","17h30-18h30"],["","","","","Repas","Introduction : Objectif, Organisation, Rendus","Atelier 1 : Web scraping/ Textmining","Pause","Atelier 1 : Web scraping/ Textmining","Atelier 1 : Bilan"],["Optimisation – J. Chiquet","Atelier 2 : R Interface","Pause","Atelier 2 : R Interface","Repas","Atelier 2 : R Interface","Atelier 2 : R Interface","Pause","Atelier 2 : R Interface","Atelier 2 : Bilan"],["Package – J. Chiquet","Atelier 3 : bonnes pratiques de programmation","Pause","Atelier 3 : bonnes pratiques de programmation","Repas","Atelier 3 : bonnes pratiques de programmation","Atelier 3 : bonnes pratiques de programmation","Pause","Atelier 3 : Point P. Navarro","Atelier 3 : Bilan"],["Base de données -MP Etienne","Atelier 4 : SIG et représentation graphique","Pause","Atelier 4 : SIG et représentation graphique","Repas","Atelier 4 : SIG et représentation graphique","Atelier 4 : SIG et représentation graphique","Pause","Atelier 4 : SIG et représentation graphique","Atelier 4 : Bilan"],["Bilan","Finalisation des rendus","Pause","Finalisation des rendus","Repas","","","","",""]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Horaire<\/th>\n      <th>Lundi<\/th>\n      <th>Mardi<\/th>\n      <th>Mercredi<\/th>\n      <th>Jeudi<\/th>\n      <th>Vendredi<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"rowCallback":"function(row, data) {\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'background-color':value == '' ? 'lightgray' : value == 'Repas' ? '#c9dfe8' : value == 'Pause' ? '#c9dfe8' : value == 'Atelier 1 : Web scraping/ Textmining' ? '#def7cf' : value == 'Atelier 2 : R Interface' ? '#c3f2a7' : value == 'Atelier 3 : bonnes pratiques de programmation' ? '#b5f48d' : value == 'Atelier 4 : SIG et représentation graphique' ? '#96e863' : value == 'Optimisation – J. Chiquet' ? '#f2fc9c' : value == 'Package – J. Chiquet' ? '#f2fc9c' : value == 'Base de données -MP Etienne' ? '#f2fc9c' : value == 'Atelier 3 : Point P. Navarro' ? '#f2fc9c' : value == 'Atelier 1 : Bilan' ? '#9ceefc' : value == 'Atelier 2 : Bilan' ? '#9ceefc' : value == 'Atelier 3 : Bilan' ? '#9ceefc' : value == 'Atelier 4 : Bilan' ? '#9ceefc' : value == 'Bilan' ? '#9ceefc' : value == 'Finalisation des rendus' ? '#9ceefc' : ''});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'background-color':value == '' ? 'lightgray' : value == 'Repas' ? '#c9dfe8' : value == 'Pause' ? '#c9dfe8' : value == 'Atelier 1 : Web scraping/ Textmining' ? '#def7cf' : value == 'Atelier 2 : R Interface' ? '#c3f2a7' : value == 'Atelier 3 : bonnes pratiques de programmation' ? '#b5f48d' : value == 'Atelier 4 : SIG et représentation graphique' ? '#96e863' : value == 'Optimisation – J. Chiquet' ? '#f2fc9c' : value == 'Package – J. Chiquet' ? '#f2fc9c' : value == 'Base de données -MP Etienne' ? '#f2fc9c' : value == 'Atelier 3 : Point P. Navarro' ? '#f2fc9c' : value == 'Atelier 1 : Bilan' ? '#9ceefc' : value == 'Atelier 2 : Bilan' ? '#9ceefc' : value == 'Atelier 3 : Bilan' ? '#9ceefc' : value == 'Atelier 4 : Bilan' ? '#9ceefc' : value == 'Bilan' ? '#9ceefc' : value == 'Finalisation des rendus' ? '#9ceefc' : ''});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'background-color':value == '' ? 'lightgray' : value == 'Repas' ? '#c9dfe8' : value == 'Pause' ? '#c9dfe8' : value == 'Atelier 1 : Web scraping/ Textmining' ? '#def7cf' : value == 'Atelier 2 : R Interface' ? '#c3f2a7' : value == 'Atelier 3 : bonnes pratiques de programmation' ? '#b5f48d' : value == 'Atelier 4 : SIG et représentation graphique' ? '#96e863' : value == 'Optimisation – J. Chiquet' ? '#f2fc9c' : value == 'Package – J. Chiquet' ? '#f2fc9c' : value == 'Base de données -MP Etienne' ? '#f2fc9c' : value == 'Atelier 3 : Point P. Navarro' ? '#f2fc9c' : value == 'Atelier 1 : Bilan' ? '#9ceefc' : value == 'Atelier 2 : Bilan' ? '#9ceefc' : value == 'Atelier 3 : Bilan' ? '#9ceefc' : value == 'Atelier 4 : Bilan' ? '#9ceefc' : value == 'Bilan' ? '#9ceefc' : value == 'Finalisation des rendus' ? '#9ceefc' : ''});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'background-color':value == '' ? 'lightgray' : value == 'Repas' ? '#c9dfe8' : value == 'Pause' ? '#c9dfe8' : value == 'Atelier 1 : Web scraping/ Textmining' ? '#def7cf' : value == 'Atelier 2 : R Interface' ? '#c3f2a7' : value == 'Atelier 3 : bonnes pratiques de programmation' ? '#b5f48d' : value == 'Atelier 4 : SIG et représentation graphique' ? '#96e863' : value == 'Optimisation – J. Chiquet' ? '#f2fc9c' : value == 'Package – J. Chiquet' ? '#f2fc9c' : value == 'Base de données -MP Etienne' ? '#f2fc9c' : value == 'Atelier 3 : Point P. Navarro' ? '#f2fc9c' : value == 'Atelier 1 : Bilan' ? '#9ceefc' : value == 'Atelier 2 : Bilan' ? '#9ceefc' : value == 'Atelier 3 : Bilan' ? '#9ceefc' : value == 'Atelier 4 : Bilan' ? '#9ceefc' : value == 'Bilan' ? '#9ceefc' : value == 'Finalisation des rendus' ? '#9ceefc' : ''});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'background-color':value == '' ? 'lightgray' : value == 'Repas' ? '#c9dfe8' : value == 'Pause' ? '#c9dfe8' : value == 'Atelier 1 : Web scraping/ Textmining' ? '#def7cf' : value == 'Atelier 2 : R Interface' ? '#c3f2a7' : value == 'Atelier 3 : bonnes pratiques de programmation' ? '#b5f48d' : value == 'Atelier 4 : SIG et représentation graphique' ? '#96e863' : value == 'Optimisation – J. Chiquet' ? '#f2fc9c' : value == 'Package – J. Chiquet' ? '#f2fc9c' : value == 'Base de données -MP Etienne' ? '#f2fc9c' : value == 'Atelier 3 : Point P. Navarro' ? '#f2fc9c' : value == 'Atelier 1 : Bilan' ? '#9ceefc' : value == 'Atelier 2 : Bilan' ? '#9ceefc' : value == 'Atelier 3 : Bilan' ? '#9ceefc' : value == 'Atelier 4 : Bilan' ? '#9ceefc' : value == 'Bilan' ? '#9ceefc' : value == 'Finalisation des rendus' ? '#9ceefc' : ''});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
 <p>Les séquences en vert correspondent à des séances d’atelier en sous groupes. Les séquences en jaune correspondent à un panorama du sujet indiqué, tandis que les séquences en bleu correspondent à des temps de réflexion et rédaction sur le rendu final.</p>
 </div>
 

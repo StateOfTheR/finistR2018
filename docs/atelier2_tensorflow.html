@@ -16,7 +16,7 @@
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -132,34 +132,34 @@ button.code-folding-btn:focus {
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
-  padding-top: 51px;
+  padding-top: 54px;
   padding-bottom: 40px;
 }
 /* offset scroll position for anchor links (for fixed navbar)  */
 .section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 
 .section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 .section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 .section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 .section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 .section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 </style>
 
@@ -318,10 +318,15 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="atelier1_webscraping_simple.html">Simple Example</a>
+      <a href="atelier1_webscraping_intro.html">Introduction</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Ateliers</li>
+    <li>
+      <a href="atelier1_webscraping_simple.html">Un exemple simple</a>
     </li>
     <li>
-      <a href="atelier1_webscraping_genealogie.html">Genealogie mathématique</a>
+      <a href="atelier1_webscraping_genealogie.html">Généalogie mathématique</a>
     </li>
     <li>
       <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
@@ -345,16 +350,24 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="atelier2_introduction.html">Introduction</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Ateliers</li>
+    <li>
+      <a href="atelier2_background_optim.html">Outils d'optimisation standard</a>
+    </li>
+    <li>
       <a href="atelier2_rgpu.html">R et GPU</a>
     </li>
     <li>
       <a href="atelier2_tensorflow.html">TensorFlow</a>
     </li>
     <li>
-      <a href="atelier2_julia.html">Julia</a>
+      <a href="atelier2_rcpp_modules.html">Modules Rcpp</a>
     </li>
     <li>
-      <a href="atelier2_rcpp_modules.html">Rcpp</a>
+      <a href="atelier2_julia.html">Julia</a>
     </li>
   </ul>
 </li>
@@ -365,23 +378,13 @@ div.tocify {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Introduction</li>
+    <li class="divider"></li>
     <li>
-      <a href="atelier3_git.html">Versionning</a>
+      <a href="atelier3_git.html">Versioning</a>
     </li>
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-        Package
-         
-        <span class="caret"></span>
-      </a>
-      <ul class="dropdown-menu" role="menu">
-        <li>
-          <a href="atelier3_package_creation.html">Création</a>
-        </li>
-        <li>
-          <a href="atelier3_package_dvp.html">Développement et tests</a>
-        </li>
-      </ul>
+    <li>
+      <a href="atelier3_package_creation.html">Packages: création, développement, tests</a>
     </li>
     <li>
       <a href="atelier3_advancedrmd.html">Production de documents</a>
@@ -444,7 +447,7 @@ b &lt;-<span class="st"> </span>tf<span class="op">$</span><span class="kw">Vari
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span>a <span class="op">*</span><span class="st"> </span>x_data <span class="op">+</span><span class="st"> </span>b
 loss &lt;-<span class="st"> </span>tf<span class="op">$</span><span class="kw">reduce_mean</span>((y <span class="op">-</span><span class="st"> </span>y_data) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)
 loss</code></pre></div>
-<pre><code>## Tensor(&quot;Mean_1:0&quot;, shape=(), dtype=float32)</code></pre>
+<pre><code>## Tensor(&quot;Mean:0&quot;, shape=(), dtype=float32)</code></pre>
 <p>On récupère un objet <code>Tensorflow</code> illisible. On spécifie maintenant la méthode d’optimisation (ici une descente de gradient) qu’on relie ensuite à la fonction <code>loss</code> qui sera minimisée.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">optimizer &lt;-<span class="st"> </span>tf<span class="op">$</span>train<span class="op">$</span><span class="kw">GradientDescentOptimizer</span>(<span class="fl">0.5</span>)
 train &lt;-<span class="st"> </span>optimizer<span class="op">$</span><span class="kw">minimize</span>(loss)</code></pre></div>
@@ -457,16 +460,16 @@ sess<span class="op">$</span><span class="kw">run</span>(tf<span class="op">$</s
   <span class="cf">if</span> (step <span class="op">%%</span><span class="st"> </span><span class="dv">20</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)
     <span class="kw">cat</span>(step, <span class="st">&quot;-&quot;</span>, sess<span class="op">$</span><span class="kw">run</span>(a), sess<span class="op">$</span><span class="kw">run</span>(b), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
 }</code></pre></div>
-<pre><code>## 20 - 0.1703788 0.2615621 
-## 40 - 0.175097 0.2589671 
-## 60 - 0.1761902 0.2583658 
-## 80 - 0.1764435 0.2582265 
-## 100 - 0.1765022 0.2581942 
-## 120 - 0.1765159 0.2581867 
-## 140 - 0.176519 0.258185 
-## 160 - 0.1765198 0.2581846 
-## 180 - 0.1765198 0.2581846 
-## 200 - 0.1765198 0.2581846</code></pre>
+<pre><code>## 20 - 0.1222981 0.3038565 
+## 40 - 0.1145072 0.3079129 
+## 60 - 0.1123584 0.3090316 
+## 80 - 0.1117658 0.3093401 
+## 100 - 0.1116024 0.3094253 
+## 120 - 0.1115573 0.3094487 
+## 140 - 0.1115449 0.3094552 
+## 160 - 0.1115414 0.309457 
+## 180 - 0.1115405 0.3094575 
+## 200 - 0.1115403 0.3094576</code></pre>
 </div>
 <div id="exemple-2-calcul-du-mode-dune-loi-gamma." class="section level3">
 <h3>Exemple 2 : calcul du mode d’une loi <span class="math inline">\(\Gamma\)</span>.</h3>
@@ -497,7 +500,7 @@ sess<span class="op">$</span><span class="kw">run</span>(tf<span class="op">$</s
 ## 80 - 0.5669852 
 ## 100 - 0.494284 
 ## 120 - 0.4441656 
-## 140 - 0.4104502 
+## 140 - 0.4104501 
 ## 160 - 0.3876656 
 ## 180 - 0.372042 
 ## 200 - 0.3611595</code></pre>
@@ -539,7 +542,7 @@ abs_x &lt;-<span class="st"> </span>tf<span class="op">$</span><span class="kw">
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grad_abs &lt;-<span class="st"> </span>tf<span class="op">$</span><span class="kw">gradients</span>(<span class="kw">abs</span>(x), x)
 <span class="kw">str</span>(grad_abs)</code></pre></div>
 <pre><code>## List of 1
-##  $ :Tensor(&quot;gradients_5/Abs_3_grad/mul:0&quot;, shape=(5,), dtype=float32)</code></pre>
+##  $ :Tensor(&quot;gradients_2/Abs_1_grad/mul:0&quot;, shape=(5,), dtype=float32)</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(grad_abs[[<span class="dv">1</span>]]<span class="op">$</span><span class="kw">eval</span>())</code></pre></div>
 <pre><code>## [1] -1 -1  0  1  1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(grad_abs[[<span class="dv">1</span>]][[<span class="dv">2</span>]]<span class="op">$</span><span class="kw">eval</span>())</code></pre></div>

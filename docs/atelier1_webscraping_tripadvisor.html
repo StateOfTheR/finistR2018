@@ -16,7 +16,7 @@
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -106,34 +106,34 @@ button.code-folding-btn:focus {
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
-  padding-top: 51px;
+  padding-top: 54px;
   padding-bottom: 40px;
 }
 /* offset scroll position for anchor links (for fixed navbar)  */
 .section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 
 .section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 .section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 .section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 .section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 .section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 </style>
 
@@ -292,10 +292,15 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="atelier1_webscraping_simple.html">Simple Example</a>
+      <a href="atelier1_webscraping_intro.html">Introduction</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Ateliers</li>
+    <li>
+      <a href="atelier1_webscraping_simple.html">Un exemple simple</a>
     </li>
     <li>
-      <a href="atelier1_webscraping_genealogie.html">Genealogie mathématique</a>
+      <a href="atelier1_webscraping_genealogie.html">Généalogie mathématique</a>
     </li>
     <li>
       <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
@@ -319,16 +324,24 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="atelier2_introduction.html">Introduction</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Ateliers</li>
+    <li>
+      <a href="atelier2_background_optim.html">Outils d'optimisation standard</a>
+    </li>
+    <li>
       <a href="atelier2_rgpu.html">R et GPU</a>
     </li>
     <li>
       <a href="atelier2_tensorflow.html">TensorFlow</a>
     </li>
     <li>
-      <a href="atelier2_julia.html">Julia</a>
+      <a href="atelier2_rcpp_modules.html">Modules Rcpp</a>
     </li>
     <li>
-      <a href="atelier2_rcpp_modules.html">Rcpp</a>
+      <a href="atelier2_julia.html">Julia</a>
     </li>
   </ul>
 </li>
@@ -339,23 +352,13 @@ div.tocify {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Introduction</li>
+    <li class="divider"></li>
     <li>
-      <a href="atelier3_git.html">Versionning</a>
+      <a href="atelier3_git.html">Versioning</a>
     </li>
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-        Package
-         
-        <span class="caret"></span>
-      </a>
-      <ul class="dropdown-menu" role="menu">
-        <li>
-          <a href="atelier3_package_creation.html">Création</a>
-        </li>
-        <li>
-          <a href="atelier3_package_dvp.html">Développement et tests</a>
-        </li>
-      </ul>
+    <li>
+      <a href="atelier3_package_creation.html">Packages: création, développement, tests</a>
     </li>
     <li>
       <a href="atelier3_advancedrmd.html">Production de documents</a>
@@ -395,6 +398,8 @@ library(parallel)# Pour paralléliser les traitements (c&#39;est long!)
 library(stringr)
 library(qdapRegex)# Manip de chaîne de caractère
 library(ggmap)# Pour le résultat final</code></pre>
+<pre><code>Google Maps API Terms of Service: http://developers.google.com/maps/terms.</code></pre>
+<pre><code>Please cite ggmap if you use it: see citation(&#39;ggmap&#39;) for details.</code></pre>
 </div>
 <div id="notre-cible" class="section level2">
 <h2>Notre cible</h2>
@@ -460,8 +465,8 @@ output &lt;- data.frame(Restau = nomRestau, Note = notes, data.frame(coords))
 head(output)</code></pre>
 <pre><code>                               Restau Note      long      lat
 1             \nLa Boite a Sardines\n  4.0 -3.986469 47.86116
-2    \nHotel &amp; Restaurant Belle Vue\n  4.5 -3.990278 47.88355
-3             \nBistrot Chez Hubert\n  4.0 -3.988376 47.86188
+2             \nBistrot Chez Hubert\n  4.0 -3.988376 47.86188
+3    \nHotel &amp; Restaurant Belle Vue\n  4.5 -3.990278 47.88355
 4 \nLe Restaurant La Pointe Cap Coz\n  4.5 -3.978467 47.88971
 5                  \nBrasserie Le 2\n  4.0 -3.987703 47.86121
 6    \nBar / Crêperie de Kervastard\n  4.0 -3.987303 47.86128</code></pre>
@@ -526,8 +531,8 @@ myFinalData &lt;- do.call(rbind.data.frame, lapply(allWebPages, function(url){
 <pre class="r"><code>head(myFinalData)</code></pre>
 <pre><code>                           Restau Note      long      lat
 1             La Boite a Sardines  4.0 -3.986469 47.86116
-2    Hotel &amp; Restaurant Belle Vue  4.5 -3.990278 47.88355
-3             Bistrot Chez Hubert  4.0 -3.988376 47.86188
+2             Bistrot Chez Hubert  4.0 -3.988376 47.86188
+3    Hotel &amp; Restaurant Belle Vue  4.5 -3.990278 47.88355
 4 Le Restaurant La Pointe Cap Coz  4.5 -3.978467 47.88971
 5                  Brasserie Le 2  4.0 -3.987703 47.86121
 6    Bar / Crêperie de Kervastard  4.0 -3.987303 47.86128</code></pre>

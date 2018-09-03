@@ -16,7 +16,7 @@
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -106,34 +106,34 @@ button.code-folding-btn:focus {
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
-  padding-top: 51px;
+  padding-top: 54px;
   padding-bottom: 40px;
 }
 /* offset scroll position for anchor links (for fixed navbar)  */
 .section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 
 .section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 .section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 .section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 .section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 .section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 59px;
+  margin-top: -59px;
 }
 </style>
 
@@ -292,10 +292,15 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="atelier1_webscraping_simple.html">Simple Example</a>
+      <a href="atelier1_webscraping_intro.html">Introduction</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Ateliers</li>
+    <li>
+      <a href="atelier1_webscraping_simple.html">Un exemple simple</a>
     </li>
     <li>
-      <a href="atelier1_webscraping_genealogie.html">Genealogie mathématique</a>
+      <a href="atelier1_webscraping_genealogie.html">Généalogie mathématique</a>
     </li>
     <li>
       <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
@@ -319,16 +324,24 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="atelier2_introduction.html">Introduction</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Ateliers</li>
+    <li>
+      <a href="atelier2_background_optim.html">Outils d'optimisation standard</a>
+    </li>
+    <li>
       <a href="atelier2_rgpu.html">R et GPU</a>
     </li>
     <li>
       <a href="atelier2_tensorflow.html">TensorFlow</a>
     </li>
     <li>
-      <a href="atelier2_julia.html">Julia</a>
+      <a href="atelier2_rcpp_modules.html">Modules Rcpp</a>
     </li>
     <li>
-      <a href="atelier2_rcpp_modules.html">Rcpp</a>
+      <a href="atelier2_julia.html">Julia</a>
     </li>
   </ul>
 </li>
@@ -339,23 +352,13 @@ div.tocify {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Introduction</li>
+    <li class="divider"></li>
     <li>
-      <a href="atelier3_git.html">Versionning</a>
+      <a href="atelier3_git.html">Versioning</a>
     </li>
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-        Package
-         
-        <span class="caret"></span>
-      </a>
-      <ul class="dropdown-menu" role="menu">
-        <li>
-          <a href="atelier3_package_creation.html">Création</a>
-        </li>
-        <li>
-          <a href="atelier3_package_dvp.html">Développement et tests</a>
-        </li>
-      </ul>
+    <li>
+      <a href="atelier3_package_creation.html">Packages: création, développement, tests</a>
     </li>
     <li>
       <a href="atelier3_advancedrmd.html">Production de documents</a>
@@ -389,18 +392,18 @@ theme_set(theme_bw())</code></pre>
   as_tibble()
 df</code></pre>
 <pre><code>## # A tibble: 204 x 6
-##    Rang  `Pays ou territoire` `Population[Note…  Date Source Commentaires 
-##    &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;             &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;        
-##  1 1     Chine                1 415 045 928      2018 Offic… Pays le plus…
-##  2 2     Inde                 1 355 621 800      2018 Offic… Pays le plus…
-##  3 •     Union européenne     512 596 403        2018 Offic… L&#39;Union euro…
-##  4 3     États-Unis           328 286 400        2018 Offic… Pays le plus…
-##  5 4     Indonésie            266 471 000        2018 Offic… Archipel le …
-##  6 5     Pakistan             207 774 520        2017 Offic… &quot;&quot;           
-##  7 6     Brésil               207 096 196        2017 Offic… Pays le plus…
-##  8 7     Nigeria              190 632 261        2017 CIA W… Pays le plus…
-##  9 8     Bangladesh           160 339 154        2016 Offic… &quot;&quot;           
-## 10 9     Russie               146 544 710        2016 Offic… La populatio…
+##    Rang  `Pays ou territo… `Population[Note…  Date Source Commentaires    
+##    &lt;chr&gt; &lt;chr&gt;             &lt;chr&gt;             &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;           
+##  1 1     Chine             1 415 045 928      2018 Offic… Pays le plus pe…
+##  2 2     Inde              1 355 621 800      2018 Offic… Pays le plus pe…
+##  3 •     Union européenne  512 596 403        2018 Offic… L&#39;Union europée…
+##  4 3     États-Unis        328 286 400        2018 Offic… Pays le plus pe…
+##  5 4     Indonésie         266 471 000        2018 Offic… Archipel le plu…
+##  6 5     Pakistan          207 774 520        2017 Offic… &quot;&quot;              
+##  7 6     Brésil            207 096 196        2017 Offic… Pays le plus pe…
+##  8 7     Nigeria           190 632 261        2017 CIA W… Pays le plus pe…
+##  9 8     Bangladesh        160 339 154        2016 Offic… &quot;&quot;              
+## 10 9     Russie            146 544 710        2016 Offic… La population r…
 ## # ... with 194 more rows</code></pre>
 <pre class="r"><code>pop &lt;- pull(df, `Population[Note 2]`)
 head(pop)</code></pre>
