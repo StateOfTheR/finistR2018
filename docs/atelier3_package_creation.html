@@ -348,6 +348,9 @@ div.tocify {
     <li>
       <a href="atelier1_webscraping_googlefight.html">Occurrences Google</a>
     </li>
+    <li>
+      <a href="atelier1_webscraping_youtube.html">Youtube, MSN meteo</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -422,7 +425,7 @@ div.tocify {
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># path to the testPackage directory</span>
 packagePath &lt;-<span class="st"> &quot;testPackage&quot;</span>
 <span class="kw">print</span>(<span class="kw">getwd</span>())
-[<span class="dv">1</span>] <span class="st">&quot;/home/jchiquet/git/StateOfTheR/finistR2018/finistr2018_website&quot;</span></code></pre></div>
+[<span class="dv">1</span>] <span class="st">&quot;/home/jchiquet/work/StateOfTheR/finistR2018/finistr2018_website&quot;</span></code></pre></div>
 <div id="objectif" class="section level1">
 <h1>Objectif</h1>
 <p>L’objectif est de faire un package qui soit:</p>
@@ -530,7 +533,7 @@ estimate &lt;-<span class="st"> </span><span class="cf">function</span>(y,x){
 <pre><code>---
 title: &quot;Pour un package propre et transportable&quot;
 author: &quot;Marie, Pierre&quot;
-date: &quot;2018-09-03&quot;
+date: &quot;2018-09-04&quot;
 output: rmarkdown::html_vignette
 vignette: &gt;
   %\VignetteIndexEntry{Vignette Title}
@@ -560,14 +563,6 @@ devtools<span class="op">::</span><span class="kw">use_testthat</span>()</code><
 <p>En gros, l’idée est de coder des tests unitaires simples (des <em>expectations</em>), au niveau minimal (dans les fonctions). Ces <em>expectations</em>, une fois assemblées donnent un test sur la fonction (le <em>test</em>). Chaque test doit être encapsulé dans un script de type <code>test_nomdutest.R</code>, enregistré dans <code>tests/testthat</code>. Le préfixe <code>test_</code> étant essentiel. Un fichier test comprend la fonction <code>test_that</code> qui regroupe tous les tests unitaires:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#fichier test_estimate.R</span>
 <span class="kw">library</span>(testthat)
-
-Attaching package<span class="op">:</span><span class="st"> &#39;testthat&#39;</span>
-The following object is masked from <span class="st">&#39;package:dplyr&#39;</span><span class="op">:</span>
-
-<span class="st">    </span>matches
-The following object is masked from <span class="st">&#39;package:purrr&#39;</span><span class="op">:</span>
-
-<span class="st">    </span>is_null
 <span class="kw">test_that</span>(<span class="st">&quot;If it quacks like a duck, it&#39;s a duck&quot;</span>, {
   <span class="kw">expect_equal</span>(<span class="st">&quot;quack&quot;</span>, <span class="st">&quot;quack&quot;</span>)
   <span class="kw">expect_is</span>(<span class="kw">estimate</span>(<span class="kw">rnorm</span>(<span class="dv">10</span>), <span class="kw">rnorm</span>(<span class="dv">10</span>)), <span class="dt">class =</span> <span class="st">&quot;numeric&quot;</span>)

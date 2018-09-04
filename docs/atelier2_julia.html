@@ -348,6 +348,9 @@ div.tocify {
     <li>
       <a href="atelier1_webscraping_googlefight.html">Occurrences Google</a>
     </li>
+    <li>
+      <a href="atelier1_webscraping_youtube.html">Youtube, MSN meteo</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -423,104 +426,181 @@ div.tocify {
 <li><a href="https://perso.ensta-paristech.fr/~diam/julia/index.php?id=bm">Julia : le language scientifique</a></li>
 <li>Run tutorials on [juliabox](<a href="https://juliabox.com" class="uri">https://juliabox.com</a>]</li>
 </ul>
-<div id="display-notebooks-on-nbviewer" class="section level1">
-<h1>Display notebooks on nbviewer</h1>
+<div id="display-notebooks-on-nbviewer" class="section level2">
+<h2>Display notebooks on nbviewer</h2>
 <ul>
 <li><a href="http://nbviewer.jupyter.org/github/StateOfTheR/finistR2018/blob/master/atelier2/julia/JuliaOptim.ipynb">Rosenbrock Julia example</a></li>
 <li><a href="http://nbviewer.jupyter.org/github/StateOfTheR/finistR2018/blob/master/atelier2/julia/JuliaCallOptim.ipynb">Call julia from R with JuliaCall</a></li>
 <li><a href="http://nbviewer.jupyter.org/github/StateOfTheR/finistR2018/blob/master/atelier2/julia/XRJulia.ipynb">Call julia from R with XRJulia</a></li>
 </ul>
-<p><a href="https://github.com/JuliaNLSolvers/Optim.jl/blob/master/docs/src/user/minimization.md"><strong>Optim.jl</strong> : Univariate and multivariate optimization in Julia</a></p>
-<!-- ```{julia} -->
-<!-- using Pkg -->
-<!-- Pkg.add("Optim") -->
-<!-- Pkg.add("LineSearches") -->
-<!-- ``` -->
-<!-- ```{julia} -->
-<!-- using Optim, LineSearches -->
-<!-- ``` -->
-<!-- ```{julia} -->
-<!-- rosenbrock(x) =  (1.0 - x[1])^2 + 100.0 * (x[2] - x[1]^2)^2 -->
-<!-- result = optimize(rosenbrock, zeros(2), BFGS()) -->
-<!-- ``` -->
-<!-- ```{julia} -->
-<!--  optimize(rosenbrock, zeros(2), BFGS(linesearch = LineSearches.BackTracking())) -->
-<!-- ``` -->
-<!-- ```{julia} -->
-<!-- optimize(rosenbrock, zeros(2), BFGS(linesearch = LineSearches.BackTracking(order = 2))) -->
-<!-- ``` -->
-<!-- For the Rosenbrock example, the analytical gradient can be shown to be: -->
-<!-- ```{julia} -->
-<!-- function g!(G, x) -->
-<!-- G[1] = -2.0 * (1.0 - x[1]) - 400.0 * (x[2] - x[1]^2) * x[1] -->
-<!-- G[2] = 200.0 * (x[2] - x[1]^2) -->
-<!-- end -->
-<!-- ``` -->
-<!-- ```{julia} -->
-<!-- optimize(rosenbrock, g!, zeros(2), LBFGS()) -->
-<!-- ``` -->
-<!-- In addition to providing gradients, you can provide a Hessian function h! as well. In our current case this is: -->
-<!-- ```{julia} -->
-<!-- function h!(H, x) -->
-<!--     H[1, 1] = 2.0 - 400.0 * x[2] + 1200.0 * x[1]^2 -->
-<!--     H[1, 2] = -400.0 * x[1] -->
-<!--     H[2, 1] = -400.0 * x[1] -->
-<!--     H[2, 2] = 200.0 -->
-<!-- end -->
-<!-- ``` -->
-<!-- ```{julia} -->
-<!-- optimize(rosenbrock, g!, h!, zeros(2))  # newton -->
-<!-- ``` -->
+</div>
+<div id="call-julia-from-r-with-juliacall" class="section level2">
+<h2>Call Julia from R with JuliaCall</h2>
+<p><a href="https://rpubs.com/Consistency/310507">JuliaCall in R Markdown</a></p>
+<p>We check if the package is instyalled or not.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;JuliaCall&quot;</span>)</code></pre></div>
+<p>Then we load it.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;JuliaCall&quot;</span>)</code></pre></div>
-<!-- ```{r} -->
-<!-- julia_setup() -->
-<!-- ``` -->
-<!-- ```{r} -->
-<!-- julia_library("Optim") -->
-<!-- julia_library("LineSearches") -->
-<!-- ``` -->
-<!-- [JuliaCall in R Markdown](https://rpubs.com/Consistency/310507) -->
-<!-- ```{r} -->
-<!-- julia_command("rosenbrock(x) =  (1.0 - x[1])^2 + 100.0 * (x[2] - x[1]^2)^2") -->
-<!-- ``` -->
-<!-- ```{r} -->
-<!-- julia_eval("optimize(rosenbrock, zeros(2), BFGS())") -->
-<!-- ``` -->
+<p>We need to inform R about the repository where Julian’s binaries are installed</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">julia_setup</span>(<span class="dt">JULIA_HOME =</span> <span class="st">&quot;/home/jchiquet/julia-1.0.0/bin&quot;</span>)</code></pre></div>
+<pre><code>## Julia version 1.0.0 at location /home/jchiquet/julia-1.0.0/bin will be used.</code></pre>
+<pre><code>## Loading setup script for JuliaCall...</code></pre>
+<pre><code>## Finish loading setup script for JuliaCall.</code></pre>
+<p>It is then possible to installed Julia package via R:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">julia_install_package_if_needed</span>(<span class="st">&quot;Optim&quot;</span>)</code></pre></div>
+<pre><code>## Julia version 1.0.0 at location /home/jchiquet/julia-1.0.0/bin will be used.</code></pre>
+<pre><code>## Loading setup script for JuliaCall...</code></pre>
+<pre><code>## Finish loading setup script for JuliaCall.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">julia_install_package_if_needed</span>(<span class="st">&quot;LineSearches&quot;</span>)</code></pre></div>
+<p>Commands are then executed line by line, which is a bit annoying, but it works !</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">julia_library</span>(<span class="st">&quot;Optim&quot;</span>)
+<span class="kw">julia_library</span>(<span class="st">&quot;LineSearches&quot;</span>)
+<span class="kw">julia_command</span>(<span class="st">&quot;rosenbrock(x) =  (1.0 - x[1])^2 + 100.0 * (x[2] - x[1]^2)^2&quot;</span>)</code></pre></div>
+<pre><code>## rosenbrock (generic function with 1 method)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">julia_eval</span>(<span class="st">&quot;optimize(rosenbrock, zeros(2), BFGS())&quot;</span>)</code></pre></div>
+<pre><code>## Julia Object of type Optim.MultivariateOptimizationResults{BFGS{InitialStatic{Float64},HagerZhang{Float64,Base.RefValue{Bool}},getfield(Optim, Symbol(&quot;##17#19&quot;))},Float64,Array{Float64,1},Float64,Float64,Array{OptimizationState{Float64,BFGS{InitialStatic{Float64},HagerZhang{Float64,Base.RefValue{Bool}},getfield(Optim, Symbol(&quot;##17#19&quot;))}},1}}.
+## Results of Optimization Algorithm
+##  * Algorithm: BFGS
+##  * Starting Point: [0.0,0.0]
+##  * Minimizer: [0.9999999926033423,0.9999999852005353]
+##  * Minimum: 5.471433e-17
+##  * Iterations: 16
+##  * Convergence: true
+##    * |x - x&#39;| ≤ 0.0e+00: false 
+##      |x - x&#39;| = 3.47e-07 
+##    * |f(x) - f(x&#39;)| ≤ 0.0e+00 |f(x)|: false
+##      |f(x) - f(x&#39;)| = 1.20e+03 |f(x)|
+##    * |g(x)| ≤ 1.0e-08: true 
+##      |g(x)| = 2.33e-09 
+##    * Stopped by an increasing objective: false
+##    * Reached Maximum Number of Iterations: false
+##  * Objective Calls: 53
+##  * Gradient Calls: 53</code></pre>
+</div>
+<div id="julia-chunck" class="section level2">
+<h2>julia chunck</h2>
+<p>It is also possible to include Julia Chuhnk just like we do with R in Rmarkdown ! First, I needed to link mly Julia’s binary to the usual place where Julia is installed and where XRJulia is going to look at:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">sudo</span> ln -s /home/jchiquet/julia-1.0.0/bin/julia /usr/local/bin/julia</code></pre></div>
+<p>And call direct julia’s code:</p>
+<div class="sourceCode"><pre class="sourceCode julia"><code class="sourceCode julia">using Pkg
+Pkg.add(<span class="st">&quot;Optim&quot;</span>)
+Pkg.add(<span class="st">&quot;LineSearches&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode julia"><code class="sourceCode julia">using Optim, LineSearches</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode julia"><code class="sourceCode julia">rosenbrock(x) =  (<span class="fl">1.0</span> - x[<span class="fl">1</span>])^<span class="fl">2</span> + <span class="fl">100.0</span> * (x[<span class="fl">2</span>] - x[<span class="fl">1</span>]^<span class="fl">2</span>)^<span class="fl">2</span></code></pre></div>
+<pre><code>## rosenbrock (generic function with 1 method)</code></pre>
+<div class="sourceCode"><pre class="sourceCode julia"><code class="sourceCode julia">result = optimize(rosenbrock, zeros(<span class="fl">2</span>), BFGS())</code></pre></div>
+<pre><code>## Results of Optimization Algorithm
+##  * Algorithm: BFGS
+##  * Starting Point: [0.0,0.0]
+##  * Minimizer: [0.9999999926033423,0.9999999852005353]
+##  * Minimum: 5.471433e-17
+##  * Iterations: 16
+##  * Convergence: true
+##    * |x - x&#39;| ≤ 0.0e+00: false 
+##      |x - x&#39;| = 3.47e-07 
+##    * |f(x) - f(x&#39;)| ≤ 0.0e+00 |f(x)|: false
+##      |f(x) - f(x&#39;)| = 1.20e+03 |f(x)|
+##    * |g(x)| ≤ 1.0e-08: true 
+##      |g(x)| = 2.33e-09 
+##    * Stopped by an increasing objective: false
+##    * Reached Maximum Number of Iterations: false
+##  * Objective Calls: 53
+##  * Gradient Calls: 53</code></pre>
+<div class="sourceCode"><pre class="sourceCode julia"><code class="sourceCode julia"> optimize(rosenbrock, zeros(<span class="fl">2</span>), BFGS(linesearch = LineSearches.BackTracking()))</code></pre></div>
+<pre><code>## Results of Optimization Algorithm
+##  * Algorithm: BFGS
+##  * Starting Point: [0.0,0.0]
+##  * Minimizer: [0.9999999926655744,0.9999999853309254]
+##  * Minimum: 5.379380e-17
+##  * Iterations: 23
+##  * Convergence: true
+##    * |x - x&#39;| ≤ 0.0e+00: false 
+##      |x - x&#39;| = 1.13e-09 
+##    * |f(x) - f(x&#39;)| ≤ 0.0e+00 |f(x)|: false
+##      |f(x) - f(x&#39;)| = 1.57e-01 |f(x)|
+##    * |g(x)| ≤ 1.0e-08: true 
+##      |g(x)| = 8.79e-11 
+##    * Stopped by an increasing objective: false
+##    * Reached Maximum Number of Iterations: false
+##  * Objective Calls: 31
+##  * Gradient Calls: 24</code></pre>
+<div class="sourceCode"><pre class="sourceCode julia"><code class="sourceCode julia">optimize(rosenbrock, zeros(<span class="fl">2</span>), BFGS(linesearch = LineSearches.BackTracking(order = <span class="fl">2</span>)))</code></pre></div>
+<pre><code>## Results of Optimization Algorithm
+##  * Algorithm: BFGS
+##  * Starting Point: [0.0,0.0]
+##  * Minimizer: [0.9999999926644578,0.9999999853284671]
+##  * Minimum: 5.381020e-17
+##  * Iterations: 23
+##  * Convergence: true
+##    * |x - x&#39;| ≤ 0.0e+00: false 
+##      |x - x&#39;| = 4.73e-09 
+##    * |f(x) - f(x&#39;)| ≤ 0.0e+00 |f(x)|: false
+##      |f(x) - f(x&#39;)| = 9.42e-01 |f(x)|
+##    * |g(x)| ≤ 1.0e-08: true 
+##      |g(x)| = 1.76e-10 
+##    * Stopped by an increasing objective: false
+##    * Reached Maximum Number of Iterations: false
+##  * Objective Calls: 29
+##  * Gradient Calls: 24</code></pre>
+<p>For the Rosenbrock example, the analytical gradient can be shown to be:</p>
+<div class="sourceCode"><pre class="sourceCode julia"><code class="sourceCode julia"><span class="kw">function</span> g!(G, x)
+G[<span class="fl">1</span>] = -<span class="fl">2.0</span> * (<span class="fl">1.0</span> - x[<span class="fl">1</span>]) - <span class="fl">400.0</span> * (x[<span class="fl">2</span>] - x[<span class="fl">1</span>]^<span class="fl">2</span>) * x[<span class="fl">1</span>]
+G[<span class="fl">2</span>] = <span class="fl">200.0</span> * (x[<span class="fl">2</span>] - x[<span class="fl">1</span>]^<span class="fl">2</span>)
+<span class="kw">end</span></code></pre></div>
+<pre><code>## g! (generic function with 1 method)</code></pre>
+<div class="sourceCode"><pre class="sourceCode julia"><code class="sourceCode julia">optimize(rosenbrock, g!, zeros(<span class="fl">2</span>), LBFGS())</code></pre></div>
+<pre><code>## Results of Optimization Algorithm
+##  * Algorithm: L-BFGS
+##  * Starting Point: [0.0,0.0]
+##  * Minimizer: [0.999999999999928,0.9999999999998559]
+##  * Minimum: 5.191703e-27
+##  * Iterations: 24
+##  * Convergence: true
+##    * |x - x&#39;| ≤ 0.0e+00: false 
+##      |x - x&#39;| = 4.58e-11 
+##    * |f(x) - f(x&#39;)| ≤ 0.0e+00 |f(x)|: false
+##      |f(x) - f(x&#39;)| = 8.50e+07 |f(x)|
+##    * |g(x)| ≤ 1.0e-08: true 
+##      |g(x)| = 1.44e-13 
+##    * Stopped by an increasing objective: false
+##    * Reached Maximum Number of Iterations: false
+##  * Objective Calls: 67
+##  * Gradient Calls: 67</code></pre>
+<p>In addition to providing gradients, you can provide a Hessian function h! as well. In our current case this is:</p>
+<div class="sourceCode"><pre class="sourceCode julia"><code class="sourceCode julia"><span class="kw">function</span> h!(H, x)
+    H[<span class="fl">1</span>, <span class="fl">1</span>] = <span class="fl">2.0</span> - <span class="fl">400.0</span> * x[<span class="fl">2</span>] + <span class="fl">1200.0</span> * x[<span class="fl">1</span>]^<span class="fl">2</span>
+    H[<span class="fl">1</span>, <span class="fl">2</span>] = -<span class="fl">400.0</span> * x[<span class="fl">1</span>]
+    H[<span class="fl">2</span>, <span class="fl">1</span>] = -<span class="fl">400.0</span> * x[<span class="fl">1</span>]
+    H[<span class="fl">2</span>, <span class="fl">2</span>] = <span class="fl">200.0</span>
+<span class="kw">end</span></code></pre></div>
+<pre><code>## h! (generic function with 1 method)</code></pre>
+<div class="sourceCode"><pre class="sourceCode julia"><code class="sourceCode julia">optimize(rosenbrock, g!, h!, zeros(<span class="fl">2</span>))  <span class="co"># newton</span></code></pre></div>
+<pre><code>## Results of Optimization Algorithm
+##  * Algorithm: Newton&#39;s Method
+##  * Starting Point: [0.0,0.0]
+##  * Minimizer: [0.9999999999999994,0.9999999999999989]
+##  * Minimum: 3.081488e-31
+##  * Iterations: 14
+##  * Convergence: true
+##    * |x - x&#39;| ≤ 0.0e+00: false 
+##      |x - x&#39;| = 3.06e-09 
+##    * |f(x) - f(x&#39;)| ≤ 0.0e+00 |f(x)|: false
+##      |f(x) - f(x&#39;)| = 3.03e+13 |f(x)|
+##    * |g(x)| ≤ 1.0e-08: true 
+##      |g(x)| = 1.11e-15 
+##    * Stopped by an increasing objective: false
+##    * Reached Maximum Number of Iterations: false
+##  * Objective Calls: 44
+##  * Gradient Calls: 44
+##  * Hessian Calls: 14</code></pre>
+<div id="references" class="section level3">
+<h3>References</h3>
 <ul>
 <li><a href="https://insightr.wordpress.com/2017/10/18/writing-julia-functions-in-r-with-examples/">Writing Julia functions in R with examples</a></li>
 <li><a href="https://cran.r-project.org/web/packages/XRJulia/index.html">XRJulia CRAN</a></li>
 <li><a href="https://github.com/johnmchambers/XRJulia">XRJulia GitHub</a></li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;XRJulia&quot;</span>)</code></pre></div>
-<!-- ```{r} -->
-<!-- library(XRJulia) -->
-<!-- ``` -->
-<!-- ```{r,eval=FALSE} -->
-<!-- Sys.setenv(JULIA_BIN = "/Applications/JuliaPro-0.6.4.1.app/Contents/Resources/julia/Contents/Resources/julia/bin/julia") -->
-<!-- ``` -->
-<!-- ```{r} -->
-<!-- findJulia(test = TRUE) -->
-<!-- ``` -->
-<!-- ```{r} -->
-<!-- optim = juliaEval("using Optim") -->
-<!-- ``` -->
-<!-- ```{r} -->
-<!-- rosenbrock <- juliaEval(" -->
-<!-- function rosenbrock(x) -->
-<!-- (1.0-x[1])^2 + 100.0*(x[2]-x[1]^2)^2 -->
-<!-- end -->
-<!-- ") -->
-<!-- ``` -->
-<!-- ```{r} -->
-<!-- result <- juliaEval("optimize(rosenbrock, zeros(2), BFGS())") -->
-<!-- ``` -->
-<!-- ```{r} -->
-<!-- JLres=juliaGet(result) -->
-<!-- ``` -->
-<!-- ```{r} -->
-<!-- JLres -->
-<!-- ``` -->
+</div>
 </div>
 
 

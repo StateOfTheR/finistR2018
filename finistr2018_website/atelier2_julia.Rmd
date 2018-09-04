@@ -11,17 +11,117 @@ output:
 knitr::opts_chunk$set(echo = TRUE, cache=TRUE)
 ```
 
+- [Julia : le language scientifique](https://perso.ensta-paristech.fr/~diam/julia/index.php?id=bm)
+- Run tutorials on [juliabox](https://juliabox.com]
 
-```{r child = 'README.Rmd'}
+## Display notebooks on nbviewer
+
+- [Rosenbrock Julia example](http://nbviewer.jupyter.org/github/StateOfTheR/finistR2018/blob/master/atelier2/julia/JuliaOptim.ipynb)
+- [Call julia from R with JuliaCall](http://nbviewer.jupyter.org/github/StateOfTheR/finistR2018/blob/master/atelier2/julia/JuliaCallOptim.ipynb)
+- [Call julia from R with XRJulia](http://nbviewer.jupyter.org/github/StateOfTheR/finistR2018/blob/master/atelier2/julia/XRJulia.ipynb)
+
+## Call Julia from R with JuliaCall
+
+[JuliaCall in R Markdown](https://rpubs.com/Consistency/310507)
+
+We check if the package is instyalled or not.
+
+```{r, eval=FALSE}
+install.packages("JuliaCall")
 ```
 
-```{r child = 'JuliaOptim.Rmd'}
+Then we load it.
+
+```{r, message = FALSE}
+library("JuliaCall")
+```
+
+We need to inform R about the repository where Julian's binaries are installed
+
+```{r}
+julia_setup(JULIA_HOME = "/home/jchiquet/julia-1.0.0/bin")
+```
+
+It is then possible to installed Julia package via R: 
+
+```{r}
+julia_install_package_if_needed("Optim")
+julia_install_package_if_needed("LineSearches")
+```
+
+Commands are then executed line by line, which is a bit annoying, but it works !
+
+```{r julia_rosenbrock_optim}
+julia_library("Optim")
+julia_library("LineSearches")
+julia_command("rosenbrock(x) =  (1.0 - x[1])^2 + 100.0 * (x[2] - x[1]^2)^2")
+julia_eval("optimize(rosenbrock, zeros(2), BFGS())")
 ```
 
 
-```{r child = 'JuliaCallOptim.Rmd'}
+## julia chunck
+
+It is also possible to include Julia Chuhnk just like we do with R in Rmarkdown ! First, I needed to link mly Julia's binary to the usual place where Julia is installed and where XRJulia is going to look at: 
+
+```{bash, eval = FALSE}
+sudo ln -s /home/jchiquet/julia-1.0.0/bin/julia /usr/local/bin/julia
 ```
 
+And call direct julia's code: 
 
-```{r child = 'XRJulia.Rmd'}
+```{julia}
+using Pkg
+Pkg.add("Optim")
+Pkg.add("LineSearches")
 ```
+
+```{julia}
+using Optim, LineSearches
+```
+
+```{julia}
+rosenbrock(x) =  (1.0 - x[1])^2 + 100.0 * (x[2] - x[1]^2)^2
+result = optimize(rosenbrock, zeros(2), BFGS())
+```
+
+```{julia}
+ optimize(rosenbrock, zeros(2), BFGS(linesearch = LineSearches.BackTracking()))
+```
+
+```{julia}
+optimize(rosenbrock, zeros(2), BFGS(linesearch = LineSearches.BackTracking(order = 2)))
+```
+
+For the Rosenbrock example, the analytical gradient can be shown to be:
+
+```{julia}
+function g!(G, x)
+G[1] = -2.0 * (1.0 - x[1]) - 400.0 * (x[2] - x[1]^2) * x[1]
+G[2] = 200.0 * (x[2] - x[1]^2)
+end
+```
+
+```{julia}
+optimize(rosenbrock, g!, zeros(2), LBFGS())
+```
+
+In addition to providing gradients, you can provide a Hessian function h! as well. In our current case this is:
+
+```{julia}
+function h!(H, x)
+    H[1, 1] = 2.0 - 400.0 * x[2] + 1200.0 * x[1]^2
+    H[1, 2] = -400.0 * x[1]
+    H[2, 1] = -400.0 * x[1]
+    H[2, 2] = 200.0
+end
+```
+
+```{julia}
+optimize(rosenbrock, g!, h!, zeros(2))  # newton
+```
+
+### References
+
+- [Writing Julia functions in R with examples](https://insightr.wordpress.com/2017/10/18/writing-julia-functions-in-r-with-examples/)
+- [XRJulia CRAN](https://cran.r-project.org/web/packages/XRJulia/index.html)
+- [XRJulia GitHub](https://github.com/johnmchambers/XRJulia)

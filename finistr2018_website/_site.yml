@@ -25,6 +25,8 @@ navbar:
         href: atelier1_webscraping_tripadvisor.html
       - text: "Occurrences Google"
         href: atelier1_webscraping_googlefight.html
+      - text: "Youtube, MSN meteo"
+        href: atelier1_webscraping_youtube.html
   - text: "Optimisation et accélération"
     icon: fa-wheelchair-alt
     menu:

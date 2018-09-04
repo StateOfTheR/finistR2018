@@ -9,11 +9,9 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Avner Bar-Hen, Gabriel Lang, Raphaëlle Momal,Bewentaoré Sawadogo" />
 
-<meta name="date" content="2018-08-27" />
 
-<title>Scraping Youtube</title>
+<title>Youtube et MSN météo</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -30,6 +28,49 @@
 <script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
 
 
 <style type="text/css">
@@ -307,6 +348,9 @@ div.tocify {
     <li>
       <a href="atelier1_webscraping_googlefight.html">Occurrences Google</a>
     </li>
+    <li>
+      <a href="atelier1_webscraping_youtube.html">Youtube, MSN meteo</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -373,97 +417,114 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Scraping Youtube</h1>
-<h4 class="author"><em>Avner Bar-Hen, Gabriel Lang, Raphaëlle Momal,Bewentaoré Sawadogo</em></h4>
-<h4 class="date"><em>August 27, 2018</em></h4>
+<h1 class="title toc-ignore">Youtube et MSN météo</h1>
 
 </div>
 
 
-<div id="recolter-des-donnees-sur-youtube" class="section level2">
-<h2>Récolter des données sur Youtube</h2>
-<p>L’objectif est de récupérer la liste des tendances de Youtube qui se trouvent dans la page. Pour cela on se sert du package rvest et de la sélection par balises. On commence par charger le package rvest et lire le fichier html en le désignant par son url.</p>
-<!-- ```{r youtube} -->
-<!-- library(rvest) -->
-<!-- # Lecture de la page -->
-<!-- youtube <-read_html("https://www.youtube.com/feed/trending") -->
-<!-- ``` -->
-<!-- Pour récupérer un élément, il faut connaître la balise; certaines sont connues à l'avance, d'autres doivent être repérées dans la page. -->
-<!-- #Récolte d'une information par une balise connue -->
-<!-- Le titre de la page correspond à la balise "title"; pour récupérer cette balise on utilise la fonction html_node. -->
-<!-- ```{r } -->
-<!-- Balise_titre= html_node(youtube,"title")  -->
-<!-- titre<-html_text(Balise_titre) -->
-<!-- print(titre) -->
-<!-- ``` -->
-<!-- Il faut ensuite filtrer le caractère spécial par les outils de traitement de chaîne. -->
-<!-- #Récolte d'une information lorsque la balise n'est pas connue -->
-<!-- On veut récupérer la liste des titre des vidéos. Il faut d'abord repérer la balise correspondante dans le navigateur Internet;  -->
-<!-- ##Utilisation du code source de la page -->
-<!-- On peut afficher la source de la page (clic droit, code source), mais le résultat n'est praticable que si la page est simple. -->
-<!-- ##Utilisation de l'inspecteur -->
-<!-- On se place avec la souris sur le titre d'une vidéo. On lance l'inspecteur sur cet élément (clic droit, Examiner l'élément), l'inspecteur s'ouvre dans une fenêtre en surlignant la balise correspondante "a". -->
-<!-- ```{r, echo=TRUE, eval=FALSE} -->
-<!-- Liste_Balise_a= html_nodes(youtube,"a")  -->
-<!-- Liste_a<-html_text(Liste_Balise_a) -->
-<!-- print(Liste_a) -->
-<!-- ``` -->
-<!-- La sélection par la balise "a" est trop large. on remarque que les titres sont toujours sous une balise "h3". On utilise le sélecteur "h3 a" -->
-<!-- ##Utilisation de selectorgadget -->
-<!-- Il s'agit d'une application java (https://selectorgadget.com/). Une fois lancée, elle examine l'élément sous la souris, le met en surbrillance avec un cadre sur lequel apparaissent les deux balises directement supérieures. Pour le titre de vidéo on obtient bien "h3 a".   -->
-<!-- ```{r eval=FALSE} -->
-<!-- Liste_Balise_Titre= html_nodes(youtube,"h3 a")  -->
-<!-- Liste_Titre<-html_text(Liste_Balise_Titre) -->
-<!-- print(Liste_Titre) -->
-<!-- ``` -->
-<!-- La liste contient encore des éléments ne correspondant pas au titre. Pour éviter ce problème il faut ajouter des conditions à la sélection. -->
-<!-- #Sélecteurs avancés -->
-<!-- Les sélecteurs avancés permettent de spécifier un type de balise en ajoutant une condition sur ses attributs. Il y a deux syntaxes pour ces sélecteurs selon qu'ils portent sur des éléments CSS ou XML. -->
-<!-- ##Code CSS -->
-<!-- L'outil sélectorgadget propose un code CSS complet dans un pop-up gris de manière directement utilisable. Il suffit de coller cette expression entre double apostrophes. -->
-<!-- ```{r} -->
-<!-- Liste_Balise_Titre= html_node(youtube,"#grid-container :nth-child(1) #dismissable #meta .style-scope")  -->
-<!-- print(Liste_Balise_Titre) -->
-<!-- ``` -->
-<!-- Malheureusement en raison de la perte de format xml lors des conversions des pages dynamiques ce sélecteur ne fonctionne pas.  -->
-<!-- ##Code XPath -->
-<!-- L'outil sélectorgadget propose de traduire le code CSS en code Xpath plus adapté à la structure xml (Bouton Xpath).La syntaxe d'appel est différente xpath='chemin xpath'. Pour en savoir plus sur la syntaxe Xpath : https://www.w3schools.com/xml/xpath_syntax.asp -->
-<!-- ```{r} -->
-<!-- Liste_Balise_Titre= html_node(youtube,xpath='//*[contains(concat( " ", @class, " " ), concat( " ", "yt-formatted-string", " " ))]')  -->
-<!-- print(Liste_Balise_Titre) -->
-<!-- ``` -->
-<!-- Malheureusement, ce sélecteur ne fonctionne pas la page Youtube. En conclusion, la récolte sur Youtube nécessite sans doute d'utiliser une API dédiée proposée par Youtube. L'avantage pour Youtube est de pouvoir connaître le type d'information récoltée dans ses pages. -->
-<!-- #Récolte des températures sur météo MSN -->
-<!--  Pour  faire une démonstration de l'usage de la syntaxe des sélecteurs, nous recherchons la température courante sur le serveur météo MSN. -->
-<!-- ```{r} -->
-<!-- meteo <-read_html("https://www.msn.com/fr-fr/meteo") -->
-<!-- ``` -->
-<!-- Pour la température courante, Selectorgadget donne la suite de balises "div span" dans la cadre en surbrillance et le sélecteur ".current" dans la boite pop up. On concatène ces deux informations. -->
-<!-- ```{r} -->
-<!-- Balise_Temp= html_node(meteo, "div span.current")  -->
-<!-- Text_Temp<-html_text(Balise_Temp) -->
-<!-- print(Text_Temp) -->
-<!-- ``` -->
-<!-- En tapant "div span.current" dans la boîte Selectorgadget on obtient sa traduction Xpath: -->
-<!-- ```{r} -->
-<!-- meteo <-read_html("https://www.msn.com/fr-fr/meteo") -->
-<!-- Balise_Temp= html_node(meteo, xpath='//div//span[contains(concat( " ", @class, " " ), concat( " ", "current", " " ))]')  -->
-<!-- Text_Temp<-html_text(Balise_Temp) -->
-<!-- print(Text_Temp) -->
-<!-- ``` -->
-<!-- Pour récupérer la liste des températures, Selectorgadget propose"#main :nth-child(1)". Ce sélecteur n'est pas assez sélectif ; il faut se limiter aux balises "li p" -->
-<!-- ```{r} -->
-<!-- meteo <-read_html("https://www.msn.com/fr-fr/meteo") -->
-<!-- Liste_Balise_Temp= html_nodes(meteo,"li p " ) -->
-<!-- Text_Temp<-html_text(Liste_Balise_Temp) -->
-<!-- print(Text_Temp) -->
-<!-- ``` -->
-<!-- Pour extraire la quatrième valeur, on emploie la fonction magritt2 -->
-<!-- ```{r} -->
-<!-- Balise_4=magrittr::extract2(Liste_Balise_Temp,4) -->
-<!-- Text_Temp<-html_text(Balise_4) -->
-<!-- print(Text_Temp) -->
-<!-- ``` -->
+<div id="tendances-youtube" class="section level1">
+<h1>Tendances Youtube</h1>
+<p>L’objectif est de récupérer la liste des tendances de Youtube qui se trouvent dans la page à l’aide du package <code>rvest</code> et de la sélection par balises.</p>
+<div id="chargement-du-fichier-html" class="section level2">
+<h2>Chargement du fichier HTML</h2>
+<p>On commence par charger le package rvest et lire le fichier html en le désignant par son url.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rvest)</code></pre></div>
+<pre><code>## Loading required package: xml2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Lecture de la page</span>
+youtube &lt;-<span class="kw">read_html</span>(<span class="st">&quot;https://www.youtube.com/feed/trending&quot;</span>)</code></pre></div>
+</div>
+<div id="recolte-dune-information" class="section level2">
+<h2>Récolte d’une information</h2>
+<p>Pour récupérer un élément, il faut connaître la balise; certaines sont connues à l’avance, d’autres doivent être repérées dans la page.</p>
+<div id="balise-connue" class="section level3">
+<h3>Balise connue</h3>
+<p>Le titre de la page correspond à la balise “title”; pour récupérer cette balise on utilise la fonction html_node.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Balise_titre &lt;-<span class="st"> </span><span class="kw">html_node</span>(youtube,<span class="st">&quot;title&quot;</span>) 
+titre &lt;-<span class="st"> </span><span class="kw">html_text</span>(Balise_titre)
+<span class="kw">print</span>(titre)</code></pre></div>
+<pre><code>## [1] &quot;  Tendances\n - YouTube&quot;</code></pre>
+<p>Il faut ensuite filtrer le caractère spécial par les outils de traitement de chaîne.</p>
+</div>
+<div id="balise-inconnue" class="section level3">
+<h3>Balise inconnue</h3>
+<p>On veut récupérer la liste des titre des vidéos. Il faut d’abord repérer la balise correspondante dans le navigateur Internet;</p>
+<div id="utilisation-du-code-source-de-la-page" class="section level4">
+<h4>Utilisation du code source de la page</h4>
+<p>On peut afficher la source de la page (clic droit, code source), mais le résultat n’est praticable que si la page est simple.</p>
+</div>
+<div id="utilisation-de-linspecteur" class="section level4">
+<h4>Utilisation de l’inspecteur</h4>
+<p>On se place avec la souris sur le titre d’une vidéo. On lance l’inspecteur sur cet élément (clic droit, Examiner l’élément), l’inspecteur s’ouvre dans une fenêtre en surlignant la balise correspondante “a”.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Liste_Balise_a &lt;-<span class="st"> </span><span class="kw">html_nodes</span>(youtube,<span class="st">&quot;a&quot;</span>) 
+Liste_a&lt;-<span class="kw">html_text</span>(Liste_Balise_a)
+<span class="kw">print</span>(Liste_a)</code></pre></div>
+<p>La sélection par la balise “a” est trop large. on remarque que les titres sont toujours sous une balise “h3”. On utilise le sélecteur “h3 a”</p>
+</div>
+<div id="utilisation-de-selectorgadget" class="section level4">
+<h4>Utilisation de selectorgadget</h4>
+<p>Il s’agit d’une application java (<a href="https://selectorgadget.com/" class="uri">https://selectorgadget.com/</a>). Une fois lancée, elle examine l’élément sous la souris, le met en surbrillance avec un cadre sur lequel apparaissent les deux balises directement supérieures. Pour le titre de vidéo on obtient bien “h3 a”.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Liste_Balise_Titre &lt;-<span class="st"> </span><span class="kw">html_nodes</span>(youtube,<span class="st">&quot;h3 a&quot;</span>) 
+Liste_Titre &lt;-<span class="st"> </span><span class="kw">html_text</span>(Liste_Balise_Titre)
+<span class="kw">print</span>(Liste_Titre)</code></pre></div>
+<p>La liste contient encore des éléments ne correspondant pas au titre. Pour éviter ce problème il faut ajouter des conditions à la sélection.</p>
+</div>
+</div>
+</div>
+<div id="selecteurs-avances" class="section level2">
+<h2>Sélecteurs avancés</h2>
+<p>Les sélecteurs avancés permettent de spécifier un type de balise en ajoutant une condition sur ses attributs. Il y a deux syntaxes pour ces sélecteurs selon qu’ils portent sur des éléments CSS ou XML.</p>
+<div id="code-css" class="section level3">
+<h3>Code CSS</h3>
+<p>L’outil sélectorgadget propose un code CSS complet dans un pop-up gris de manière directement utilisable. Il suffit de coller cette expression entre double apostrophes.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Liste_Balise_Titre &lt;-<span class="st"> </span><span class="kw">html_node</span>(youtube,<span class="st">&quot;#grid-container :nth-child(1) #dismissable #meta .style-scope&quot;</span>) 
+<span class="kw">print</span>(Liste_Balise_Titre)</code></pre></div>
+<pre><code>## {xml_missing}
+## &lt;NA&gt;</code></pre>
+<p>Malheureusement en raison de la perte de format xml lors des conversions des pages dynamiques ce sélecteur ne fonctionne pas.</p>
+</div>
+<div id="code-xpath" class="section level3">
+<h3>Code XPath</h3>
+<p>L’outil sélectorgadget propose de traduire le code CSS en code Xpath plus adapté à la structure xml (Bouton Xpath).La syntaxe d’appel est différente xpath=‘chemin xpath’. Pour en savoir plus sur la syntaxe Xpath : <a href="https://www.w3schools.com/xml/xpath_syntax.asp" class="uri">https://www.w3schools.com/xml/xpath_syntax.asp</a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Liste_Balise_Titre &lt;-<span class="st"> </span><span class="kw">html_node</span>(youtube,<span class="dt">xpath=</span><span class="st">&#39;//*[contains(concat( &quot; &quot;, @class, &quot; &quot; ), concat( &quot; &quot;, &quot;yt-formatted-string&quot;, &quot; &quot; ))]&#39;</span>) 
+<span class="kw">print</span>(Liste_Balise_Titre)</code></pre></div>
+<pre><code>## {xml_missing}
+## &lt;NA&gt;</code></pre>
+<p>Malheureusement, ce sélecteur ne fonctionne pas la page Youtube. En conclusion, la récolte sur Youtube nécessite sans doute d’utiliser une API dédiée proposée par Youtube. L’avantage pour Youtube est de pouvoir connaître le type d’information récoltée dans ses pages.</p>
+</div>
+</div>
+</div>
+<div id="recolte-des-temperatures-sur-meteo-msn" class="section level1">
+<h1>Récolte des températures sur météo MSN</h1>
+<p>Pour faire une démonstration de l’usage de la syntaxe des sélecteurs, nous recherchons la température courante sur le serveur météo MSN.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">meteo &lt;-<span class="kw">read_html</span>(<span class="st">&quot;https://www.msn.com/fr-fr/meteo&quot;</span>)</code></pre></div>
+<p>Pour la température courante, Selectorgadget donne la suite de balises “div span” dans la cadre en surbrillance et le sélecteur “.current” dans la boite pop up. On concatène ces deux informations.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Balise_Temp=<span class="st"> </span><span class="kw">html_node</span>(meteo, <span class="st">&quot;div span.current&quot;</span>) 
+Text_Temp&lt;-<span class="kw">html_text</span>(Balise_Temp)
+<span class="kw">print</span>(Text_Temp)</code></pre></div>
+<pre><code>## [1] &quot;18&quot;</code></pre>
+<p>En tapant “div span.current” dans la boîte Selectorgadget on obtient sa traduction Xpath:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">meteo &lt;-<span class="kw">read_html</span>(<span class="st">&quot;https://www.msn.com/fr-fr/meteo&quot;</span>)
+Balise_Temp=<span class="st"> </span><span class="kw">html_node</span>(meteo, <span class="dt">xpath=</span><span class="st">&#39;//div//span[contains(concat( &quot; &quot;, @class, &quot; &quot; ), concat( &quot; &quot;, &quot;current&quot;, &quot; &quot; ))]&#39;</span>) 
+Text_Temp&lt;-<span class="kw">html_text</span>(Balise_Temp)
+<span class="kw">print</span>(Text_Temp)</code></pre></div>
+<pre><code>## [1] &quot;18&quot;</code></pre>
+<p>Pour récupérer la liste des températures, Selectorgadget propose“#main :nth-child(1)”. Ce sélecteur n’est pas assez sélectif ; il faut se limiter aux balises “li p”</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">meteo &lt;-<span class="kw">read_html</span>(<span class="st">&quot;https://www.msn.com/fr-fr/meteo&quot;</span>)
+Liste_Balise_Temp=<span class="st"> </span><span class="kw">html_nodes</span>(meteo,<span class="st">&quot;li p &quot;</span> )
+Text_Temp&lt;-<span class="kw">html_text</span>(Liste_Balise_Temp)
+<span class="kw">print</span>(Text_Temp)</code></pre></div>
+<pre><code>##  [1] &quot;11&quot;  &quot;18°&quot; &quot;12&quot;  &quot;19°&quot; &quot;13&quot;  &quot;20°&quot; &quot;14&quot;  &quot;20°&quot; &quot;15&quot;  &quot;20°&quot; &quot;16&quot; 
+## [12] &quot;20°&quot; &quot;17&quot;  &quot;20°&quot; &quot;18&quot;  &quot;20°&quot; &quot;19&quot;  &quot;20°&quot; &quot;20&quot;  &quot;20°&quot; &quot;21&quot;  &quot;20°&quot;
+## [23] &quot;22&quot;  &quot;19°&quot; &quot;23&quot;  &quot;19°&quot; &quot;00&quot;  &quot;19°&quot; &quot;01&quot;  &quot;18°&quot; &quot;02&quot;  &quot;18°&quot; &quot;03&quot; 
+## [34] &quot;18°&quot; &quot;04&quot;  &quot;18°&quot; &quot;05&quot;  &quot;18°&quot; &quot;06&quot;  &quot;18°&quot; &quot;07&quot;  &quot;18°&quot; &quot;08&quot;  &quot;18°&quot;
+## [45] &quot;09&quot;  &quot;18°&quot; &quot;10&quot;  &quot;19°&quot; &quot;20°&quot; &quot;18°&quot; &quot;23°&quot; &quot;17°&quot; &quot;21°&quot; &quot;14°&quot; &quot;20°&quot;
+## [56] &quot;11°&quot; &quot;21°&quot; &quot;15°&quot; &quot;22°&quot; &quot;12°&quot; &quot;23°&quot; &quot;13°&quot; &quot;25°&quot; &quot;14°&quot; &quot;26°&quot; &quot;14°&quot;
+## [67] &quot;25°&quot; &quot;15°&quot;</code></pre>
+<p>Pour extraire la quatrième valeur, on emploie la fonction magritt2</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Balise_<span class="dv">4</span> &lt;-<span class="st"> </span>magrittr<span class="op">::</span><span class="kw">extract2</span>(Liste_Balise_Temp,<span class="dv">4</span>)
+Text_Temp&lt;-<span class="kw">html_text</span>(Balise_<span class="dv">4</span>)
+<span class="kw">print</span>(Text_Temp)</code></pre></div>
+<pre><code>## [1] &quot;19°&quot;</code></pre>
 </div>
 
 

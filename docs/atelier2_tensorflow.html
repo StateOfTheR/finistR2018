@@ -348,6 +348,9 @@ div.tocify {
     <li>
       <a href="atelier1_webscraping_googlefight.html">Occurrences Google</a>
     </li>
+    <li>
+      <a href="atelier1_webscraping_youtube.html">Youtube, MSN meteo</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -472,16 +475,16 @@ sess<span class="op">$</span><span class="kw">run</span>(tf<span class="op">$</s
   <span class="cf">if</span> (step <span class="op">%%</span><span class="st"> </span><span class="dv">20</span> <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)
     <span class="kw">cat</span>(step, <span class="st">&quot;-&quot;</span>, sess<span class="op">$</span><span class="kw">run</span>(a), sess<span class="op">$</span><span class="kw">run</span>(b), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
 }</code></pre></div>
-<pre><code>## 20 - 0.0703861 0.3223835 
-## 40 - 0.05355401 0.3310279 
-## 60 - 0.04979218 0.3329598 
-## 80 - 0.04895144 0.3333916 
-## 100 - 0.04876353 0.3334881 
-## 120 - 0.04872156 0.3335097 
-## 140 - 0.04871216 0.3335145 
-## 160 - 0.04871006 0.3335156 
-## 180 - 0.04870959 0.3335158 
-## 200 - 0.04870952 0.3335158</code></pre>
+<pre><code>## 20 - 0.1222981 0.3038565 
+## 40 - 0.1145072 0.3079129 
+## 60 - 0.1123584 0.3090316 
+## 80 - 0.1117658 0.3093401 
+## 100 - 0.1116024 0.3094253 
+## 120 - 0.1115573 0.3094487 
+## 140 - 0.1115449 0.3094552 
+## 160 - 0.1115414 0.309457 
+## 180 - 0.1115405 0.3094575 
+## 200 - 0.1115403 0.3094576</code></pre>
 </div>
 <div id="exemple-2-calcul-du-mode-dune-loi-gamma." class="section level3">
 <h3>Exemple 2 : calcul du mode d’une loi <span class="math inline">\(\Gamma\)</span>.</h3>
@@ -568,7 +571,7 @@ abs_x &lt;-<span class="st"> </span>tf<span class="op">$</span><span class="kw">
 <h3>Exemple : dérivée de la densité d’une loi gaussienne</h3>
 <p>La fonction à dériver doit être écrite sous forme de fonction mathématique de base <code>tensorflow</code> :</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gaussian &lt;-<span class="st"> </span><span class="cf">function</span>(x, mu, sig) {
-  <span class="fl">1.</span><span class="op">/</span>(sig <span class="op">*</span><span class="st"> </span>tf<span class="op">$</span><span class="kw">sqrt</span>(<span class="fl">2.</span> <span class="op">*</span><span class="st"> </span>pi )) <span class="op">*</span><span class="st"> </span>tf<span class="op">$</span><span class="kw">exp</span>(<span class="op">-</span>.<span class="dv">5</span> <span class="op">*</span><span class="st"> </span>((x <span class="op">-</span><span class="st"> </span>mu)<span class="op">/</span>sig)<span class="op">**</span><span class="dv">2</span>)
+  <span class="dv">1</span>.<span class="op">/</span>(sig <span class="op">*</span><span class="st"> </span>tf<span class="op">$</span><span class="kw">sqrt</span>(<span class="dv">2</span>. <span class="op">*</span><span class="st"> </span>pi )) <span class="op">*</span><span class="st"> </span>tf<span class="op">$</span><span class="kw">exp</span>(<span class="op">-</span>.<span class="dv">5</span> <span class="op">*</span><span class="st"> </span>((x <span class="op">-</span><span class="st"> </span>mu)<span class="op">/</span>sig)<span class="op">**</span><span class="dv">2</span>)
 }</code></pre></div>
 <p>Il est important de réinitialiser le graphe <code>tensorflow</code>. Celui-ci n’est pas stocké dans les variables d’environnement et vider l’environnement de travail sous <code>Rstudio</code> ne réinitialise pas le graph <code>tensorflow</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tf<span class="op">$</span><span class="kw">reset_default_graph</span>()

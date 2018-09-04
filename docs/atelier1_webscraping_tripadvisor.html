@@ -348,6 +348,9 @@ div.tocify {
     <li>
       <a href="atelier1_webscraping_googlefight.html">Occurrences Google</a>
     </li>
+    <li>
+      <a href="atelier1_webscraping_youtube.html">Youtube, MSN meteo</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -434,16 +437,8 @@ div.tocify {
 <span class="kw">library</span>(rvest)<span class="co"># Pour la lecture des pages HTML</span>
 <span class="kw">library</span>(parallel)<span class="co"># Pour paralléliser les traitements (c&#39;est long!)</span>
 <span class="kw">library</span>(stringr)
-<span class="kw">library</span>(qdapRegex)<span class="co"># Manip de chaîne de caractère</span></code></pre></div>
-<pre><code>
-Attaching package: &#39;qdapRegex&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:dplyr&#39;:
-
-    explain</code></pre>
-<pre><code>The following object is masked from &#39;package:ggplot2&#39;:
-
-    %+%</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggmap)<span class="co"># Pour le résultat final</span></code></pre></div>
+<span class="kw">library</span>(qdapRegex)<span class="co"># Manip de chaîne de caractère</span>
+<span class="kw">library</span>(ggmap)<span class="co"># Pour le résultat final</span></code></pre></div>
 <pre><code>Google Maps API Terms of Service: http://developers.google.com/maps/terms.</code></pre>
 <pre><code>Please cite ggmap if you use it: see citation(&#39;ggmap&#39;) for details.</code></pre>
 </div>
@@ -582,7 +577,7 @@ myFinalData &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind.
 4 Le Restaurant La Pointe Cap Coz  4.5 -3.978467 47.88971
 5                  Brasserie Le 2  4.0 -3.987703 47.86121
 6    Bar / Crêperie de Kervastard  4.0 -3.987303 47.86128</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">begMeil =<span class="st"> </span><span class="kw">c</span>(<span class="dt">lat =</span> <span class="fl">47.863843</span>, <span class="dt">lon =</span> <span class="fl">-3.9852351</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">begMeil =<span class="st"> </span><span class="kw">c</span>(<span class="dt">lat =</span> <span class="fl">47.863843</span>, <span class="dt">lon =</span> <span class="op">-</span><span class="fl">3.9852351</span>)
 myMap =<span class="st"> </span><span class="kw">get_map</span>(<span class="dt">location=</span>begMeil,<span class="dt">zoom=</span><span class="dv">12</span>)</code></pre></div>
 <pre><code>note : locations should be specified in the lon/lat format, not lat/lon.</code></pre>
 <pre><code>Map from URL : http://maps.googleapis.com/maps/api/staticmap?center=47.863843,-3.985235&amp;zoom=12&amp;size=640x640&amp;scale=2&amp;maptype=terrain&amp;language=en-EN&amp;sensor=false</code></pre>
