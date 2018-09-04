@@ -44,7 +44,7 @@ Cette semaine a été consacrée à l'approfondissement de diverses thématiques
 - [Vincent Runge](http://www.math-evry.cnrs.fr/members/vrunge/welcome) (UMR LaMME - Université  Paris Saclay)
 - [Jean-Baptiste Lecomte](https://www6.rennes.inra.fr/ese/PERSONNELS/Personne_umr/(idpers)/280/(idlang)/) (UMR ESE - Agrocampus Ouest)
 - [Gabriel Lang](https://www6.inra.fr/mia-paris/Equipes/Membres/Gabriel-Lang) (UMR MIA Paris - Agroparistech)
-- [Raphaëlle Momal](https://www6.inra.fr/mia-paris/Equipes/Membres/Raphaelle-Momal) (UMR MIA Paris)
+- [Raphaëlle Momal](https://rmomal.github.io) (UMR MIA Paris)
 - [Pierre Navaro](https://irmar.univ-rennes1.fr/interlocuteurs/pierre-navaro) (IRMAR - CNRS)
 - [Éric Parent](https://www6.inra.fr/mia-paris/Equipes/Membres/Eric-Parent) (UMR MIA Paris - Agroparistech)
 
