@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Makefile tutorial</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 54px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+
+.section h2 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h3 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h4 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h5 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h6 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FinistR 2018</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    accueil
+  </a>
+</li>
+<li>
+  <a href="https://github.com/StateOfTheR/finistR2018">
+    <span class="fa fa-github"></span>
+     
+    dépôt github
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-refresh"></span>
+     
+    Webscraping
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier1_webscraping_intro.html">Introduction</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="atelier1_webscraping_simple.html">Un exemple simple</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_genealogie.html">Généalogie mathématique</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_googlefight.html">Occurrences Google</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_youtube.html">Youtube, MSN meteo</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-wheelchair-alt"></span>
+     
+    Optimisation et accélération
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier2_introduction.html">Introduction</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="atelier2_background_optim.html">Outils d'optimisation standard</a>
+    </li>
+    <li>
+      <a href="atelier2_rgpu.html">R et GPU</a>
+    </li>
+    <li>
+      <a href="atelier2_tensorflow.html">TensorFlow</a>
+    </li>
+    <li>
+      <a href="atelier2_greta.html">Greta</a>
+    </li>
+    <li>
+      <a href="atelier2_rcpp_modules.html">Modules Rcpp</a>
+    </li>
+    <li>
+      <a href="atelier2_julia.html">Julia</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-thumbs-o-up"></span>
+     
+    Bonnes pratiques
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Introduction</li>
+    <li class="divider"></li>
+    <li>
+      <a href="atelier3_git.html">Versioning with git(hub)</a>
+    </li>
+    <li>
+      <a href="atelier3_makefile_tuto.html">Understanding Makefiles</a>
+    </li>
+    <li>
+      <a href="atelier3_package_creation.html">Packages: création, développement, tests</a>
+    </li>
+    <li>
+      <a href="atelier3_advancedrmd.html">Production de documents</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Makefile tutorial</h1>
+
+</div>
+
+
+<div id="main-program-written-in-c" class="section level1">
+<h1>Main program written in C++</h1>
+<p>Reference : <a href="http://nuclear.mutantstargoat.com/articles/make/">Practical Makefiles, by example</a></p>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="dt">void</span> operations();
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="at">const</span> <span class="dt">char</span> **argv) {
+
+    operations();
+    
+    <span class="cf">return</span> <span class="dv">0</span>;
+}</code></pre></div>
+</div>
+<div id="function-that-uses-armadillo-also-in-c" class="section level1">
+<h1>Function that uses Armadillo also in C++</h1>
+<div class="sourceCode"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span>
+<span class="pp">#include </span><span class="im">&lt;armadillo&gt;</span>
+
+<span class="dt">void</span> operations() {
+    <span class="co">// Initialize the random generator</span>
+    arma::arma_rng::set_seed_random();
+    
+    <span class="co">// Create a 4x4 random matrix and print it on the screen</span>
+    arma::Mat&lt;<span class="dt">double</span>&gt; A = arma::randu(<span class="dv">4</span>,<span class="dv">4</span>);
+    <span class="bu">std::</span>cout &lt;&lt; <span class="st">&quot;A:</span><span class="sc">\n</span><span class="st">&quot;</span> &lt;&lt; A &lt;&lt; <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>;
+    
+    <span class="co">// Multiply A with his transpose:</span>
+    <span class="bu">std::</span>cout &lt;&lt; <span class="st">&quot;A * A.t() =</span><span class="sc">\n</span><span class="st">&quot;</span>;
+    <span class="bu">std::</span>cout &lt;&lt; A * A.t() &lt;&lt; <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>;
+    
+    <span class="co">// Access/Modify rows and columns from the array:</span>
+    A.row(<span class="dv">0</span>) = A.row(<span class="dv">1</span>) + A.row(<span class="dv">3</span>);
+    A.col(<span class="dv">3</span>).zeros();
+    <span class="bu">std::</span>cout &lt;&lt; <span class="st">&quot;add rows 1 and 3, store result in row 0, also fill 4th column with zeros:</span><span class="sc">\n</span><span class="st">&quot;</span>;
+    <span class="bu">std::</span>cout &lt;&lt; <span class="st">&quot;A:</span><span class="sc">\n</span><span class="st">&quot;</span> &lt;&lt; A &lt;&lt; <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>;
+    
+    <span class="co">// Create a new diagonal matrix using the main diagonal of A:</span>
+    arma::Mat&lt;<span class="dt">double</span>&gt;B = arma::diagmat(A);
+    <span class="bu">std::</span>cout &lt;&lt; <span class="st">&quot;B:</span><span class="sc">\n</span><span class="st">&quot;</span> &lt;&lt; B &lt;&lt; <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>;
+    
+    <span class="co">// Save matrices A and B:</span>
+    A.save(<span class="st">&quot;A_mat.txt&quot;</span>, arma::arma_ascii);
+    B.save(<span class="st">&quot;B_mat.txt&quot;</span>, arma::arma_ascii);
+    
+}</code></pre></div>
+</div>
+<div id="build-executable-exe_armadillo-with-command-line" class="section level1">
+<h1>Build executable exe_armadillo with command line</h1>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">c++</span> -c files/obj_armadillo.cpp -I/opt/local/include <span class="co"># create the file obj_armadillo.o</span>
+<span class="ex">c++</span> -o exe_armadillo files/main.cpp obj_armadillo.o -L/opt/local/lib -larmadillo <span class="co"># create the executable exe_armadillo.o</span></code></pre></div>
+<ul>
+<li><code>-I</code> option flag to set headers file directory (<code>.h</code>) needed to build every object files (CXXFLAGS).</li>
+<li><code>-L</code> option flag to set library directory (<code>.a</code>) needed only to build executable (LDFLAGS)</li>
+</ul>
+</div>
+<div id="test-the-program" class="section level1">
+<h1>Test the program</h1>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">./exe_armadillo</span>
+<span class="fu">rm</span> ./exe_armadillo *.o</code></pre></div>
+<pre><code>## A:
+##    0.3242   0.9179   0.8407   0.2887
+##    0.6265   0.9646   0.1353   0.3970
+##    0.2623   0.6067   0.2422   0.0642
+##    0.1417   0.8869   0.0553   0.3016
+## 
+## A * A.t() =
+##    1.7378   1.3169   0.8641   0.9936
+##    1.3169   1.4989   0.8078   1.0715
+##    0.8641   0.8078   0.4997   0.6080
+##    0.9936   1.0715   0.6080   0.9007
+## 
+## add rows 1 and 3, store result in row 0, also fill 4th column with zeros:
+## A:
+##    0.7682   1.8515   0.1906        0
+##    0.6265   0.9646   0.1353        0
+##    0.2623   0.6067   0.2422        0
+##    0.1417   0.8869   0.0553        0
+## 
+## B:
+##    0.7682        0        0        0
+##         0   0.9646        0        0
+##         0        0   0.2422        0
+##         0        0        0        0</code></pre>
+</div>
+<div id="first-makefile" class="section level1">
+<h1>First Makefile</h1>
+<div class="sourceCode"><pre class="sourceCode makefile"><code class="sourceCode makefile">
+<span class="dv">default:</span><span class="dt"> exe_armadillo</span>
+
+<span class="dv">obj_armadillo.o:</span><span class="dt"> files/obj_armadillo.cpp</span>
+    c++ -o <span class="ch">$@</span> -c <span class="ch">$^</span> -I/opt/local/include 
+    
+<span class="dv">exe_armadillo:</span><span class="dt"> files/main.cpp obj_armadillo.o</span>
+    c++ -o <span class="ch">$@</span> <span class="ch">$^</span> -L/opt/local/lib -larmadillo
+    
+<span class="dv">clean:</span>
+    rm *.txt *.o exe_armadillo</code></pre></div>
+</div>
+<div id="test-the-program-1" class="section level1">
+<h1>Test the program</h1>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">make</span> -f files/Makefile1
+<span class="ex">./exe_armadillo</span>
+<span class="fu">make</span> -f files/Makefile1 clean</code></pre></div>
+<pre><code>## c++ -o obj_armadillo.o -c files/obj_armadillo.cpp -I/opt/local/include 
+## c++ -o exe_armadillo files/main.cpp obj_armadillo.o -L/opt/local/lib -larmadillo
+## A:
+##    0.3083   0.0142   0.6443   0.4483
+##    0.2421   0.3985   0.4164   0.9910
+##    0.6250   0.6929   0.5455   0.9921
+##    0.5084   0.0933   0.3719   0.9642
+## 
+## A * A.t() =
+##    0.7114   0.7929   0.9988   0.8300
+##    0.7929   1.3729   1.6377   1.2707
+##    0.9988   1.6377   2.1525   1.5419
+##    0.8300   1.2707   1.5419   1.3352
+## 
+## add rows 1 and 3, store result in row 0, also fill 4th column with zeros:
+## A:
+##    0.7505   0.4918   0.7883        0
+##    0.2421   0.3985   0.4164        0
+##    0.6250   0.6929   0.5455        0
+##    0.5084   0.0933   0.3719        0
+## 
+## B:
+##    0.7505        0        0        0
+##         0   0.3985        0        0
+##         0        0   0.5455        0
+##         0        0        0        0
+## 
+## rm -f *.txt *.o exe_armadillo</code></pre>
+</div>
+<div id="using-variables" class="section level1">
+<h1>Using variables</h1>
+<div class="sourceCode"><pre class="sourceCode makefile"><code class="sourceCode makefile">
+<span class="dv">default:</span><span class="dt"> exe_armadillo </span><span class="co"># default target</span>
+
+<span class="dt">CXX                </span><span class="ch">:=</span><span class="st"> c++   # := means &quot;change CXX only if it is undefined&quot;</span>
+<span class="dt">ARMADILLO_INCDIR   </span><span class="ch">=</span><span class="st"> /opt/local/include</span>
+<span class="dt">ARMADILLO_LIBDIR   </span><span class="ch">=</span><span class="st"> /opt/local/lib</span>
+<span class="dt">ARMADILLO_INC_FLAGS </span><span class="ch">=</span><span class="st"> -I</span><span class="ch">${</span><span class="dt">ARMADILLO_INCDIR</span><span class="ch">}</span>
+<span class="dt">ARMADILLO_LIB_FLAGS </span><span class="ch">=</span><span class="st"> -L</span><span class="ch">${</span><span class="dt">ARMADILLO_LIBDIR</span><span class="ch">}</span><span class="st"> -larmadillo</span>
+
+<span class="dv">obj_armadillo.o:</span><span class="dt"> files/obj_armadillo.cpp</span>
+    <span class="ch">${</span><span class="dt">CXX</span><span class="ch">}</span> -c -o <span class="ch">$@</span> <span class="ch">$^</span> <span class="ch">${</span><span class="dt">ARMADILLO_INC_FLAGS</span><span class="ch">}</span> <span class="co"># $@ : target $^: dependencies</span>
+    
+<span class="dv">exe_armadillo:</span><span class="dt"> files/main.cpp obj_armadillo.o</span>
+    <span class="ch">${</span><span class="dt">CXX</span><span class="ch">}</span> -o <span class="ch">$@</span> <span class="ch">$^</span> <span class="ch">${</span><span class="dt">ARMADILLO_LIB_FLAGS</span><span class="ch">}</span>
+    
+<span class="dv">clean:</span>
+    rm *.txt *.o exe_armadillo</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">make</span> -f files/Makefile2
+<span class="ex">./exe_armadillo</span>
+<span class="fu">make</span> -f files/Makefile2 clean</code></pre></div>
+<pre><code>## c++    -c -o obj_armadillo.o files/obj_armadillo.cpp -I/opt/local/include # obj_armadillo.o : target files/obj_armadillo.cpp: dependencies
+## c++    -o exe_armadillo files/main.cpp obj_armadillo.o -L/opt/local/lib -larmadillo
+## A:
+##    0.6850   0.8411   0.8426   0.7267
+##    0.3522   0.3316   0.6890   0.9672
+##    0.4139   0.1566   0.7797   0.4492
+##    0.8736   0.1315   0.7571   0.6324
+## 
+## A * A.t() =
+##    2.4149   1.8036   1.3988   1.8067
+##    1.8036   1.6441   1.1694   1.4846
+##    1.3988   1.1694   1.0056   1.2567
+##    1.8067   1.4846   1.2567   1.7538
+## 
+## add rows 1 and 3, store result in row 0, also fill 4th column with zeros:
+## A:
+##    1.2258   0.4632   1.4461        0
+##    0.3522   0.3316   0.6890        0
+##    0.4139   0.1566   0.7797        0
+##    0.8736   0.1315   0.7571        0
+## 
+## B:
+##    1.2258        0        0        0
+##         0   0.3316        0        0
+##         0        0   0.7797        0
+##         0        0        0        0
+## 
+## rm *.txt *.o exe_armadillo</code></pre>
+</div>
+<div id="add-rule-to-build-object-files" class="section level1">
+<h1>Add rule to build object files</h1>
+<div class="sourceCode"><pre class="sourceCode makefile"><code class="sourceCode makefile">
+<span class="dv">default:</span><span class="dt"> exe_armadillo</span>
+
+<span class="dt">CXX                 </span><span class="ch">:=</span><span class="st"> c++</span>
+<span class="dt">ARMADILLO_INCDIR    </span><span class="ch">=</span><span class="st"> /opt/local/include</span>
+<span class="dt">ARMADILLO_LIBDIR    </span><span class="ch">=</span><span class="st"> /opt/local/lib</span>
+<span class="dt">ARMADILLO_INC_FLAGS </span><span class="ch">=</span><span class="st"> -I</span><span class="ch">${</span><span class="dt">ARMADILLO_INCDIR</span><span class="ch">}</span>
+<span class="dt">ARMADILLO_LIB_FLAGS </span><span class="ch">=</span><span class="st"> -L</span><span class="ch">${</span><span class="dt">ARMADILLO_LIBDIR</span><span class="ch">}</span><span class="st"> -larmadillo</span>
+
+<span class="dt">CXXFLAGS </span><span class="ch">+=</span><span class="st"> </span><span class="ch">${</span><span class="dt">ARMADILLO_INC_FLAGS</span><span class="ch">}</span>
+<span class="dt">LDFLAGS  </span><span class="ch">+=</span><span class="st"> </span><span class="ch">${</span><span class="dt">ARMADILLO_LIB_FLAGS</span><span class="ch">}</span>
+
+<span class="dt">SRCS </span><span class="ch">=</span><span class="st"> </span><span class="ch">$(</span><span class="kw">wildcard</span><span class="st"> *.cpp</span><span class="ch">)</span><span class="st">  # List all cpp files</span>
+<span class="dt">OBJS </span><span class="ch">=</span><span class="st"> </span><span class="ch">$(</span><span class="dt">SRCS</span><span class="er">:</span><span class="dt">.cpp</span><span class="er">=</span><span class="dt">.o</span><span class="ch">)</span><span class="st">    # List all matching object files</span>
+    
+<span class="ot">.cpp.o:</span><span class="dt"> </span><span class="co"># $&lt; the source file .cpp $@ the target .o</span>
+    <span class="ch">$(</span><span class="dt">CXX</span><span class="ch">)</span> <span class="ch">$(</span><span class="dt">CXXFLAGS</span><span class="ch">)</span> -c <span class="ch">$&lt;</span> -o <span class="ch">$@</span>   
+    
+<span class="dv">exe_armadillo:</span><span class="dt"> </span><span class="ch">$(</span><span class="dt">OBJS</span><span class="ch">)</span>
+    <span class="ch">${</span><span class="dt">CXX</span><span class="ch">}</span> -o <span class="ch">$@</span> <span class="ch">$^</span> <span class="ch">$(</span><span class="dt">CXXFLAGS</span><span class="ch">)</span> <span class="ch">${</span><span class="dt">LDFLAGS</span><span class="ch">}</span>
+    
+<span class="dv">clean:</span>
+    rm *.txt *.o exe_armadillo</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">make</span> -f Makefile3
+<span class="ex">./exe_armadillo</span>
+<span class="fu">make</span> -f Makefile3 clean</code></pre></div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

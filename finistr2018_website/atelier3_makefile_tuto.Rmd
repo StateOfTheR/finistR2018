@@ -1,0 +1,161 @@
+---
+title: "Makefile tutorial"
+output: 
+  html_document:
+    toc: true
+    toc depth: 2
+    toc_float: true
+---
+
+# Main program written in C++
+
+Reference : [Practical Makefiles, by example](http://nuclear.mutantstargoat.com/articles/make/)
+
+```cpp
+void operations();
+
+int main(int argc, const char **argv) {
+
+    operations();
+    
+    return 0;
+}
+```
+
+# Function that uses Armadillo also in C++
+
+```cpp
+#include <iostream>
+#include <armadillo>
+
+void operations() {
+    // Initialize the random generator
+    arma::arma_rng::set_seed_random();
+    
+    // Create a 4x4 random matrix and print it on the screen
+    arma::Mat<double> A = arma::randu(4,4);
+    std::cout << "A:\n" << A << "\n";
+    
+    // Multiply A with his transpose:
+    std::cout << "A * A.t() =\n";
+    std::cout << A * A.t() << "\n";
+    
+    // Access/Modify rows and columns from the array:
+    A.row(0) = A.row(1) + A.row(3);
+    A.col(3).zeros();
+    std::cout << "add rows 1 and 3, store result in row 0, also fill 4th column with zeros:\n";
+    std::cout << "A:\n" << A << "\n";
+    
+    // Create a new diagonal matrix using the main diagonal of A:
+    arma::Mat<double>B = arma::diagmat(A);
+    std::cout << "B:\n" << B << "\n";
+    
+    // Save matrices A and B:
+    A.save("A_mat.txt", arma::arma_ascii);
+    B.save("B_mat.txt", arma::arma_ascii);
+    
+}
+```
+
+# Build executable exe_armadillo with command line
+
+```{bash}
+c++ -c files/obj_armadillo.cpp -I/opt/local/include # create the file obj_armadillo.o
+c++ -o exe_armadillo files/main.cpp obj_armadillo.o -L/opt/local/lib -larmadillo # create the executable exe_armadillo.o
+```
+
+- `-I` option flag to set headers file directory (`.h`) needed to build every object files (CXXFLAGS).
+- `-L` option flag to set library directory (`.a`) needed only to build executable (LDFLAGS)
+
+# Test the program
+
+```{bash}
+./exe_armadillo
+rm ./exe_armadillo *.o
+```
+
+# First Makefile
+
+```Makefile
+
+default: exe_armadillo
+
+obj_armadillo.o: files/obj_armadillo.cpp
+	c++ -o $@ -c $^ -I/opt/local/include 
+    
+exe_armadillo: files/main.cpp obj_armadillo.o
+	c++ -o $@ $^ -L/opt/local/lib -larmadillo
+    
+clean:
+	rm *.txt *.o exe_armadillo
+```
+
+# Test the program
+
+```{bash}
+make -f files/Makefile1
+./exe_armadillo
+make -f files/Makefile1 clean
+```
+
+# Using variables 
+
+```Makefile
+
+default: exe_armadillo # default target
+
+CXX                := c++   # := means "change CXX only if it is undefined"
+ARMADILLO_INCDIR   = /opt/local/include
+ARMADILLO_LIBDIR   = /opt/local/lib
+ARMADILLO_INC_FLAGS = -I${ARMADILLO_INCDIR}
+ARMADILLO_LIB_FLAGS = -L${ARMADILLO_LIBDIR} -larmadillo
+
+obj_armadillo.o: files/obj_armadillo.cpp
+	${CXX} -c -o $@ $^ ${ARMADILLO_INC_FLAGS} # $@ : target $^: dependencies
+    
+exe_armadillo: files/main.cpp obj_armadillo.o
+	${CXX} -o $@ $^ ${ARMADILLO_LIB_FLAGS}
+    
+clean:
+	rm *.txt *.o exe_armadillo
+```
+
+```{bash}
+make -f files/Makefile2
+./exe_armadillo
+make -f files/Makefile2 clean
+```
+
+# Add rule to build object files
+
+```Makefile
+
+default: exe_armadillo
+
+CXX                 := c++
+ARMADILLO_INCDIR    = /opt/local/include
+ARMADILLO_LIBDIR    = /opt/local/lib
+ARMADILLO_INC_FLAGS = -I${ARMADILLO_INCDIR}
+ARMADILLO_LIB_FLAGS = -L${ARMADILLO_LIBDIR} -larmadillo
+
+CXXFLAGS += ${ARMADILLO_INC_FLAGS}
+LDFLAGS  += ${ARMADILLO_LIB_FLAGS}
+
+SRCS = $(wildcard *.cpp)  # List all cpp files
+OBJS = $(SRCS:.cpp=.o)    # List all matching object files
+    
+.cpp.o: # $< the source file .cpp $@ the target .o
+	$(CXX) $(CXXFLAGS) -c $< -o $@   
+    
+exe_armadillo: $(OBJS)
+	${CXX} -o $@ $^ $(CXXFLAGS) ${LDFLAGS}
+    
+clean:
+	rm *.txt *.o exe_armadillo
+```
+
+```{bash, eval = FALSE}
+make -f Makefile3
+./exe_armadillo
+make -f Makefile3 clean
+```
