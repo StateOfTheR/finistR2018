@@ -19,7 +19,7 @@ output:
 # Dropbox shares your data
 
 <a href="https://twitter.com/kopfnuss/status/1020575998205710336">
-<img src="images/tweet_dropbox.png" width=600>
+<img src="img/tweet_dropbox" width=600>
 </a>
 
 # New products based on a git server for collaborating writing.
