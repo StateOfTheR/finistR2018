@@ -51,8 +51,10 @@ navbar:
     menu:
       - text: "Introduction"
       - text: "-------"
-      - text: "Versioning"
+      - text: "Versioning with git(hub)"
         href: atelier3_git.html
+      - text: "Understanding Makefiles"
+        href: atelier3_makefile_tuto.html
       - text: "Packages: création, développement, tests"
         href: atelier3_package_creation.html
       - text: "Production de documents"
