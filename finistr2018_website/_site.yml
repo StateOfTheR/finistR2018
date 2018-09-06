@@ -10,7 +10,7 @@ navbar:
     icon: fa-github
     href: https://github.com/StateOfTheR/finistR2018
  right:
-  - text: "Webscrapping"
+  - text: "Webscraping"
     icon: fa-refresh
     href: atelier1_webscraping.html
     menu:
