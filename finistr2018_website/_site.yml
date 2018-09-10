@@ -61,5 +61,5 @@ navbar:
         href: atelier3_advancedrmd.html
 output:
   html_document:
-    theme: lumen
+    theme: flatly
     highlight: tango
