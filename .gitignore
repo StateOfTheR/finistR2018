@@ -43,7 +43,7 @@ rsconnect/
 Readme_files/
 
 ## ignorer les fichiers gnérés du site web
-atelier*/
+atelier*cache
 finistr2018_website/_site
 
 finistR2018.Rproj
