@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Intégration de CUDA avec R</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 54px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+
+.section h2 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h3 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h4 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h5 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h6 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FinistR 2018</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    accueil
+  </a>
+</li>
+<li>
+  <a href="https://github.com/StateOfTheR/finistR2018">
+    <span class="fa fa-github"></span>
+     
+    dépôt github
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-refresh"></span>
+     
+    Webscraping
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier1_webscraping_intro.html">Introduction</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="atelier1_webscraping_simple.html">Un exemple simple</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_genealogie.html">Généalogie mathématique</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_tripadvisor.html">Trip advisor</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_googlefight.html">Occurrences Google</a>
+    </li>
+    <li>
+      <a href="atelier1_webscraping_youtube.html">Youtube, MSN meteo</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-wheelchair-alt"></span>
+     
+    Optimisation et accélération
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="atelier2_introduction.html">Introduction</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="atelier2_background_optim.html">Outils d'optimisation standard</a>
+    </li>
+    <li>
+      <a href="atelier2_cuda.html">R et GPU</a>
+    </li>
+    <li>
+      <a href="atelier2_tensorflow.html">TensorFlow</a>
+    </li>
+    <li>
+      <a href="atelier2_greta.html">Greta</a>
+    </li>
+    <li>
+      <a href="atelier2_rcpp_modules.html">Modules Rcpp</a>
+    </li>
+    <li>
+      <a href="atelier2_julia.html">Julia</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-thumbs-o-up"></span>
+     
+    Bonnes pratiques
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Introduction</li>
+    <li class="divider"></li>
+    <li>
+      <a href="atelier3_git.html">Versioning with git(hub)</a>
+    </li>
+    <li>
+      <a href="atelier3_makefile_tuto.html">Understanding Makefiles</a>
+    </li>
+    <li>
+      <a href="atelier3_package_creation.html">Packages: création, développement, tests</a>
+    </li>
+    <li>
+      <a href="atelier3_advancedrmd.html">Production de documents</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Intégration de CUDA avec R</h1>
+
+</div>
+
+
+<div id="cpu-versu-gpu" class="section level2">
+<h2>CPU versu GPU</h2>
+<p>Le CPU (Central Processing Unit) est un microprocesseur chargé d’exécuter les instructions des programmes informatiques. Il fonctionne séquentiellement, exécutant les instructions les unes à la suite des autres (aujourd’hui, un coeur CPU fonctionne entre 2 et 4 GHz, c’est-à-dire exécute entre 2x10<sup>9</sup> et 4x10<sup>9</sup> opérations par seconde). Les ordinateurs modernes possèdent des CPUs multi-coeurs, chaque coeur étant un microprocesseur pouvant fonctionner indépendamment des autres. En général, 2 à 4 coeurs sont présents, permettant d’exécuter autant d’instructions en parallèle. Sous Windows, l’utilisation de ces coeurs peut être visualisé par le moniteur de performances (Gestionnaire de tâches [Ctrl + Maj + Echap] &gt; onglet Performances &gt; Ouvrir le moniteur de ressources &gt; onglet CPU).</p>
+<div class="figure">
+<img src="img/cpu.png" />
+
+</div>
+<p>Les GPU (Graphics Processing Unit, souvent appelés cartes graphiques) ont été initialement développés pour traiter l’information contenues dans les images : pour générer plus de 60 images par seconde, à raison de plusieurs millions de pixels par image, le CPU ne peut pas traiter l’information suffisamment rapidement. Ces GPUs intègrent énormément de coeurs (plusieurs centaines, voire plusieurs milliers), pouvant tous fonctionner en parallèle indépendamment les uns des autres. Bien que chacun de ces coeurs soit moins performant que les coeurs du CPU (1 GHz pour les cartes graphiques modernes), la parallélisation massive des instructions permet d’accélérer grandement les codes adaptés.</p>
+<div class="figure">
+<img src="img/cpu_vs_gpu.png" />
+
+</div>
+</div>
+<div id="cuda-quest-ce" class="section level2">
+<h2>CUDA, qu’est-ce ?</h2>
+<p>CUDA (Compute Unified Device Architecture) est une plateforme de développement créée par NVidia permettant d’utiliser le GPU pour exécuter du code à la place du CPU. Les librairies disponibles permettent en particulier d’intégrer aisément les fonctions de l’API CUDA à du code C ou C++. En particulier, CUDA peut être interfacé à R afin de bénéficier des perfomances computationnelles du GPU.</p>
+<div class="figure">
+<img src="model1.jpg" />
+
+</div>
+<p>Il existe des librairies R pour utiliser le GPU (par exemple <code>gpuR</code>). Ces librairies sont cependant relativement limitées, puisqu’elles implémentent un certain nombre de fonctions faisant appel au GPU mais ne permettent pas d’en développer de nouvelles. L’exception est RCUDA, qui permet d’écrire du code CUDA directement sous R. Nous nous intéresserons ici à l’interface via développement sous C (correspondant à la deuxième colonne sur le schéma ci-dessus).</p>
+<p>Attention : CUDA nécessite une carte graphique NVidia ! Ce n’est pas nécessaire de continuer sans.</p>
+</div>
+<div id="installation-de-cuda" class="section level2">
+<h2>Installation de CUDA</h2>
+<p>Cette partie concerne uniquement les utilisateurs de Windows. Les utilisateurs de Linux peuvent installer RCUDA et profiter de CUDA sans avoir à sortir de RStudio.</p>
+<p>L’installation de CUDA sous Windows est légèrement complexe. Heureusement, les développeurs de NVidia ont été suffisamment gentils pour fournir un tutoriel. Je vous invite à vous référer à l’appendice du lien suivant : <a href="https://devblogs.nvidia.com/accelerate-r-applications-cuda/" class="uri">https://devblogs.nvidia.com/accelerate-r-applications-cuda/</a> pour l’installation, puis à ce blogpost <a href="http://www.ademiller.com/blogs/tech/2010/10/visual-studio-2010-adding-intellisense-support-for-cuda-c/" class="uri">http://www.ademiller.com/blogs/tech/2010/10/visual-studio-2010-adding-intellisense-support-for-cuda-c/</a> pour ajouter le support Intellisense de CUDA à C (pour éviter que Visual Studio détecte des erreurs de syntaxe).</p>
+</div>
+<div id="architecture-cuda-du-gpu" class="section level2">
+<h2>Architecture CUDA du GPU</h2>
+<p>Un programme CUDA est composé de code destiné à être exécuté soit sur le CPU (appelé système <em>hôte</em>), soit sur le GPU. Les fonctions parallélisables à exécuter sur le GPU, appelées <em>kernels</em>, génèrent un grand nombre de <em>threads</em>, i.e. les éléments de base qu’il faut exécuter, organisés en <em>blocs</em>. Tous ces threads générés par le kernel sont collectivement appelés <em>grille</em>. Chaque thread exécute ensuite le même code, indépendamment des autres threads.</p>
+<p>Dans la grille, les threads sont organisées selon une hiérarchie à deux niveaux, comme illustré sur la figure ci-dessous. Au premier niveau, la grille est composé de blocs, organisés en tableau de dimension 2. Sur la figure, la grille 1 est organisée en un tableau 2x2 de 4 blocs. Les blocs sont ensuite composées de threads, organisés en tableau de dimension 3. Sur la figure, le bloc (1, 1) est composé de 16 threads organisés en tableau 4x2x2. Tous les blocs d’une grille doivent avoir le même nombre de threads et la même organisation. Par ailleurs, il ne peut y avoir plus de 1024 threads par bloc (ceci est une limitation hardware, et peut dépendre de la carte graphique, les anciennes étant limitées à 512 threads par bloc, et peut-être les futures à 2048 ou davantage ?).</p>
+<p>Comme chaque thread exécute le même code, leur identification est nécessaire pour leur permettre d’accéder à des éléments mémoire différents. Ainsi, chaque bloc est identifié par les mots clé <code>blockIdx.x</code> et <code>blockIdx.y</code> et chaque thread par <code>threadIdx.x</code>, <code>threadIdx.y</code> et <code>threadIdx.z</code>.</p>
+<center>
+<div class="figure">
+<img src="img/grid.png" />
+
+</div>
+</center>
+</div>
+<div id="structure-dun-code-cuda" class="section level2">
+<h2>Structure d’un code CUDA</h2>
+<p>Nous pouvons enfin nous intéresser à la syntaxe. Voici un code CUDA permettant de multiplier deux matrices carrées :</p>
+<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c"><span class="co">/* CUDA API header files*/</span>
+<span class="pp">#include </span><span class="im">&quot;cuda.h&quot;</span>
+<span class="pp">#include </span><span class="im">&quot;cuda_runtime.h&quot;</span>
+<span class="pp">#include </span><span class="im">&quot;device_launch_parameters.h&quot;</span>
+
+__global__ <span class="dt">void</span>
+matrixMult(<span class="dt">const</span> <span class="dt">double</span> *Md, <span class="dt">const</span> <span class="dt">double</span> *Nd, <span class="dt">double</span> *Pd, <span class="dt">int</span> size)
+{
+    <span class="dt">int</span> row = blockDim.x * blockIdx.x + threadIdx.x;
+    <span class="dt">int</span> col = blockDim.y * blockIdx.y + threadIdx.y;
+
+    <span class="cf">if</span> (row &lt; size) {   <span class="co">// Don&#39;t do anything to the memory if we&#39;re above the size of the matrix</span>
+        <span class="cf">if</span> (col &lt; size) {
+            
+            <span class="dt">double</span> Pvalue = <span class="dv">0</span>;
+            <span class="cf">for</span> (<span class="dt">int</span> k = <span class="dv">0</span>; k &lt; size; k++) {    
+                <span class="co">// Elements of 2d-arrays are stored in column-major ordering (i.e. column by column)</span>
+                <span class="co">// This is a consequence of this code being called in R (where column-major ordering is the norm)</span>
+                <span class="co">// whereas C usually stores 2d-array in row-major ordering</span>
+                Pvalue += Md[k*size + row] * Nd[col*size + k];
+            }
+            Pd[col*size + row] = Pvalue;
+            
+        }
+    }
+}
+
+<span class="kw">extern</span> <span class="st">&quot;C&quot;</span> __declspec(dllexport)
+<span class="dt">void</span> gmatrixMult(<span class="dt">double</span> *M, <span class="dt">double</span> *N, <span class="dt">double</span> *P, <span class="dt">int</span> *size)
+{
+    <span class="dt">int</span> memSize = *size * *size * <span class="kw">sizeof</span>(<span class="dt">double</span>);
+    <span class="co">// Device Memory</span>
+    <span class="dt">double</span> *Md, *Nd, *Pd;
+    <span class="co">// Define the execution configuration</span>
+    dim3 blockSize(<span class="dv">32</span>, <span class="dv">32</span>, <span class="dv">1</span>);
+    dim3 gridSize(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>);
+    gridSize.x = (*size + blockSize.x - <span class="dv">1</span>) / blockSize.x;
+    gridSize.y = (*size + blockSize.y - <span class="dv">1</span>) / blockSize.y;
+    <span class="co">// Allocate output array</span>
+    cudaMalloc((<span class="dt">void</span>**)&amp;Md, memSize);
+    cudaMalloc((<span class="dt">void</span>**)&amp;Nd, memSize);
+    cudaMalloc((<span class="dt">void</span>**)&amp;Pd, memSize);
+    <span class="co">// copy data to device</span>
+    cudaMemcpy(Md, M, memSize, cudaMemcpyHostToDevice);
+    cudaMemcpy(Nd, N, memSize, cudaMemcpyHostToDevice);
+    <span class="co">// GPU matrix multiplication</span>
+    matrixMult&lt;&lt;&lt;gridSize, blockSize&gt;&gt;&gt;(Md, Nd, Pd, *size);
+    <span class="co">// Copy output</span>
+    cudaMemcpy(P, Pd, memSize, cudaMemcpyDeviceToHost);
+    cudaFree(Md);
+    cudaFree(Nd);
+    cudaFree(Pd);
+}</code></pre></div>
+<p>Le code CUDA est décomposé en deux parties : la fonction <code>gmatrixMult</code> qui sera appelée par l’utilisateur, repérée par la balise <code>extern &quot;C&quot; __declspec(dllexport)</code> qui spécifie au compilateur C NVidia <code>nvcc</code> quelle fonction sera exportée et donc accessible par l’utilisateur sous R; et le kernel <code>matrixMult</code>, qui est le code exécuté par tous les threads.</p>
+<div id="fonction-interfacegmatrixmult" class="section level3">
+<h3>Fonction interface<code>gmatrixMult</code></h3>
+<p>Avant toute chose, cette fonction interface entre R et C doit respecter un certain nombre de propriétés :</p>
+<ol style="list-style-type: decimal">
+<li>Les fonctions C qui seront appelées dans R doivent avoir un type pour <code>return</code> de classe <code>void</code>, et doivent donc retourner les résultats à travers les arguments de la fonction. Ici, la matrice <code>P</code> en argument est en réalité celle qui sera retournée après multiplication de <code>M</code> et <code>N</code>.</li>
+<li>R passe ses arguments par référence à C (e.g. <code>int *size</code>), et il faudra donc déréférencer systématiquement les pointeurs (<code>*size</code>).</li>
+</ol>
+<p>Comme l’hôte et le GPU disposent de leur propre mémoire, une séquence typique d’instructions pour la fonction CUDA C exportée est la suivante :</p>
+<ol style="list-style-type: decimal">
+<li>Déclarer et allouer la mémoire GPU;</li>
+<li>Transférer les données de l’hôte vers le GPU;</li>
+<li>Appeler et exécuter les kernels;</li>
+<li>Transférer les résultats du GPU vers l’hôte.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c">  <span class="co">// Device Memory</span>
+    <span class="dt">double</span> *Md, *Nd, *Pd;
+    
+  [...]
+    
+  <span class="co">// Allocate output array</span>
+    cudaMalloc((<span class="dt">void</span>**)&amp;Md, memSize);
+    cudaMalloc((<span class="dt">void</span>**)&amp;Nd, memSize);
+    cudaMalloc((<span class="dt">void</span>**)&amp;Pd, memSize);
+    
+    [...]
+    
+    cudaFree(Md);
+    cudaFree(Nd);
+    cudaFree(Pd);</code></pre></div>
+<p>Les pointeurs <code>Md</code>, <code>Nd</code> et <code>Pd</code> vont pointer vers des emplacements mémoire dans la mémoire GPU. Ces espaces mémoire sont alloués avec la fonction <code>cudaMalloc</code>, qui récupère l’adresse du pointeur spécifié en premier argument, et alloue la taille spécifiée par le deuxième argument (ici, taille mémoire d’une matrice de <code>double</code>). Désormais, <code>Md</code> est un pointeur qui pointe vers un espace mémoire du GPU de taille suffisante pour accueillir une matrice de <code>double</code> de taille <code>size*size</code>. Après l’exécution du code, les espaces mémoire du GPU sont libérés avec la fonction <code>cudaFree</code>.</p>
+<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c">  <span class="co">// copy data to device</span>
+    cudaMemcpy(Md, M, memSize, cudaMemcpyHostToDevice);
+    cudaMemcpy(Nd, N, memSize, cudaMemcpyHostToDevice);</code></pre></div>
+<p>Les espaces mémoires du GPU sont ensuite initialisés avec la fonction <code>cudaMemcpy</code>. <code>cudaMemcpy</code> copie l’objet <code>M</code> vers l’espace mémoire GPU désigné par <code>Md</code>, en spécifiant la taille de la copie par <code>memSize</code>. <code>cudaMemcpyHostToDevice</code> spécifie que la copie s’effectue de l’hôte (le CPU) vers le GPU.</p>
+<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c">    <span class="co">// Copy output</span>
+    cudaMemcpy(P, Pd, memSize, cudaMemcpyDeviceToHost);</code></pre></div>
+<p>Après l’exécution du kernel, pour récupérer les résultats sur le CPU, <code>cudaMemcpy</code> copie du GPU la matrice pointée par <code>Pd</code> vers l’objet hôte <code>P</code>. L’argument <code>cudaMemcpyDeviceToHost</code> spécifie que cette fois-ci, le passage se fait du GPU vers le CPU.</p>
+</div>
+<div id="execution-du-kernel" class="section level3">
+<h3>Exécution du kernel</h3>
+<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c">    <span class="co">// GPU matrix multiplication</span>
+    matrixMult&lt;&lt;&lt;gridSize, blockSize&gt;&gt;&gt;(Md, Nd, Pd, *size);</code></pre></div>
+<p>Le kernel est lancé en spécifiant la <em>configuration d’exécution</em> (entre triple chevrons), c’est-à-dire de combien de blocs va être composée la grille (premier argument <code>gridSize</code>) et de combien de threads seront composés chaque bloc (deuxième argument <code>blockSize</code>).</p>
+<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c">  <span class="co">// Define the execution configuration</span>
+    dim3 blockSize(<span class="dv">32</span>, <span class="dv">32</span>, <span class="dv">1</span>);
+    dim3 gridSize(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>);
+    gridSize.x = (*size + blockSize.x - <span class="dv">1</span>) / blockSize.x;
+    gridSize.y = (*size + blockSize.y - <span class="dv">1</span>) / blockSize.y;</code></pre></div>
+<p><code>gridSize</code> et <code>blockSize</code> sont des structures <code>dim3</code> (des <code>struct</code> simples définies par CUDA possédant les membres <code>x</code>, <code>y</code> et <code>z</code>). Il est intéressant de noter que les membres de ces structures peuvent être modifiés au moment de l’exécution du programme, et donc que le nombre de threads peut être défini dynamiquement en fonction de la taille de la matrice.</p>
+<p>Ici, <code>blockSize</code> est un tableau 32x32, contenant donc 1024 threads (le maximum par bloc). Pour traiter des matrices de tailles supérieures à 32x32, un peu d’arithmétique est donc nécessaire pour déterminer le nombre de blocs à générer.</p>
+</div>
+<div id="kernel-matrixmult" class="section level3">
+<h3>Kernel <code>matrixMult</code></h3>
+<p>Les kernels sont caractérisés par le mot-clé <code>__global__</code> qui spécifie au compilateur que la fonction <code>matrixMult</code> est un kernel.</p>
+<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c">    <span class="dt">int</span> row = blockDim.x * blockIdx.x + threadIdx.x;
+    <span class="dt">int</span> col = blockDim.y * blockIdx.y + threadIdx.y;</code></pre></div>
+<p>Puisque tous les threads vont effectuer le même kernel, il est nécessaire de les différencier et de les identifier pour que chacun d’eux agissent sur un coefficient différent de la matrice résultat. <code>blockDim</code>, <code>blockIdx</code> et <code>threadIdx</code> sont des variables CUDA prédéfinies dans les kernels, de structure <code>dim3</code>, permettant d’accéder à la dimension des blocs et aux index du bloc dans la grille et du thread dans le bloc respectivement. La variable <code>gridDim</code> existe également pour récupérer les dimensions de la grille.</p>
+<center>
+<div class="figure">
+<img src="img/matrix.png" />
+
+</div>
+</center>
+<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c">    <span class="cf">if</span> (row &lt; size) {   <span class="co">// Don&#39;t do anything to the memory if we&#39;re above the size of the matrix</span>
+        <span class="cf">if</span> (col &lt; size) {
+            
+            [...]
+            
+        }
+    }</code></pre></div>
+<p>Si le nombre de threads par bloc n’est pas un multiple de la taille de la matrice, il est nécessaire d’inclure ces conditions <code>if</code> pour s’assurer qu’à aucun moment le programme ne modifie des éléments mémoire au delà de ceux alloués à notre matrice <code>P</code>.</p>
+</div>
+</div>
+<div id="utilisation-du-code-sous-r" class="section level2">
+<h2>Utilisation du code sous R</h2>
+<p>Après avoir compilé le code CUDA et construit la librairie correspondante, elle est chargée sous R avec :</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dyn.load</span>(<span class="st">&quot;cmatMult.dll&quot;</span>)</code></pre></div>
+<p>On peut vérifier qu’elle est bien chargée avec :</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">getLoadedDLLs</span>()</code></pre></div>
+<pre><code>##                                                                                 Filename
+## base                                                                                base
+## methods                                       /usr/lib/R/library/methods/libs/methods.so
+## utils                                             /usr/lib/R/library/utils/libs/utils.so
+## grDevices                                 /usr/lib/R/library/grDevices/libs/grDevices.so
+## graphics                                    /usr/lib/R/library/graphics/libs/graphics.so
+## stats                                             /usr/lib/R/library/stats/libs/stats.so
+## tools                                             /usr/lib/R/library/tools/libs/tools.so
+## internet                                                 /usr/lib/R/modules//internet.so
+## (embedding)                                                                  (embedding)
+## digest            /home/jchiquet/R/x86_64-pc-linux-gnu-library/3.5/digest/libs/digest.so
+## Rcpp                  /home/jchiquet/R/x86_64-pc-linux-gnu-library/3.5/Rcpp/libs/Rcpp.so
+## htmltools   /home/jchiquet/R/x86_64-pc-linux-gnu-library/3.5/htmltools/libs/htmltools.so
+## backports   /home/jchiquet/R/x86_64-pc-linux-gnu-library/3.5/backports/libs/backports.so
+## stringi         /home/jchiquet/R/x86_64-pc-linux-gnu-library/3.5/stringi/libs/stringi.so
+## yaml                  /home/jchiquet/R/x86_64-pc-linux-gnu-library/3.5/yaml/libs/yaml.so
+## cairo                                        /usr/lib/R/library/grDevices/libs//cairo.so
+##             Dynamic.Lookup
+## base                 FALSE
+## methods              FALSE
+## utils                FALSE
+## grDevices            FALSE
+## graphics             FALSE
+## stats                FALSE
+## tools                FALSE
+## internet              TRUE
+## (embedding)          FALSE
+## digest                TRUE
+## Rcpp                  TRUE
+## htmltools            FALSE
+## backports            FALSE
+## stringi              FALSE
+## yaml                 FALSE
+## cairo                 TRUE</code></pre>
+<p>Enfin, la fonction exportée <code>gmatrixMult</code> peut être appelée avec <code>.C</code> :</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">size &lt;-<span class="st"> </span><span class="fl">1e3</span>
+M &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(size<span class="op">*</span>size), size, size)
+N &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(size<span class="op">*</span>size), size, size)
+P &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>, size, size)
+n &lt;-<span class="st"> </span><span class="kw">as.integer</span>(size)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rP &lt;-<span class="st"> </span>M <span class="op">%*%</span><span class="st"> </span>N
+gpuP &lt;-<span class="st"> </span><span class="kw">.C</span>(<span class="st">&quot;gmatrixMult&quot;</span>, M, N, <span class="dt">P=</span>P, n)[[<span class="st">&quot;P&quot;</span>]]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all</span>(rP <span class="op">-</span><span class="st"> </span>gpuP <span class="op">&lt;</span><span class="st"> </span><span class="fl">1e16</span>)</code></pre></div>
+<div id="performances" class="section level3">
+<h3>Performances</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">size &lt;-<span class="st"> </span><span class="fl">5e3</span>
+M &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(size<span class="op">*</span>size), size, size)
+N &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(size<span class="op">*</span>size), size, size)
+P &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>, size, size)
+n &lt;-<span class="st"> </span><span class="kw">as.integer</span>(size)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system.time</span>(M <span class="op">%*%</span><span class="st"> </span>N)
+<span class="kw">system.time</span>(<span class="kw">.C</span>(<span class="st">&quot;gmatrixMult&quot;</span>, M, N, P, n))</code></pre></div>
+</div>
+</div>
+<div id="references" class="section level2">
+<h2>Références</h2>
+<ol style="list-style-type: decimal">
+<li><a href="https://devblogs.nvidia.com/accelerate-r-applications-cuda/" class="uri">https://devblogs.nvidia.com/accelerate-r-applications-cuda/</a> (last accessed 30/08/2018)</li>
+<li><a href="https://devblogs.nvidia.com/easy-introduction-cuda-c-and-c/" class="uri">https://devblogs.nvidia.com/easy-introduction-cuda-c-and-c/</a> (last accessed 30/08/2018)</li>
+<li><a href="http://www.ademiller.com/blogs/tech/2010/10/visual-studio-2010-adding-intellisense-support-for-cuda-c/" class="uri">http://www.ademiller.com/blogs/tech/2010/10/visual-studio-2010-adding-intellisense-support-for-cuda-c/</a> (last accessed 30/08/2018)</li>
+<li>Kirk, D. B., &amp; Hwu, W. W. (2010). Programming Massively Parallel Processors: A Hands-on Approach. Morgan Kaufmann.</li>
+</ol>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

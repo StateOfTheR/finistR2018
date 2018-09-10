@@ -36,7 +36,7 @@ navbar:
       - text: "Outils d'optimisation standard"
         href: atelier2_background_optim.html
       - text: "R et GPU"
-        href: atelier2_rgpu.html
+        href: atelier2_cuda.html
       - text: "TensorFlow"
         href: atelier2_tensorflow.html
       - text: "Greta"
