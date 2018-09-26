@@ -110,7 +110,7 @@ All slides stolen (extracted/re-arranged) from \alert{Lieve Vandenberghe}:
 ## Rosenbrock Banana function
 
 \[
-  f(x) = 100( x_2 - x_2^2) + (1-x_1)^2
+  f(x) = 100( x_2 - x_1^2) + (1-x_1)^2
 \]
 
 \[
